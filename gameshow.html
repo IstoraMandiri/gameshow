@@ -1,0 +1,123 @@
+<head>
+  <title>gameshow</title>
+</head>
+
+<body>
+  {{> stage}}
+  {{> controls}}
+</body>
+
+<template name="stage">
+  <div id="stage" class="stage-{{currentStage.type}} {{currentStage.classes}}">
+    <h1>{{currentStage.title}}</h1>
+    {{renderCurrentStage}}
+  </div>
+</template>
+
+<template name="stage-static">
+  {{{content}}}
+</template>
+
+<template name="stage-registration">
+  <h1>Registration</h1>
+
+  <form class="form-horizontal">
+  <fieldset>
+    <div id="legend">
+      <legend class="">Register</legend>
+    </div>
+    <div class="control-group">
+      <label class="control-label"  for="firstname">First Name</label>
+      <div class="controls">
+        <input type="text" id="firstname" name="firstname" placeholder="" class="input-xlarge">
+        <!-- <p class="help-block">Name can contain any letters or numbers, without spaces</p> -->
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label"  for="lastname">Last Name</label>
+      <div class="controls">
+        <input type="text" id="lastname" name="lastname" placeholder="" class="input-xlarge">
+        <!-- <p class="help-block">Name can contain any letters or numbers, without spaces</p> -->
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <label class="control-label"  for="lastname">Position</label>
+      <div class="controls">
+        <input type="text" id="lastname" name="lastname" placeholder="" class="input-xlarge">
+        <!-- <p class="help-block">Name can contain any letters or numbers, without spaces</p> -->
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label"  for="lastname">Company</label>
+      <div class="controls">
+        <input type="text" id="lastname" name="lastname" placeholder="" class="input-xlarge">
+        <!-- <p class="help-block">Name can contain any letters or numbers, without spaces</p> -->
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="email">E-mail</label>
+      <div class="controls">
+        <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+        <p class="help-block">Please provide your E-mail</p>
+      </div>
+    </div>
+
+ 
+    <div class="control-group">
+      <div class="controls">
+        <a href="#" class="btn btn-success">Register</a>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+</template>
+
+<template name="stage-question">
+  <h1>Question</h1>
+  <h2>title</h2>
+  {{#each options}}
+    {{> option}}
+  {{/each}}
+</template>
+
+<template name="stage-answer">
+  <h1>Answers</h1>
+  <h2>title</h2>
+  {{#each options}}
+    {{> option}}
+  {{/each}}
+</template>
+
+<template name="stage-results">
+  <h1>This Game's Results</h1>
+  {{> scores}}
+</template>
+<template name="stage-leaderboard">
+  <h1>Overall Leaders</h1>
+  <!-- score type? -->
+  {{> scores}}
+</template>
+
+
+<template name="scores">
+  {{> leaderboard}}
+</template>
+
+<template name="option">
+  Option here
+</template>
+
+
+<template name="controls">
+  <div id="controls">
+    <div class="btn" id="back-btn">Back</div>
+    <span class='position'>{{position}}</span class='position'>
+    <div class="btn" id="forward-btn">Forward</div>  
+  </div>
+</template>
