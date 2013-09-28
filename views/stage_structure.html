@@ -1,0 +1,81 @@
+
+
+<template name="holding_slide">
+  <div id="holding_slide">=== HOLDING ===</div>
+</template>
+
+<template name="stage_static">
+  {{#if screenMode and content.screen}}
+    {{{content.screen}}}
+  {{else}}
+    {{{content.default}}}
+  {{/if}}
+</template>
+
+<template name="stage_registration">
+    {{#if screenMode}}
+      {{> holding_slide}}
+    {{else}}
+      {{> stage_form}}
+    {{/if}}
+</template>
+
+<template name="stage_form">
+  {{#if screenMode}}
+    {{> holding_slide}}
+  {{else}}
+    # form creation
+  {{/if}}
+</template>
+
+<template name="stage_question">
+  <h2>{{currentQuestion.text}}</h2>
+  {{#if voted}}
+    <div>VOTED</div>
+  {{/if}}
+
+  <ul class="options">  
+    {{#each currentQuestion.options}}
+      <li class="option btn">{{text}}</li>
+    {{/each}}
+  </ul>
+
+  <div class="countdown"><h3>Countdown Timer...</h3></div>
+</template>
+
+<template name="stage_answer">
+  <h1>Answer</h1>
+  <h2>The correct answer was X</h2>
+  {{#if screenMode}}
+    {{> leaderboard currentPlayers}}
+  {{else}}
+    <h3>You were correct/incorrect</h3>
+  {{/if}}
+</template>
+
+
+<!-- tiebreak stuff -->
+
+
+<template name="stage_results">
+  <h1>This Game's Results</h1>
+  {{> leaderboard currentPlayers}}
+</template>
+
+
+<template name="stage_leaderboard">
+  {{#if screenMode}}
+    <h1>Overall Winners Today</h1>
+    {{> leaderboard topTenOverallPlayers}}
+  {{else}}
+    <!-- form template -->
+  {{/if}}
+</template>
+
+
+
+
+
+<template name='screen_video'>
+  <h1>Playing video</h1>
+</template>

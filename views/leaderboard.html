@@ -1,0 +1,16 @@
+
+<template name="leaderboard">
+  <div class="leaderboard">
+    {{#each players}}
+      {{> leaderboard_player}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="leaderboard_player">
+  <div class="player">
+    <span class="name">{{firstname}} {{lastname}}</span>
+    <span class="score">{{score}}</span>
+  </div>
+</template>
+

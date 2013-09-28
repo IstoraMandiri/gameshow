@@ -1,0 +1,79 @@
+/* CSS declarations go here */
+html,body{
+  margin:0;
+  padding:0;
+}
+body{
+  background:#f7bb33;
+  /*background-image:url('/img/logo.png');
+  background-position: 20px 20px;
+  background-size:auto 100%;
+  background-repeat:no-repeat;*/
+}
+#stage, #controls{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  padding:20px;
+}
+#controls{
+  /*top:auto;*/
+  z-index:10;
+  text-align: center;
+  background:black;
+  color:white;
+}
+#controls .btn{
+  font-size:2em;
+  padding:1em;
+}
+.true{
+  background:red;
+}
+#stage{
+  text-align:center;
+}
+.checkbox input[type="checkbox"] {
+  float:none;
+}
+ul{
+  margin:0;
+}
+ul.options li{
+  display:block;
+  margin-bottom:10px;
+  font-size:2em;
+  padding:1em;
+  box-sizing:border-box;
+}
+.btn{
+  font-size:1.2em;
+  padding:1em;
+  margin-bottom:1em;
+}
+
+input.input-full{
+  width:100%;
+}
+
+.btn-video{
+  font-size:20px;
+  display:inline-block;
+  padding:80px 120px;
+  margin:20px;
+}
+
+.countdown{
+  position:absolute;
+  bottom:40px;
+  right:40px;
+  padding:50px;
+  box-sizing:border-box;
+  text-align:center;
+  background:white;
+  width:200px;
+  height:200px;
+  border-radius:100% 100%;
+}

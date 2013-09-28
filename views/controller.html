@@ -1,0 +1,22 @@
+
+<template name="controller">
+  <div id="controls">
+    {{> controller_info}}
+    <div class="btn" id="back-btn">Back</div>
+    <span class='position'>{{position}}</span class='position'>
+    <div class="btn" id="forward-btn">Forward</div>  
+    <hr>
+    <div class="btn" id="reset-btn">Reset</div>
+  </div>
+</template>
+
+<template name="controller_info">
+  <h1>Control info</h1>
+  {{#each players}}
+    {{> controller_player_info}}
+  {{/each}}
+</template>
+
+<template name="controller_player_info">
+  <p>{{firstname}} {{lastname}} - {{score}}</p>
+</template>
