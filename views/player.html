@@ -1,7 +1,7 @@
 <template name='player_info'>
   {{#if currentPlayer}}
-    <h1>{{currentPlayer.firstname}} - {{currentPlayer.score}}</h1>
-  {{else}}
-    <h1>No Player</h1>
+    <div id="player_info">
+      <h1>{{currentPlayer.firstname}} - {{myScore}}</h1>    
+    </div>
   {{/if}}
 </template>

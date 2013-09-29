@@ -39,14 +39,10 @@ insertFakeData = ->
     title: 'Holding Slide'
     _id: 'home'
     type: 'static'
-    content:
-      default: '<h1>Holding Slide</h1>'
-      screen: '<h1>Holding Slide (Screen)</h1>'
   
   Stages.insert
     _id: 'register'
     type: 'registration'
-    content: 'register'
 
   Stages.insert
     _id: 'form'
@@ -191,6 +187,17 @@ correctAnswer = (player) ->
       score: correctAnswerPoints 
   # create new game class
 
+getPlayer = (player) -> Players.findOne player
+
+getScore = (player) ->
+  score = 0
+  if getPlayer(player)?.answers
+    for answer in getPlayer(player).answers
+      if answer.answer.correct
+        score+= correctAnswerPoints
+  return score
+
+
 
 # if Meteor.isServer
   # pick up from from prevous game
@@ -249,9 +256,9 @@ if Meteor.isClient
     if currentStage()?.type
       new Handlebars.SafeString(Template["stage_#{currentStage()?.type}"](currentStage()));
   
-  Template.controls.position = -> currentGame()?.position
+  Template.controller.position = -> currentGame()?.position
 
-  Template.controls.events
+  Template.controller.events
     "click #forward-btn" : -> move 'forward'
     "click #back-btn" : -> move 'back'
     "click #reset-btn" : -> move 0
@@ -279,36 +286,29 @@ if Meteor.isClient
 
     "click .tandc" : (e,t) -> correctAnswer Session.get 'currentPlayer'
 
-  Template.stage_question.voted = -> Session.equals 'voted', true
-  Template.stage_question.created = -> Session.set 'voted', false
 
-  Template.stage_question.events
-    "click li.option" : (evt, template) ->
-      if Session.equals 'voted', false
-        Session.set 'voted', true
+  Template.controller_player_info.score = -> 
+    getScore @._id
+  # Template.stage_question.voted = -> Session.equals 'voted', true
+  # Template.stage_question.created = -> Session.set 'voted', false
+  Template.player_info.myScore = ->
+    getScore Session.get('currentPlayer')
 
+  Template.option.events
+    "click" : (evt, template) ->
+      question = Questions.findOne currentStage().question_id
+      Players.update Session.get('currentPlayer'),
+        $push:
+          answers:
+            question: question.text
+            question_id: question._id
+            answer: @
+  
+        # submitAnswer
 
   Template.leaderboard.players = ->
     Players.find {},
       sort:
         score: -1
         name: 1
-
-  Template.leaderboard.selected_name = ->
-    player = Players.findOne(Session.get("selected_player"))
-    player and player.name
-
-  Template.player.selected = ->
-    (if Session.equals("selected_player", @_id) then "selected" else "")
-
-  Template.leaderboard.events "click input.inc": ->
-    Players.update Session.get("selected_player"),
-      $inc:
-        score: 100
-
-
-  Template.player.events click: ->
-    Session.set "selected_player", @_id
-
-
 
