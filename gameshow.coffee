@@ -187,6 +187,16 @@ correctAnswer = (player) ->
       score: correctAnswerPoints 
   # create new game class
 
+      
+alreadyVoted = (playerId, questionId) ->
+  if !getPlayer(playerId)?.answers?
+    return false
+  for answer in getPlayer(playerId).answers
+    if answer.question_id is questionId
+      return true
+  return false
+
+
 getPlayer = (player) -> Players.findOne player
 
 getScore = (player) ->
@@ -287,24 +297,35 @@ if Meteor.isClient
     "click .tandc" : (e,t) -> correctAnswer Session.get 'currentPlayer'
 
 
-  Template.controller_player_info.score = -> 
-    getScore @._id
+  # Template.controller_player_info.score = -> 
+  #   getScore @._id
   # Template.stage_question.voted = -> Session.equals 'voted', true
   # Template.stage_question.created = -> Session.set 'voted', false
-  Template.player_info.myScore = ->
-    getScore Session.get('currentPlayer')
+  # Template.player_info.myScore = ->
+  #   getScore Session.get('currentPlayer')
 
   Template.option.events
     "click" : (evt, template) ->
       question = Questions.findOne currentStage().question_id
-      Players.update Session.get('currentPlayer'),
-        $push:
-          answers:
-            question: question.text
-            question_id: question._id
-            answer: @
-  
-        # submitAnswer
+      playerId = Session.get('currentPlayer')
+
+      
+      # already voted?
+      if !alreadyVoted playerId, currentStage().question_id 
+
+        Players.update playerId,
+          $push:
+            answers:
+              question: question.text
+              question_id: question._id
+              answer: @
+        
+        Players.update playerId,
+          $set:
+            score: getScore playerId
+      else
+        console.log 'no multiple votes for you'
+          # submitAnswer
 
   Template.leaderboard.players = ->
     Players.find {},
