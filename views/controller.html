@@ -2,8 +2,9 @@
 <template name="controller">
   <div id="controls">
     {{> controller_info}}
+    <span class='position'>{{position}} - {{currentStage.title}}</span class='position'>
+    <br>
     <div class="btn" id="back-btn">Back</div>
-    <span class='position'>{{position}}</span class='position'>
     <div class="btn" id="forward-btn">Forward</div>  
     <hr>
     <div class="btn" id="reset-btn">Reset</div>
@@ -17,5 +18,5 @@
 </template>
 
 <template name="controller_player_info">
-  <p>{{firstname}} {{lastname}} - {{score}}</p>
+  <p>{{firstname}} {{lastname}} - {{score}} - {{video.title}}</p>
 </template>

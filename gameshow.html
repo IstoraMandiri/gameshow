@@ -3,22 +3,29 @@
 </head>
 
 <body>
-  {{#if controllerMode}}
-    {{> controller}}
-  {{else}}
-    {{#if playerMode}}
-      {{> player_info}}
+  <div id="wrapper">
+    {{#if controllerMode}}
+      {{> controller}}
+    {{else}}
+      {{#if playerMode}}
+        {{> player_info}}
+      {{/if}}
+      {{> stage}}
     {{/if}}
-    {{> stage}}
-  {{/if}}
+  </div>
 </body>
 
 
-
 <template name="stage">
-  <div id="stage" class="stage_{{currentStage.type}} {{currentStage.classes}}">
-    {{renderCurrentStage}}
-  </div>
+  {{#if allowedToSee}}
+    <div id="stage" class="stage_{{currentStage.type}} {{currentStage.classes}}">
+      {{renderCurrentStage}}
+    </div>
+  {{else}}
+    <div id="stage">
+      <h1>Registration Currently Closed</h1>
+    </div>
+  {{/if}}
 </template>
 
 

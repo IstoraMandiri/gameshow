@@ -1,7 +1,7 @@
 
 
 <template name="holding_slide">
-  <div id="holding_slide"></div>
+    <div id="holding_slide"></div>
 </template>
 
 <template name="stage_static">
@@ -13,7 +13,7 @@
     {{/if}}
   {{else}}
     {{#if content.default}}
-      {{content.screen}}
+      {{content.default}}
     {{else}}
       {{> holding_slide}}
     {{/if}}
@@ -39,30 +39,30 @@
             <!-- <p class="help-block">Name can contain any letters or numbers, without spaces</p> -->
           </div>
 
-          <label class="control-label" for="position">Position</label>
+          {{#if registration_form}}
+            {{> registration_form}}
+          {{/if}}
+
+<!--           <label class="control-label" for="position">Position</label>
           <div class="controls">
             <select id="position" name="position" placeholder="" class="input-large">
               <option value="">Position</option>
               <option value="">Position</option>
               <option value="">Position</option>
             </select>
-            <!-- <p class="help-block">Name can contain any letters or numbers, without spaces</p> -->
           </div>
 
           <label class="control-label" for="company">Company</label>
           <div class="controls">
             <input type="text" id="company" name="company" placeholder="" class="input-large">
-            <!-- <p class="help-block">Name can contain any letters or numbers, without spaces</p> -->
           </div>
 
-
-          <!-- E-mail -->
           <label class="control-label" for="email">E-mail</label>
           <div class="controls">
             <input type="text" id="email" name="email" placeholder="" class="input-large">
           </div>
 
-          <div class="btn tandc">Privacy Policy</div>
+ -->       <div class="btn tandc">Privacy Policy</div>
           <div class="btn tandc">Ts and Cs</div>
 
           <label class="checkbox">
@@ -83,24 +83,43 @@
     {{> holding_slide}}
   {{else}}
     <h1>More info form</h1>
+    <button id="submit" class="btn btn-success">Submit</button>
   {{/if}}
 </template>
 
 
-
-
-
 <template name="stage_video_select">
   <h1>Select Video</h1>
-  <h2>The correct answer was X</h2>
+  <div id="video_select_wrapper">
+    {{#if voted}}
+      <h1>Your vote has been cast</h1>
+    {{else}}
+      {{#each videos}}
+        {{> video_button}}
+      {{/each}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="video_button">
+  <div class="video btn video-btn">{{title}}</div>
 </template>
 
 <template name="stage_video_play">
-  <h1>Select Video</h1>
-  <h2>The correct answer was X</h2>
+  {{#if screenMode}}
+    {{> playing_video}}
+  {{else}}
+    {{> holding_slide}}
+  {{/if}}
 </template>
 
-
+<template name='playing_video'>
+  <div id="video_wrapper">
+    <video autoplay>
+     <source src="/videos/test3.mp4">
+    </video>
+  </div>  
+</template>
 
 <template name='screen_video'>
   <h1>Playing video</h1>
@@ -108,20 +127,18 @@
 
 
 
-
-
-
 <template name="stage_question">
   <h2>{{currentQuestion.text}}</h2>
   {{#if voted}}
-    <div>VOTED</div>
+    <h3>Your vote has been counted</h3>
+  {{else}}
+  
+    <ul class="options">  
+      {{#each currentQuestion.options}}
+        {{> option}}
+      {{/each}}
+    </ul>
   {{/if}}
-
-  <ul class="options">  
-    {{#each currentQuestion.options}}
-      {{> option}}
-    {{/each}}
-  </ul>
 
   <div class="countdown"><h3>Countdown Timer...</h3></div>
 </template>
@@ -131,12 +148,29 @@
 </template>
 
 <template name="stage_answer">
-  <h1>Answer</h1>
-  <h2>The correct answer was X</h2>
+  <h1>{{currentQuestion.text}}</h1>
+  <h2>The correct answer was {{currentCorrectAnswer.text}}</h2>
   {{#if screenMode}}
     {{> leaderboard currentPlayers}}
   {{else}}
-    <h3>You were correct/incorrect</h3>
+    {{#if answered}}
+      {{#if answeredCorrectly}}
+        <div class="question-result answered-correctly">
+          <h1>Well done!</h1>
+          <h3>You were correct</h3>
+        </div>
+      {{else}}
+        <div class="question-result answered-incorrectly">
+          <h1>Too Bad!</h1>
+          <h3>You were incorrect</h3>
+        </div>
+      {{/if}}
+    {{else}}
+      <div class="question-result didnt-answer">
+        <h1>Oops!</h1>
+        <h3>You didnt answer in time</h3>
+      </div>
+    {{/if}}
   {{/if}}
 </template>
 
@@ -147,14 +181,27 @@
 <template name="stage_results">
   <h1>This Game's Results</h1>
   {{> leaderboard currentPlayers}}
+  {{#if playerMode}}
+    {{#if iAmWinner}}
+      <div class="winner">
+        <h1>Congratualtions</h1>
+        <h2>You are the winner!</h2>
+      </div>
+    {{else}}
+      <div class="loser">
+        <h1>Sorry</h1>
+        <h2>You didn't win.<br/>Better luck next time!</h2>
+      </div>
+    {{/if}}
+  {{/if}}
 </template>
 
 
 <template name="stage_leaderboard">
   {{#if screenMode}}
     <h1>Overall Winners Today</h1>
-    {{> leaderboard topTenOverallPlayers}}
+    {{> leaderboard top10}}
   {{else}}
-    <!-- form template -->
+    <h1>Form here</h1>
   {{/if}}
 </template>
