@@ -13,12 +13,15 @@
       {{> stage}}
     {{/if}}
   </div>
+
+  {{> modal}}
 </body>
 
 
 <template name="stage">
   {{#if allowedToSee}}
     <div id="stage" class="stage_{{currentStage.type}} {{currentStage.classes}}">
+      <h1 class='title'>{{currentStage.title}}</h1>
       {{renderCurrentStage}}
     </div>
   {{else}}
@@ -28,20 +31,23 @@
   {{/if}}
 </template>
 
-
-<template name="modal">      
-  <div class="modal hide fade in" id="settings-modal">
-    {{> modalInner}}
-  </div>
-</template>      
-
-<template name="modalInner">
-  <div class="modal-header">
-    ...
+<template name="modal">
+  <div class="modal hide fade" id="modal">
+    {{#if message.title}}
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">{{message.title}}</h3>
+      </div>
+    {{/if}}
+    <div class="modal-body">
+        {{message.body}}
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <!-- <button class="btn btn-primary">Save changes</button> -->
+    </div>
+</div>
 </template>
-
-
-
 
 
 

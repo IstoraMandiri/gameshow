@@ -2,13 +2,19 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "jqbootstrapvalidation": {}
+      "jqbootstrapvalidation": {},
+      "collection-hooks": {}
     },
     "packages": {
       "jqbootstrapvalidation": {
         "git": "https://github.com/nate-strauser/meteor-jqbootstrapvalidation.git",
         "tag": "v0.1.0",
         "commit": "2af4625d41a9b24311544a53790f14fa38c27b10"
+      },
+      "collection-hooks": {
+        "git": "https://github.com/matb33/meteor-collection-hooks.git",
+        "tag": "v0.5.4",
+        "commit": "7f286358af49ffc1a63e97354f2f306a911bacc0"
       }
     }
   }

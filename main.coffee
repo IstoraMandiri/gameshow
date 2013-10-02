@@ -1,160 +1,13 @@
 
 tieBreakStages = ['tiebreakInto','tiebreak']
 
-insertFakeData = ->
-
-  fakePlayers = [
-    firstname: 'Chris'
-    lastname: 'Hitchcott'
-    company: 'TAPevents'
-    position: 'CTO'
-    email: 'chris@tapevents.net'
-  ,
-    firstname: 'Joe'
-    lastname: 'Syntax'
-    company: 'Hospital Records'
-    position: 'Producer'
-    email: 'joe@hospitalrecords.com'
-  ,
-    firstname: 'Bob'
-    lastname: 'Jones'
-    company: 'Company X'
-    position: 'CEO'
-    email: 'bob@company-x.com'
-  ]
-
-  # for player in fakePlayers
-  #   createNewPlayer
-  #     firstname: player.firstname
-  #     lastname: player.lastname
-  #     company: player.company
-  #     position: player.position
-  #     email: player.email
-
-  
-  Stages.insert
-    title: 'Holding Slide'
-    _id: 'home'
-    type: 'static'
-  
-  Stages.insert
-    title: 'Registration Form'
-    _id: 'register'
-    type: 'registration'
-    content: 'form'
-
-  Stages.insert
-    title: 'More Info Form'  
-    _id: 'form'
-    type: 'form'
-    content: 'form'
-
-  Stages.insert
-    _id: 'videoSelect'
-    type: 'video_select'
-    title: 'Selecting Video...'
-
-  Stages.insert
-    _id: 'videoPlay'
-    type: 'video_play'
-    title: 'Playing Video...'
-
-  Stages.insert
-    title: 'Question 1'
-    _id: 'question'
-    type: 'question'
-    question_id: 'objId'
-
-  Stages.insert
-    title: 'Question 1 Answer' 
-    _id: 'answer'
-    type: 'answer'
-    question_id: 'objId'
-
-  Stages.insert
-    title: 'Question 2'   
-    _id: 'question2'
-    type: 'question'
-    question_id: 'objId2'
-
-  Stages.insert
-    title: 'Question 2 Answer'   
-    _id: 'answer2'
-    type: 'answer'
-    question_id: 'objId2'
-
-  Stages.insert
-    title: 'Tiebreak Intro'   
-    _id: 'tiebreakInto'
-    type: 'static'
-    content:
-      default: '<h1>Tie Break Rules</h1><h2>Pres the buttons on the next screen...</h2>'
-      screen: '<h1>Tie Break Rules (Screen)</h1>'
-
-  Stages.insert
-    title: 'Tiebreaker'   
-    _id: 'tiebreak'
-    type: 'static'
-    content:
-      default: '<h1>Tie Break Entry</h1><h2><div class="btn">1</div> <div class="btn">2</div> <div class="btn">3</div> <div class="btn">4</div> <div class="btn">5</div> <br/><div class="btn">6</div> <div class="btn">7</div> <div class="btn">8</div> <div class="btn">9</div> <div class="btn">10</div> </h2>'
-      screen: '<h1>1 2 3 4 5<br/>6 7 8 9 10</h1><h2 class="countdown">Countdown Clock</h2>'
-
-  Stages.insert
-    title: 'This game results'  
-    _id: 'results'
-    type: 'results'
-
-  Stages.insert
-    title: 'Overall Leaderboard'  
-    _id: 'leaderboard'
-    type: 'leaderboard'
-
-
-  Questions.insert
-    _id: 'objId'
-    text: 'Question Text Here'
-    options: [
-      text: 'Answer 1'
-      correct: true
-    ,
-      text: 'Answer 2'
-    ,
-      text: 'Answer 3'
-    ,
-      text: 'Answer 4'                    
-    ]
-
-  Questions.insert
-    _id: 'objId2'
-    text: 'Question 2 Text Here'
-    options: [
-      text: 'Answer 1'
-      correct: true
-    ,
-      text: 'Answer 2'
-    ,
-      text: 'Answer 3'
-    ,
-      text: 'Answer 4'                    
-    ]    
-
 # vars
-
-
-correctAnswerPoints = 100
-
-
-Games = new Meteor.Collection 'games'
-Config = new Meteor.Collection 'config'
-Players = new Meteor.Collection 'players'
-Stages = new Meteor.Collection 'stages'
-Questions = new Meteor.Collection 'questions'
-
+# console.log collections
 currentGame = -> 
-  Games.findOne({},{sort:{_id:-1}})
+  collections.Games.findOne({},{sort:{_id:-1}})
 
 updateCurrentGame = (update) ->
-  Games.update currentGame()._id,
+  collections.Games.update currentGame()._id,
     $set : update
 
 currentStage = ->
@@ -166,7 +19,7 @@ currentStage = ->
         pos = tempAdvance
       else
         Session.set 'temporaryAdvance', false
-    stage = Stages.findOne
+    stage = collections.Stages.findOne
       _id: currentGame().stages?[pos]
     return stage
 
@@ -176,7 +29,7 @@ currentPlayers = ->
   if currentGame()?.players
     playerIds = currentGame().players
     for playerId in playerIds
-      players.push Players.findOne playerId
+      players.push collections.Players.findOne playerId
   return players
 
 
@@ -199,16 +52,16 @@ move = (position) ->
 
 createNewPlayer = (options) ->
   options.score = 0
-  newPlayer = Players.insert options
-  Games.update currentGame()._id,
+  newPlayer = collections.Players.insert options
+  collections.Games.update currentGame()._id,
     $push :
       players : newPlayer
   return newPlayer
 
 correctAnswer = (player) ->
-  Players.update {_id:player},
+  collections.Players.update {_id:player},
     $inc: 
-      score: correctAnswerPoints 
+      score: currentGame().correctPoints 
   # create new game class
 
 currentCorrectAnswer = ->
@@ -219,21 +72,21 @@ currentCorrectAnswer = ->
   return false 
 
 
-getPlayer = (player) -> Players.findOne player
+getPlayer = (player) -> collections.Players.findOne player
 
 getScore = (player) ->
   score = 0
   if getPlayer(player)?.answers
     for answer in getPlayer(player).answers
       if answer.answer.correct
-        score+= correctAnswerPoints
+        score+= currentGame().correctPoints
   return score
 
 
 currentQuestion = ->
   questionId = currentStage().question_id
   if questionId
-    Questions.findOne({_id:questionId})
+    collections.Questions.findOne({_id:questionId})
 
 highgestScore = ->
   maxScore = _.max currentPlayers(), (player) ->
@@ -248,16 +101,10 @@ highestScorers = ->
       winners.push player
   return winners
 
-# newVideoVote = ->
-#   console.log 'voaaaat.'
-#   if Meteor.isServer
-#     console.log 'got a new video vote'
-
 winningVideo = -> 1
 
 if Meteor.isServer
   
-
   Meteor.methods
     'quizComplete': ->
       console.log 'Quiz Complete, Checking Results'
@@ -279,7 +126,7 @@ if Meteor.isServer
       ###
       # needs fixing with some real math
       ### 
-      # haveresults?
+
       if !currentGame().winningVideo?
         potentialVotes = currentPlayers().length
         numberOfVideos = 3
@@ -299,11 +146,13 @@ if Meteor.isServer
               break
 
   createNewGame = ->
-    defaultGame = Config.findOne({_id:'defaultGame'})
+    console.log 'new game being created'
+    defaultGame = collections.Config.findOne({_id:'defaultGame'})
 
     if !defaultGame?
       defaultGame =
         _id:'defaultGame'
+        correctPoints : 100
         position: 0
         stages: ['home','register','form','home','videoSelect','home','videoPlay','home','question','answer','question2','answer2','home','results','tiebreakInto','tiebreak','leaderboard','home']
         videos: [
@@ -320,15 +169,16 @@ if Meteor.isServer
           file:'test3.mp4'
         ]
 
-      Config.insert defaultGame
+      collections.Config.insert defaultGame
 
     delete defaultGame._id
-    Games.insert defaultGame
+    collections.Games.insert defaultGame
 
   Meteor.startup ->
     if !currentGame()?
       createNewGame()
       insertFakeData()
+
 
 
 
@@ -347,9 +197,8 @@ if Meteor.isClient
   else
     Session.set 'view', 'player'
 
-
   currentPlayer = ->
-    Players.findOne Session.get('currentPlayer')
+    collections.Players.findOne Session.get('currentPlayer')
 
   Handlebars.registerHelper 'screenMode', -> Session.equals 'view', 'screen'
   Handlebars.registerHelper 'controllerMode', -> Session.equals 'view', 'control'
@@ -362,39 +211,73 @@ if Meteor.isClient
   Handlebars.registerHelper 'renderCurrentStage', ->   
     if currentStage()?.type
       new Handlebars.SafeString(Template["stage_#{currentStage()?.type}"](currentStage()));
-  
+  Handlebars.registerHelper 'createForm', (formObj) -> createForm formObj
+
   Template.controller.position = -> currentGame()?.position
 
-  Template.controller.events
-    "click #forward-btn" : -> move 'forward'
-    "click #back-btn" : -> move 'back'
-    "click #reset-btn" : -> move 0
+  # ugh
+  eventsObj = {}
+  eventsObj["#{quickTouch} #forward-btn"] = -> move 'forward'
+  eventsObj["#{quickTouch} #back-btn"] = -> move 'back'
+  eventsObj["#{quickTouch} #reset-btn"] = -> move 0
+  Template.controller.events eventsObj
+
+
+  processForm = (stage, template) ->
+    fields = []
+    $(template.findAll('.collect-data')).each ->
+      $this = $(this)
+      fieldTitle = $.trim($('label',this).text())
+      if $("[type='checkbox']",$this).size() > 0
+        fieldValue = $("[type='checkbox']",$this).attr('checked')?
+      else
+        fieldValue = $('.input', $this).val()
+      fields.push
+        title:fieldTitle
+        value:fieldValue
+
+    collections.Forms.insert
+      player: currentPlayer()
+      stage_id: stage._id
+      title: stage.title
+      fields: fields
 
   Template.stage.allowedToSee = ->
-    (currentStage()?.type is 'registration' or currentPlayer() or Session.equals('view','screen'))
+    (currentStage()?.registration is true or currentPlayer() or Session.equals('view','screen'))
 
-  Template.stage_form.events
-    "click #submit" : (e,t) ->
-      temporaryAdvance()
-      e.preventDefault()
+  # Template.stage_form.events
+  #   "click #submit" : (e,t) ->
+  #     temporaryAdvance()
+  #     e.preventDefault()
 
-  Template.stage_registration.events
-    "click #submit" : (e,t) ->
-      # do some validation first
-      e.preventDefault()
+  Template.stage_form.content = -> currentStage().content
+  
 
-      @currentPlayer = createNewPlayer 
-        firstname: t.find('#firstname').value
-        lastname: t.find('#lastname').value
-      
-      Session.set 'currentPlayer', @currentPlayer
-      
-      # process the form
+  Template.stage_form.rendered = ->
+    t = @
+    $("input,select,textarea",$(t.find('form'))).not("[type=submit]").jqBootstrapValidation
+      submitSuccess: (form, e) ->
+        e.preventDefault()
+        thisCurrentPlayer = createNewPlayer 
+          firstname: t.find('[name="firstname"]').value
+          lastname: t.find('[name="lastname"]').value
+        Session.set 'currentPlayer', thisCurrentPlayer
+        processForm currentStage(), t
+        temporaryAdvance()
 
-      temporaryAdvance()
 
-    "click .tandc" : (e,t) -> correctAnswer Session.get 'currentPlayer'
+  Template.modal.message = -> Session.get('modalData')
 
+  showModal = (data) -> 
+    Session.set 'modalData', data
+    Meteor.setTimeout ->
+      $('#modal').modal
+        fadeIn: true
+    , 10
+
+  Template.form_modal.events
+    "click": (e,t) -> showModal @content
+    
 
   # Template.controller_player_info.score = -> 
   #   getScore @._id
@@ -405,7 +288,6 @@ if Meteor.isClient
 
   alreadyVoted = (playerId, questionId) ->
     if !getPlayer(playerId)?.answers
-      console.log 'no answers'
       return false
     for answer in getPlayer(playerId).answers
       if answer.question_id is questionId
@@ -419,19 +301,19 @@ if Meteor.isClient
 
   Template.option.events
     "click" : (evt, template) ->
-      question = Questions.findOne currentStage().question_id
+      question = collections.Questions.findOne currentStage().question_id
       playerId = Session.get('currentPlayer')
       # already voted?
       if !alreadyVoted Session.get('currentPlayer'), currentStage().question_id 
 
-        Players.update Session.get('currentPlayer'),
+        collections.Players.update Session.get('currentPlayer'),
           $push:
             answers:
               question: question.text
               question_id: question._id
               answer: @
         
-        Players.update Session.get('currentPlayer'),
+        collections.Players.update Session.get('currentPlayer'),
           $set:
             score: getScore playerId
       else
@@ -466,7 +348,7 @@ if Meteor.isClient
 
   Template.video_button.events = 
     "click" : (evt, template) ->
-      Players.update Session.get('currentPlayer'),
+      collections.Players.update Session.get('currentPlayer'),
         $set:
           video: @      
       Session.set 'votedOnVideo', true
@@ -476,7 +358,7 @@ if Meteor.isClient
 
 
 
-  Template.playing_video.created = (template) ->
+  Template.playing_video.created = ->
     Meteor.setTimeout ->
       $video = $('video')[0]
       $video.play()
@@ -494,14 +376,20 @@ if Meteor.isClient
     return false
 
 
+  Template.build_form.typeIs = (type) -> @.type is type
+
+  Template.form_textbox.type = ->  @.validate || 'text'
+
+  # Template.form_textbox.required = -> if @.required then 'required' else ''
+
   Template.leaderboard.players = ->
-    Players.find {},
+    collections.Players.find {},
       sort:
         score: -1
         name: 1
 
   Template.stage_leaderboard.top10 = ->
-    Players.find({},{sort:{score:-1},limit:10})
+    collections.Players.find({},{sort:{score:-1},limit:10})
 
 
 

@@ -12,3 +12,4 @@ coffeescript
 accounts-base
 amplify
 jqbootstrapvalidation
+collection-hooks

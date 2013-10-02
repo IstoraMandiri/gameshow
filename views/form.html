@@ -1,0 +1,72 @@
+<template name='build_form'>
+  <form>
+  {{#each fields}}
+    <div class="field-item {{class}}">
+      {{#if typeIs 'textbox'}}
+        {{> form_textbox}}
+      {{/if}}
+      {{#if typeIs 'dropdown'}}
+        {{> form_dropdown}}
+      {{/if}}
+      {{#if typeIs 'modal'}}
+        {{> form_modal}}
+      {{/if}}
+      {{#if typeIs 'checkbox'}}
+        {{> form_checkbox}}
+      {{/if}}
+    </div>
+  {{/each}}
+  <div class="controls">
+    <button id="submit" class="btn btn-success">Submit</button>
+  </div>
+  </form>
+</template>
+
+<template name='form_textbox'>
+  <div class='collect-data'>
+    <label class="control-label">{{text}}</label>
+    <div class="controls">
+      <input {{#if name}}name="{{name}}"{{/if}} placeholder="Tap here to type" {{#if required}}required{{/if}} id="{{inputId}}" type="{{type}}" class="input"/>
+    </div>
+  </div>
+</template>
+
+<template name='form_dropdown'>
+  <div class='collect-data'>
+    <label class="control-label">{{text}}</label>
+    <div class="controls">
+      <select id="{{inputId}}" {{#if required}}required{{/if}} class="input">
+        <option value="">Tap here to select</option>
+        {{#each options}}
+          <option value="{{.}}">{{.}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+</template>
+
+<template name='form_checkbox'>
+  <div class='collect-data'>
+    <label class="checkbox">
+      <input {{#if required}}required{{/if}} id="{{inputId}}" type="checkbox" class='input'> {{text}}
+    </label>
+  </div>
+</template>
+
+
+<template name='form_modal'>
+  <div class="btn btn-modal">{{text}}</div>
+</template>
+
+
+
+
+
+<!--           
+     <div class="btn tandc">Privacy Policy</div>
+            <div class="btn tandc">Ts and Cs</div>
+
+          <label class="checkbox">
+            <input id="{{inputId}}" type="checkbox"> Checkbox disclaimer
+          </label>
+-->   
