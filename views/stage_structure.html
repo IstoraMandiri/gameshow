@@ -23,9 +23,7 @@
     {{#if screenMode}}
       {{> holding_slide}}
     {{else}}
-      {{#if content.fields}}
-        {{> build_form content}}
-      {{/if}}
+      {{> build_form}}
     {{/if}}
 </template>
 
@@ -82,7 +80,11 @@
     </ul>
   {{/if}}
 
-  <div class="countdown"><h3>Countdown Timer...</h3></div>
+  {{> clock}}
+</template>
+
+<template name="clock">
+<div id="clock"><input class="face"/></div>
 </template>
 
 <template name="option">

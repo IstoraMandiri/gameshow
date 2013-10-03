@@ -102,17 +102,12 @@ input.input-full{
   margin:20px;
 }
 
-.countdown{
+#clock{
   position:absolute;
   bottom:0;
   right:0;
-  padding:50px;
-  box-sizing:border-box;
   text-align:center;
-  background:white;
-  width:200px;
-  height:200px;
-  border-radius:100% 100%;
+  font-size:24px;
 }
 
 .didnt-answer{

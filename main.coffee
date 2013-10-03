@@ -183,12 +183,15 @@ if Meteor.isServer
 
 
 if Meteor.isClient 
+  # Session.delete()
+  
 
   getURLParameter = (name) -> return decodeURIComponent((new RegExp("[?|&]#{name}=([^&;]+?)(&|##|;|$)").exec(location.search) || [null,""] )[1].replace(/\+/g, '%20'))||null;
 
   temporaryAdvance = ->
     inc = parseInt(Session.get('temporaryAdvance')) || 1
     Session.set 'temporaryAdvance', currentGame()?.position + inc
+    console.log 'tempadv',Session.get('temporaryAdvance')
 
   quickTouch = if (@navigator.userAgent.match(/(iPhone|iPod|iPad)/) || @navigator.userAgent.match(/Android/)) then 'tap' else 'click'
 
@@ -197,9 +200,12 @@ if Meteor.isClient
   else
     Session.set 'view', 'player'
 
-  currentPlayer = ->
-    collections.Players.findOne Session.get('currentPlayer')
+  currentPlayer = -> 
+    if Session.get('currentPlayer')
+      collections.Players.findOne Session.get('currentPlayer')
 
+  console.log currentPlayer()
+  
   Handlebars.registerHelper 'screenMode', -> Session.equals 'view', 'screen'
   Handlebars.registerHelper 'controllerMode', -> Session.equals 'view', 'control'
   Handlebars.registerHelper 'playerMode', -> Session.equals 'view', 'player'  
@@ -252,19 +258,25 @@ if Meteor.isClient
 
   Template.stage_form.content = -> currentStage().content
   
-
   Template.stage_form.rendered = ->
-    t = @
-    $("input,select,textarea",$(t.find('form'))).not("[type=submit]").jqBootstrapValidation
-      submitSuccess: (form, e) ->
-        e.preventDefault()
-        thisCurrentPlayer = createNewPlayer 
-          firstname: t.find('[name="firstname"]').value
-          lastname: t.find('[name="lastname"]').value
-        Session.set 'currentPlayer', thisCurrentPlayer
-        processForm currentStage(), t
-        temporaryAdvance()
-
+    if @rendered != currentStage()._id
+      $.jqBootstrapValidation('destroy')
+      @rendered = currentStage()._id
+      t = @
+      $form = $("input,select,textarea",$(t.find('form'))).not("[type=submit]")
+      submitted = false
+      $form.jqBootstrapValidation
+          submitSuccess: (form, e) ->
+            e.preventDefault()
+            if !submitted
+              submitted = true
+              if currentStage().registration
+                thisCurrentPlayer = createNewPlayer 
+                  firstname: t.find('[name="firstname"]').value
+                  lastname: t.find('[name="lastname"]').value
+                Session.set 'currentPlayer', thisCurrentPlayer
+              processForm currentStage(), t
+              temporaryAdvance()
 
   Template.modal.message = -> Session.get('modalData')
 
@@ -356,8 +368,6 @@ if Meteor.isClient
       # temporaryAdvance()
 
 
-
-
   Template.playing_video.created = ->
     Meteor.setTimeout ->
       $video = $('video')[0]
@@ -380,7 +390,11 @@ if Meteor.isClient
 
   Template.form_textbox.type = ->  @.validate || 'text'
 
+  # Template.form_textbox.inputId = -> 
+
+
   # Template.form_textbox.required = -> if @.required then 'required' else ''
+
 
   Template.leaderboard.players = ->
     collections.Players.find {},

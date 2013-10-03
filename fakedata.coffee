@@ -10,8 +10,7 @@
     _id: 'register'
     type: 'form'
     registration: true
-    content:
-      fields: [
+    content: [
         text:'First Name'
         type:'textbox'
         name:'firstname'
@@ -68,7 +67,15 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     title: 'More Info Form'  
     _id: 'form'
     type: 'form'
-    content: 'form'
+    content: [
+        text:'Custom Fields'
+        type:'textbox'
+        required:true
+      ,
+        text:'Custom Field 2'
+        type:'textbox'
+        required:true
+    ]
 
   collections.Stages.insert
     _id: 'videoSelect'
