@@ -1,60 +1,23 @@
 <head>
-  <title>gameshow</title>
-    <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <meta name = "format-detection" content = "telephone=no">
-    <!-- <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72x72-precomposed.png" /> -->
-    <!-- <link href="images/apple-startup-iPad-Portrait.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
-    <link href="images/apple-startup-iPad-Landscape.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)" rel="apple-touch-startup-image">
- -->
+  <title>Gameshow</title>
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+  <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name = "format-detection" content = "telephone=no">
 </head>
 
 <body>
   <div id="wrapper">
-    {{#if controllerMode}}
-      {{> controller}}
-    {{else}}
-      {{#if playerMode}}
-        {{> player_info}}
-      {{/if}}
-      {{> stage}}
-    {{/if}}
+    {{> body}}
   </div>
   {{> modal}}
 </body>
 
-
-<template name="stage">
-  {{#if allowedToSee}}
-    <div id="stage" class="stage_{{currentStage.type}} {{currentStage.classes}}">
-      <h1 class='title'>{{currentStage.title}}</h1>
-      {{renderCurrentStage}}
-    </div>
-  {{else}}
-    <div id="stage">
-      <h1>Registration Currently Closed</h1>
-    </div>
-  {{/if}}
-</template>
-
-<template name="modal">
-  <div class="modal hide fade" id="modal">
-    {{#if message.title}}
-      <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h3 id="myModalLabel">{{message.title}}</h3>
-      </div>
-    {{/if}}
-    <div class="modal-body">
-        {{message.body}}
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <!-- <button class="btn btn-primary">Save changes</button> -->
-    </div>
-</div>
+<template name="body">
+  <div id="wrapper_inner" class="{{layoutName}}">
+    {{renderPage layoutName}}
+  </div>
 </template>
 
 

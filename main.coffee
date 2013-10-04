@@ -184,7 +184,20 @@ if Meteor.isServer
 
 if Meteor.isClient 
   # Session.delete()
-  
+
+
+  # pr
+  $(document).on 'touchmove', (e) ->
+    scrollable = false
+    items = $(e.target).parents()
+    $(items).each (i,o) ->
+      if $(o).hasClass("scrollable")
+        scrollable = true
+
+    if !scrollable
+        e.preventDefault()
+
+
 
   getURLParameter = (name) -> return decodeURIComponent((new RegExp("[?|&]#{name}=([^&;]+?)(&|##|;|$)").exec(location.search) || [null,""] )[1].replace(/\+/g, '%20'))||null;
 
@@ -203,8 +216,6 @@ if Meteor.isClient
   currentPlayer = -> 
     if Session.get('currentPlayer')
       collections.Players.findOne Session.get('currentPlayer')
-
-  console.log currentPlayer()
   
   Handlebars.registerHelper 'screenMode', -> Session.equals 'view', 'screen'
   Handlebars.registerHelper 'controllerMode', -> Session.equals 'view', 'control'
@@ -285,6 +296,7 @@ if Meteor.isClient
     Meteor.setTimeout ->
       $('#modal').modal
         fadeIn: true
+        backdrop:false
     , 10
 
   Template.form_modal.events
@@ -293,8 +305,8 @@ if Meteor.isClient
 
   # Template.controller_player_info.score = -> 
   #   getScore @._id
-  # Template.stage_question.voted = -> Session.equals 'voted', true
-  # Template.stage_question.created = -> Session.set 'voted', false
+  # Template.question_content.voted = -> Session.equals 'voted', true
+  # Template.question_content.created = -> Session.set 'voted', false
   # Template.player_info.myScore = ->
   #   getScore Session.get('currentPlayer')
 
@@ -306,31 +318,31 @@ if Meteor.isClient
         return true
     return false
 
-  Template.stage_question.voted = ->
+  Template.question_content.voted = ->
     alreadyVoted Session.get('currentPlayer'), currentStage().question_id
 
     # return voted
+  eventsObj = {}
+  eventsObj["#{quickTouch}"] = (evt, template) ->
+    question = collections.Questions.findOne currentStage().question_id
+    playerId = Session.get('currentPlayer')
+    # already voted?
+    if !alreadyVoted Session.get('currentPlayer'), currentStage().question_id 
 
-  Template.option.events
-    "click" : (evt, template) ->
-      question = collections.Questions.findOne currentStage().question_id
-      playerId = Session.get('currentPlayer')
-      # already voted?
-      if !alreadyVoted Session.get('currentPlayer'), currentStage().question_id 
+      collections.Players.update Session.get('currentPlayer'),
+        $push:
+          answers:
+            question: question.text
+            question_id: question._id
+            answer: @
+      
+      collections.Players.update Session.get('currentPlayer'),
+        $set:
+          score: getScore playerId
+    else
+      console.log 'no multiple votes for you', Template.question_content.voted()
 
-        collections.Players.update Session.get('currentPlayer'),
-          $push:
-            answers:
-              question: question.text
-              question_id: question._id
-              answer: @
-        
-        collections.Players.update Session.get('currentPlayer'),
-          $set:
-            score: getScore playerId
-      else
-        console.log 'no multiple votes for you', Template.stage_question.voted()
-          # submitAnswer
+  Template.option.events eventsObj
 
   Template.stage_answer.answered = ->
     if Session.get('currentPlayer')?

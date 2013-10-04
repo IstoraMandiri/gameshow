@@ -1,6 +1,7 @@
 {
   "packages": {
     "jqbootstrapvalidation": {},
-    "collection-hooks": {}
+    "collection-hooks": {},
+    "router": {}
   }
 }
