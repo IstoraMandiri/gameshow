@@ -9,3 +9,4 @@
 collections.Players.before.insert (id,doc) -> doc.created = new Date()
 collections.Games.before.insert (id,doc) -> doc.created = new Date()
 collections.Forms.before.insert (id,doc) -> doc.created = new Date()
+collections.Questions.before.insert (id,doc) -> doc.created = new Date()

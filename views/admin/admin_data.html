@@ -1,0 +1,128 @@
+<template name="admin_data">
+  <h2>Data <small>Review collected information</small></h2>
+  <hr>
+  <button class="btn btn-primary pull-right">Export Data</button>
+  <ul class="nav nav-tabs">
+    {{#each tabs}}
+      <li class='tab {{active id}}'><a href="">{{name}}</a></li>
+    {{/each}}
+  </ul>
+  <button class="btn btn-danger btn-mini pull-right">Delete All</button>
+  <div class="content">
+    {{render}}
+  </div>
+</template>
+
+<template name="admin_data_players">
+  <h4>{{count}} Total Players</h4>
+  <table class="table table-striped">
+    <tr>
+      <th>Name</th>
+      <th>Score</th>
+      <th>Answers</th>
+      <th>Signed Up</th>
+    </tr>
+    {{#each players}}
+      <tr>
+        <td>{{firstname}} {{lastname}}</td>  
+        <td>{{score}}</td>
+        <td>
+        {{#if answers}}
+          <button class="answers btn btn-small">{{answers.length}} Answers</a>
+        {{/if}}
+        </td>      
+        <td>{{created}}</td>
+      </tr>
+    {{/each}}          
+  </table>
+  
+</template>
+
+<template name="admin_data_players_answers">
+  <table class="table">
+    <tr>
+      <th>Question</th>
+      <th>Answer</th>
+    </tr>    
+  {{#each answers}}
+    <tr class='{{#if answer.correct}}success{{else}}danger{{/if}}'>
+      <td>{{question}}</td>
+      <td>{{answer.text}}</td>
+    </tr>
+  {{/each}}
+  </table>
+</template>
+
+<template name="admin_data_forms_fields">
+  <p>Submitted: {{created}}</p>
+  <table class="table table-striped">
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>    
+    {{#each fields}}
+      <tr>
+        <td>{{title}}</td>
+        <td>{{value}}</td>
+      </tr>
+    {{/each}}
+  </table>
+</template>
+
+
+
+<template name="admin_data_forms">
+  <h4>{{count}} Completed Forms</h4>
+  <table class="table table-striped">
+    <tr>
+      <th>Form</th>
+      <th>Player</th>
+      <th>Fields</th>
+      <th>Submitted</th>
+    </tr>
+    {{#each forms}}
+      <tr>
+        <td>{{title}}</td>  
+        <td>{{player.firstname}} {{player.lastname}}</td>  
+        <td><button class="fields btn btn-small">{{fields.length}} Fields</a></td>
+        <td>{{created}}</td>
+      </tr>
+    {{/each}}          
+  </table>
+</template>
+
+<template name="admin_data_games">
+  <h4>{{count}} Games Played</h4>
+  <table class="table table-striped">
+    <tr>
+      <th>Video Category</th>
+      <th>Players</th>
+      <th>Winner</th>
+      <th>Started</th>
+    </tr>
+    {{#each games}}
+      <tr>
+        <td>{{winningVideo.title}}</td>  
+        <td><button class="players btn btn-small">{{players.length}} Players</a></td>
+        <td>{{winner.firstname}} {{winner.lastname}}</td>  
+        <td>{{created}}</td>
+      </tr>
+    {{/each}}          
+  </table>
+</template>
+
+<template name="admin_data_games_players">
+  <p>Started: {{created}}</p>
+  <table class="table table-striped">
+    <tr>
+      <th>Name</th>
+      <th>Score</th>
+    </tr>    
+    {{#each players}}
+      <tr>
+        <td>{{name}}</td>
+        <td>{{score}}</td>
+      </tr>
+    {{/each}}
+  </table>
+</template>

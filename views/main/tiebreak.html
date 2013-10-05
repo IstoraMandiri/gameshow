@@ -1,0 +1,54 @@
+<template name="stage_tiebreakIntro">
+<h1>Intro</h1>
+</template>
+
+<template name="stage_tiebreak">
+
+<h1>TIEBREAK!</h1>
+
+
+{{#if phaseOne}}
+  {{> tiebreak_phaseone}}
+{{else}}
+  {{> tiebreak_phasetwo}}
+{{/if}}
+
+</template>
+
+<template name='tiebreak_phaseone'>
+  {{#if screenMode}}
+    {{> tiebreak_numbers}}
+  {{else}}
+    {{#if playing}}
+      <h1>Watch the scren...</h1>
+    {{else}}
+      {{> notPlayingTiebreak}}
+    {{/if}}
+  {{/if}}
+</template>
+
+<template name='notPlayingTiebreak'>
+  <h1>Not Playing</h1>
+</template>
+
+<template name='tiebreak_numbers'>
+  <div class="tiebreak_number">
+    {{numbers}}
+  </div>
+</template>
+
+<template name='tiebreak_phasetwo'>
+  {{#if screenMode}}
+    <h1>COUNTDOWN</h1>
+  {{else}}
+    <h1>ENTER NUMBERS:</h1>
+    <input type="text">
+  {{/if}}
+</template>
+
+
+<template name="stage_tiebreakResults">
+
+<h1>TB Results</h1>
+</template>
+

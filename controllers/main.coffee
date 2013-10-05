@@ -1,18 +1,13 @@
 
-tieBreakStages = ['tiebreakInto','tiebreak']
 
 # vars
-# console.log collections
-currentGame = -> 
-  collections.Games.findOne({},{sort:{_id:-1}})
 
-updateCurrentGame = (update) ->
-  collections.Games.update currentGame()._id,
-    $set : update
+
+# console.log collections
 
 currentStage = ->
-  if currentGame()?
-    pos = currentGame().position
+  if helpers.currentGame()?
+    pos = helpers.currentGame().position
     if Meteor.isClient  
       tempAdvance = Session.get 'temporaryAdvance'
       if pos < tempAdvance
@@ -20,14 +15,14 @@ currentStage = ->
       else
         Session.set 'temporaryAdvance', false
     stage = collections.Stages.findOne
-      _id: currentGame().stages?[pos]
+      _id: helpers.currentGame().stages?[pos]
     return stage
 
 
 currentPlayers = ->
   players = []
-  if currentGame()?.players
-    playerIds = currentGame().players
+  if helpers.currentGame()?.players
+    playerIds = helpers.currentGame().players
     for playerId in playerIds
       players.push collections.Players.findOne playerId
   return players
@@ -36,24 +31,24 @@ currentPlayers = ->
 move = (position) ->
 
   if position is 'back'
-    newPosition = currentGame().position - 1
+    newPosition = helpers.currentGame().position - 1
   else if position is 'forward'
-    newPosition = currentGame().position + 1
+    newPosition = helpers.currentGame().position + 1
   else
     newPosition = position
 
-  if newPosition >= 0 and newPosition < currentGame().stages.length # stages length
-    updateCurrentGame 
+  if newPosition >= 0 and newPosition < helpers.currentGame().stages.length # stages length
+    helpers.updateCurrentGame 
       position: newPosition
 
-    if currentGame().stages[newPosition] is 'results'
+    if helpers.currentGame().stages[newPosition] is 'results'
       Meteor.call 'quizComplete'
 
 
 createNewPlayer = (options) ->
   options.score = 0
   newPlayer = collections.Players.insert options
-  collections.Games.update currentGame()._id,
+  collections.Games.update helpers.currentGame()._id,
     $push :
       players : newPlayer
   return newPlayer
@@ -61,7 +56,7 @@ createNewPlayer = (options) ->
 correctAnswer = (player) ->
   collections.Players.update {_id:player},
     $inc: 
-      score: currentGame().correctPoints 
+      score: helpers.currentGame().correctPoints 
   # create new game class
 
 currentCorrectAnswer = ->
@@ -79,7 +74,7 @@ getScore = (player) ->
   if getPlayer(player)?.answers
     for answer in getPlayer(player).answers
       if answer.answer.correct
-        score+= currentGame().correctPoints
+        score+= helpers.currentGame().correctPoints
   return score
 
 
@@ -111,15 +106,14 @@ if Meteor.isServer
       winners = highestScorers()
       if winners.length is 1
         console.log 'We have one winner!'
-        noTieBreakStages = _.filter currentGame().stages, (stage) ->
+        # remove tiebreak stages
+        noTieBreakStages = _.filter helpers.currentGame().stages, (stage) ->
           !(tieBreakStages.indexOf(stage) >= 0)
-
-        updateCurrentGame 
+        helpers.updateCurrentGame 
           stages: noTieBreakStages
       else if winners.length > 1
         console.log 'Tiebreak situation'
-        tieBreakers = winners 
-
+        tiebreak.begin winners
         
     'newVideoVote': ->
       
@@ -127,7 +121,7 @@ if Meteor.isServer
       # needs fixing with some real math
       ### 
 
-      if !currentGame().winningVideo?
+      if !helpers.currentGame().winningVideo?
         potentialVotes = currentPlayers().length
         numberOfVideos = 3
 
@@ -140,7 +134,7 @@ if Meteor.isServer
         for key,value of videoVotes      
           if key isnt 'undefined'
             if value >= minForVictory
-              updateCurrentGame 
+              helpers.updateCurrentGame 
                 winningVideo:key
               move 'forward'
               break
@@ -153,8 +147,9 @@ if Meteor.isServer
       defaultGame =
         _id:'defaultGame'
         correctPoints : 100
+        firstCorrectPoints : 50
         position: 0
-        stages: ['home','register','form','home','videoSelect','home','videoPlay','home','question','answer','question2','answer2','home','results','tiebreakInto','tiebreak','leaderboard','home']
+        stages: ['home','register','form','home','videoSelect','home','videoPlay','home','question','answer','question2','answer2','home','results','tiebreakIntro','tiebreak','tiebreakResults','leaderboard','home']
         videos: [
           id: 1
           title:'Video 1'
@@ -175,7 +170,7 @@ if Meteor.isServer
     collections.Games.insert defaultGame
 
   Meteor.startup ->
-    if !currentGame()?
+    if !helpers.currentGame()?
       createNewGame()
       insertFakeData()
 
@@ -203,7 +198,7 @@ if Meteor.isClient
 
   temporaryAdvance = ->
     inc = parseInt(Session.get('temporaryAdvance')) || 1
-    Session.set 'temporaryAdvance', currentGame()?.position + inc
+    Session.set 'temporaryAdvance', helpers.currentGame()?.position + inc
     console.log 'tempadv',Session.get('temporaryAdvance')
 
   quickTouch = if (@navigator.userAgent.match(/(iPhone|iPod|iPad)/) || @navigator.userAgent.match(/Android/)) then 'tap' else 'click'
@@ -213,9 +208,6 @@ if Meteor.isClient
   else
     Session.set 'view', 'player'
 
-  currentPlayer = -> 
-    if Session.get('currentPlayer')
-      collections.Players.findOne Session.get('currentPlayer')
   
   Handlebars.registerHelper 'screenMode', -> Session.equals 'view', 'screen'
   Handlebars.registerHelper 'controllerMode', -> Session.equals 'view', 'control'
@@ -223,14 +215,16 @@ if Meteor.isClient
   Handlebars.registerHelper 'currentStage', -> currentStage()
   Handlebars.registerHelper 'currentPlayers', -> currentPlayers()
   Handlebars.registerHelper 'currentCorrectAnswer', -> currentCorrectAnswer()
-  Handlebars.registerHelper 'currentPlayer', -> currentPlayer()
+  Handlebars.registerHelper 'currentPlayer', -> helpers.currentPlayer()
   Handlebars.registerHelper 'currentQuestion', -> currentQuestion()
+
   Handlebars.registerHelper 'renderCurrentStage', ->   
     if currentStage()?.type
       new Handlebars.SafeString(Template["stage_#{currentStage()?.type}"](currentStage()));
   Handlebars.registerHelper 'createForm', (formObj) -> createForm formObj
+  Handlebars.registerHelper 'showingCountdown', -> clock.showingCountdown()
 
-  Template.controller.position = -> currentGame()?.position
+  Template.controller.position = -> helpers.currentGame()?.position
 
   # ugh
   eventsObj = {}
@@ -254,13 +248,13 @@ if Meteor.isClient
         value:fieldValue
 
     collections.Forms.insert
-      player: currentPlayer()
+      player: helpers.currentPlayer()
       stage_id: stage._id
       title: stage.title
       fields: fields
 
   Template.stage.allowedToSee = ->
-    (currentStage()?.registration is true or currentPlayer() or Session.equals('view','screen'))
+    (currentStage()?.registration is true or helpers.currentPlayer() or Session.equals('view','screen'))
 
   # Template.stage_form.events
   #   "click #submit" : (e,t) ->
@@ -291,16 +285,9 @@ if Meteor.isClient
 
   Template.modal.message = -> Session.get('modalData')
 
-  showModal = (data) -> 
-    Session.set 'modalData', data
-    Meteor.setTimeout ->
-      $('#modal').modal
-        fadeIn: true
-        backdrop:false
-    , 10
 
   Template.form_modal.events
-    "click": (e,t) -> showModal @content
+    "click": (e,t) -> helpers.showModal @content
     
 
   # Template.controller_player_info.score = -> 
@@ -366,7 +353,7 @@ if Meteor.isClient
     return false
 
 
-  Template.stage_video_select.videos = -> currentGame().videos
+  Template.stage_video_select.videos = -> helpers.currentGame().videos
 
   Template.stage_video_select.voted = -> Session.get 'votedOnVideo', true
 
@@ -390,7 +377,7 @@ if Meteor.isClient
 
 
   Template.stage_results.iAmWinner = ->
-    thisPlayerId = currentPlayer()._id 
+    thisPlayerId = helpers.currentPlayer()._id 
     for winner in highestScorers()
       if winner._id is thisPlayerId
         return true

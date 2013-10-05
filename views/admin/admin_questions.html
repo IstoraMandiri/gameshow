@@ -1,0 +1,34 @@
+
+<template name="admin_questions">
+  <h2>Questions <small>Create a pool of questions</small></h2>
+  <hr>
+  <button class="btn btn-primary pull-right">New Question</button>
+  <h3>{{count}} Questions Created</h3>
+  {{#each questions}}
+    {{> admin_question}}
+  {{/each}}
+</template>
+
+<template name="admin_question">
+  <div class="well question">
+      <button class="btn tool delete btn-danger pull-right">Delete</button>  
+    <h4>
+      <button class="btn tool edit btn-success pull-left">Edit</button> 
+      {{text}}</h4>
+    <label for="">Category: </label>
+    <select name="" id="">
+      <option value="">Internet</option>
+      <option value="">Other</option>
+      <option value="">Videos</option>
+    </select>
+    <ul class="questions">
+      {{#each options}}
+        <li {{#if correct}}class='correct'{{/if}}>
+           {{text}}
+        </li> 
+      {{/each}}    
+    </ul>
+    
+  </div>
+  
+</template>

@@ -6,6 +6,7 @@
       {{> player_info}}
     {{/if}}
     {{> stage}}
+    {{> countdown}}
   {{/if}}
 </template>
 
@@ -23,6 +24,10 @@
   {{/if}}
 </template>
 
+
+<template name="countdown">
+  <div id="clock"></div>
+</template>
 
 <template name="holding_slide">
     <div id="holding_slide"></div>
@@ -93,12 +98,7 @@
 
 
 <template name="stage_question">
-  {{#isolate}}
-    {{> question_content}}
-  {{/isolate}}
-  {{#isolate}}
-    {{> clock}}
-  {{/isolate}}
+  {{> question_content}}
 </template>
 
 <template name="question_content">
@@ -115,10 +115,6 @@
       </ul>
     {{/if}}
   </div>
-</template>
-
-<template name="clock">
-  <div id="clock"><input class="face"/></div>
 </template>
 
 <template name="option">
@@ -153,7 +149,13 @@
 </template>
 
 
-<!-- tiebreak stuff -->
+
+
+
+
+
+
+
 
 
 <template name="stage_results">
@@ -163,7 +165,12 @@
     {{#if iAmWinner}}
       <div class="winner">
         <h1>Congratualtions</h1>
-        <h2>You are the winner!</h2>
+        {{#if playingTiebreak}}
+          <h2>You have reached the tiebreak!</h2>
+        {{else}}
+          <h2>You are the winner!</h2>
+        {{/if}}
+
       </div>
     {{else}}
       <div class="loser">

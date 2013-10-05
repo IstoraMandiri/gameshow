@@ -1,0 +1,67 @@
+<template name="admin_show">
+  <h2>Configure Show <small>Changes will be applied once the next game is started</small></h2>
+  <hr>
+  <div class="row-fluid">
+    <div class="span6">
+      <h3>Scoring</h3>
+      <form class='form form-inline'>
+        <div class="control-group">
+          <input type="text" value='{{defaultConfig.correctPoints}}' class='input input-small'/>
+          <label class='control-label'>Correct answer</label>
+        </div>
+        <div class="control-group">
+          <input type="text" value='50' class='input input-small'/>
+          <label class='control-label'>First correct answer</label>
+        </div>
+      </form>
+    </div>
+    <div class="span6">
+      <h3>Questions</h3>
+      <form class='form form-inline'>
+        <div class="control-group">
+          <input type="text" value='6' class='input input-small'/>
+          <label class='control-label'>Number of Questions</label>
+        </div>
+        <div class="control-group">
+          <input type="text" value='15' class='input input-small'/>
+          <label class='control-label'>Countdown Length</label>
+        </div>
+        <div class="control-group">
+          <input type="text" value='15' class='input input-small'/>
+          <label class='control-label'>Tiebreak Countdown Length</label>
+        </div>        
+      </form>
+    </div>
+  </div>
+  <hr>
+  <div class="row-fluid">
+    <button class="btn btn-primary pull-right">New Video</button>
+    <h3>Videos</h3>
+    <div class="row-fluid">
+      <div class="span12">
+    {{#each videos}}
+      {{> admin_video}}
+    {{/each}}
+     </div>
+    </div>
+  </div>
+
+</template>
+
+<template name="admin_video">
+  <div class="well span6 videobox">
+    <div class="thumbnail pull-right align-center">
+      <img src="http://placehold.it/150x150" alt=""></img>
+      screenshot here  
+    </div>
+    <h4>{{title}}</h4>
+    <label class='tool' for="">Upload File
+      <input type='file' class='input input-small' style="width:100px;"></input>
+    </label>
+    
+    <button class="btn tool delete btn-success pull-left">Edit</button>  
+    <button class="btn tool delete btn-danger  pull-left">Delete</button>  
+
+    <div class="clearfix"></div>
+  </div>
+</template>

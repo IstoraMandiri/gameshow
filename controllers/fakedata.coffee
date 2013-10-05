@@ -14,17 +14,17 @@
         text:'First Name'
         type:'textbox'
         name:'firstname'
-        required:true
+        # required:true
       ,
         text:'Last Name'
         type:'textbox'
         name:'lastname'
-        required:true
+        # required:true
       ,
         text:'What is your profession'
         type:'dropdown'
         options:['Please select','Graphic Design','Programming','Sysadmin']
-        required:true
+        # required:true
       ,
         text:'Company'
         type:'textbox'
@@ -32,7 +32,7 @@
         text:'Email'
         type:'textbox'
         validate:'email'
-        required:true
+        # required:true
       , 
         text:'T&C'
         type:'modal'
@@ -60,7 +60,7 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
       ,
         text:'I agree'
         type:'checkbox'
-        required:true
+        # required:true
       ]
 
   collections.Stages.insert
@@ -70,11 +70,11 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     content: [
         text:'Custom Fields'
         type:'textbox'
-        required:true
+        # required:true
       ,
         text:'Custom Field 2'
         type:'textbox'
-        required:true
+        # required:true
     ]
 
   collections.Stages.insert
@@ -113,19 +113,18 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
 
   collections.Stages.insert
     title: 'Tiebreak Intro'   
-    _id: 'tiebreakInto'
-    type: 'static'
-    content:
-      default: '<h1>Tie Break Rules</h1><h2>Pres the buttons on the next screen...</h2>'
-      screen: '<h1>Tie Break Rules (Screen)</h1>'
+    _id: 'tiebreakIntro'
+    type: 'tiebreakIntro'
 
   collections.Stages.insert
     title: 'Tiebreaker'   
     _id: 'tiebreak'
-    type: 'static'
-    content:
-      default: '<h1>Tie Break Entry</h1><h2><div class="btn">1</div> <div class="btn">2</div> <div class="btn">3</div> <div class="btn">4</div> <div class="btn">5</div> <br/><div class="btn">6</div> <div class="btn">7</div> <div class="btn">8</div> <div class="btn">9</div> <div class="btn">10</div> </h2>'
-      screen: '<h1>1 2 3 4 5<br/>6 7 8 9 10</h1><h2 class="countdown">Countdown Clock</h2>'
+    type: 'tiebreak'
+
+  collections.Stages.insert
+    title: 'Tiebreak Intro'   
+    _id: 'tiebreakResults'
+    type: 'tiebreakResults'
 
   collections.Stages.insert
     title: 'This game results'  

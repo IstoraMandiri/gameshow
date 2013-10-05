@@ -1,0 +1,62 @@
+
+
+<template name="admin_forms">
+  <h2>Forms <small>Create and edit user input fields</small></h2>
+  <hr>
+    <button class="btn btn-primary pull-right">New Form</button>
+    <ul class="nav nav-tabs">
+      <li class='tab active'><a href="">Form 1</a></li>
+      <li class='tab {{active}}'><a href="">Form 2</a></li>
+      <li class='tab {{active}}'><a href="">Form 3</a></li>
+      <li class='tab {{active}}'><a href="">Form 4</a></li>
+      <li class='tab {{active}}'><a href="">Form 5</a></li>
+  </ul>
+  <button class="btn btn-primary pull-right">New Field</button>
+  <h3>Form 1 Fields</h3>
+  <div class="fields">
+    {{> admin_form}}
+  </div>
+</template>
+
+
+<template name="admin_form">
+  <form class="form">    
+    <div class="well form-item">
+      <div class="row-fluid">
+        <div class="span6">
+           <label>Text</label>
+            <input type="text">
+            <label for="">Type</label>
+            <select value="">
+              <option name="" id="">Text (Single Line)</option>
+              <option name="" id="">Text (Multi Line)</option>
+              <option name="" id="">Dropdown</option>
+              <option name="" id="">Checkbox</option>
+              <option name="" id="">Modal</option>
+              <option name="" id="">HTML</option>
+            </select>
+            <label>Name (optional)</label>
+            <input type="text">
+
+        </div>
+        <div class="span6">
+          <label>Tooltip / Modal Text</label>
+          <textarea type="text"></textarea>
+          
+          <label for="">Validation</label>
+          <select value="">
+            <option name="" id="">Any Text</option>
+            <option name="" id="">Email</option>
+            <option name="" id="">Number</option>
+          </select>
+
+          <label><input type="checkbox"> Required?</label>
+
+        </div>
+      </div>
+
+      
+    </div>
+
+  </form>
+</template>
