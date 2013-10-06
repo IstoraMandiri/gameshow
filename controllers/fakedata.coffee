@@ -122,7 +122,7 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     type: 'tiebreak'
 
   collections.Stages.insert
-    title: 'Tiebreak Intro'   
+    title: 'Tiebreak Results'   
     _id: 'tiebreakResults'
     type: 'tiebreakResults'
 

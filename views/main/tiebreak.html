@@ -1,35 +1,41 @@
 <template name="stage_tiebreakIntro">
-<h1>Intro</h1>
+{{#if screenMode}}
+  <h1>Intro</h1>
+{{else}}
+  {{> holding_slide}}
+{{/if}}
 </template>
 
 <template name="stage_tiebreak">
-
-<h1>TIEBREAK!</h1>
-
-
-{{#if phaseOne}}
-  {{> tiebreak_phaseone}}
-{{else}}
-  {{> tiebreak_phasetwo}}
-{{/if}}
-
-</template>
-
-<template name='tiebreak_phaseone'>
-  {{#if screenMode}}
-    {{> tiebreak_numbers}}
-  {{else}}
-    {{#if playing}}
-      <h1>Watch the scren...</h1>
+{{#if tiebreakPlayer}}
+  {{#if phaseOne}}
+    {{> tiebreak_phaseone}}
+  {{/if}}
+  {{#if phaseTwo}}
+    {{#if tiebreakComplete}}
+      {{> tiebreak_complete}}
     {{else}}
-      {{> notPlayingTiebreak}}
+      {{> tiebreak_phasetwo}}
     {{/if}}
   {{/if}}
+{{else}}
+  {{> notPlayingTiebreak}}
+{{/if}}
 </template>
 
 <template name='notPlayingTiebreak'>
   <h1>Not Playing</h1>
 </template>
+
+
+<template name='tiebreak_phaseone'>
+  {{#if screenMode}}
+    {{> tiebreak_numbers}}
+  {{else}}
+    <h1>Watch the scren...</h1>
+  {{/if}}
+</template>
+
 
 <template name='tiebreak_numbers'>
   <div class="tiebreak_number">
@@ -38,17 +44,47 @@
 </template>
 
 <template name='tiebreak_phasetwo'>
-  {{#if screenMode}}
-    <h1>COUNTDOWN</h1>
-  {{else}}
-    <h1>ENTER NUMBERS:</h1>
-    <input type="text">
+  {{#if playerMode}}
+    {{> tiebreak_number_input}}
   {{/if}}
 </template>
 
+<template name="tiebreak_number_input">
+  <div class="numbers">{{numberString}}</div>
+  <div class="number-input">
+    {{#each buttons}}
+      {{> number_input_button}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="number_input_button">
+  <div class="btn number {{c}}" data-n='{{d}}'>{{t}}</div>
+</template>
+
+<template name='tiebreak_complete'>
+  <h1>Complete</h1>
+</template>
 
 <template name="stage_tiebreakResults">
+{{#if tiebreakPlayer}}
+  <h1>TB Results</h1>
+  {{> leaderboard tiebreakResults}}
+  {{#if winner}}
+    <h2 class="winner">{{winner.firstname}} {{winner.lastname}} is the winner!</h2>
+  {{else}}
+    <h2>Another tiebreak!</h2>
+  {{/if}}
+{{else}}
+  {{> notPlayingTiebreak}}
+{{/if}}
 
-<h1>TB Results</h1>
+
+</template>
+
+<template name="tiebreak_player">
+  <div class="player">
+    {{firstname}} {{lastname}} - {{currentTiebreakScore}}
+  </div>
 </template>
 

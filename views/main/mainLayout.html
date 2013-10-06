@@ -160,13 +160,13 @@
 
 <template name="stage_results">
   <h1>This Game's Results</h1>
-  {{> leaderboard currentPlayers}}
+  {{> leaderboard currentScores}}
   {{#if playerMode}}
     {{#if iAmWinner}}
       <div class="winner">
         <h1>Congratualtions</h1>
         {{#if playingTiebreak}}
-          <h2>You have reached the tiebreak!</h2>
+          <h2>You have reached the tiebreak stage!</h2>
         {{else}}
           <h2>You are the winner!</h2>
         {{/if}}

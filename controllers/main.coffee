@@ -5,19 +5,6 @@
 
 # console.log collections
 
-currentStage = ->
-  if helpers.currentGame()?
-    pos = helpers.currentGame().position
-    if Meteor.isClient  
-      tempAdvance = Session.get 'temporaryAdvance'
-      if pos < tempAdvance
-        pos = tempAdvance
-      else
-        Session.set 'temporaryAdvance', false
-    stage = collections.Stages.findOne
-      _id: helpers.currentGame().stages?[pos]
-    return stage
-
 
 currentPlayers = ->
   players = []
@@ -26,23 +13,6 @@ currentPlayers = ->
     for playerId in playerIds
       players.push collections.Players.findOne playerId
   return players
-
-
-move = (position) ->
-
-  if position is 'back'
-    newPosition = helpers.currentGame().position - 1
-  else if position is 'forward'
-    newPosition = helpers.currentGame().position + 1
-  else
-    newPosition = position
-
-  if newPosition >= 0 and newPosition < helpers.currentGame().stages.length # stages length
-    helpers.updateCurrentGame 
-      position: newPosition
-
-    if helpers.currentGame().stages[newPosition] is 'results'
-      Meteor.call 'quizComplete'
 
 
 createNewPlayer = (options) ->
@@ -79,22 +49,10 @@ getScore = (player) ->
 
 
 currentQuestion = ->
-  questionId = currentStage().question_id
+  questionId = helpers.currentStage().question_id
   if questionId
     collections.Questions.findOne({_id:questionId})
 
-highgestScore = ->
-  maxScore = _.max currentPlayers(), (player) ->
-    player.score
-  return maxScore.score
-
-highestScorers = ->
-  highScore = highgestScore()
-  winners = []
-  for player in currentPlayers()
-    if player.score is highScore
-      winners.push player
-  return winners
 
 winningVideo = -> 1
 
@@ -102,15 +60,10 @@ if Meteor.isServer
   
   Meteor.methods
     'quizComplete': ->
-      console.log 'Quiz Complete, Checking Results'
-      winners = highestScorers()
+      winners = helpers.highestScorers currentPlayers()
       if winners.length is 1
         console.log 'We have one winner!'
-        # remove tiebreak stages
-        noTieBreakStages = _.filter helpers.currentGame().stages, (stage) ->
-          !(tieBreakStages.indexOf(stage) >= 0)
-        helpers.updateCurrentGame 
-          stages: noTieBreakStages
+        tiebreak.disable()
       else if winners.length > 1
         console.log 'Tiebreak situation'
         tiebreak.begin winners
@@ -136,7 +89,7 @@ if Meteor.isServer
             if value >= minForVictory
               helpers.updateCurrentGame 
                 winningVideo:key
-              move 'forward'
+              helpers.move 'forward'
               break
 
   createNewGame = ->
@@ -201,8 +154,6 @@ if Meteor.isClient
     Session.set 'temporaryAdvance', helpers.currentGame()?.position + inc
     console.log 'tempadv',Session.get('temporaryAdvance')
 
-  quickTouch = if (@navigator.userAgent.match(/(iPhone|iPod|iPad)/) || @navigator.userAgent.match(/Android/)) then 'tap' else 'click'
-
   if getURLParameter 'view'
     Session.set 'view', getURLParameter('view')
   else
@@ -212,25 +163,24 @@ if Meteor.isClient
   Handlebars.registerHelper 'screenMode', -> Session.equals 'view', 'screen'
   Handlebars.registerHelper 'controllerMode', -> Session.equals 'view', 'control'
   Handlebars.registerHelper 'playerMode', -> Session.equals 'view', 'player'  
-  Handlebars.registerHelper 'currentStage', -> currentStage()
+  Handlebars.registerHelper 'currentStage', -> helpers.currentStage()
   Handlebars.registerHelper 'currentPlayers', -> currentPlayers()
   Handlebars.registerHelper 'currentCorrectAnswer', -> currentCorrectAnswer()
   Handlebars.registerHelper 'currentPlayer', -> helpers.currentPlayer()
   Handlebars.registerHelper 'currentQuestion', -> currentQuestion()
 
   Handlebars.registerHelper 'renderCurrentStage', ->   
-    if currentStage()?.type
-      new Handlebars.SafeString(Template["stage_#{currentStage()?.type}"](currentStage()));
+    if helpers.currentStage()?.type
+      new Handlebars.SafeString(Template["stage_#{helpers.currentStage()?.type}"](helpers.currentStage()));
   Handlebars.registerHelper 'createForm', (formObj) -> createForm formObj
-  Handlebars.registerHelper 'showingCountdown', -> clock.showingCountdown()
 
   Template.controller.position = -> helpers.currentGame()?.position
 
   # ugh
   eventsObj = {}
-  eventsObj["#{quickTouch} #forward-btn"] = -> move 'forward'
-  eventsObj["#{quickTouch} #back-btn"] = -> move 'back'
-  eventsObj["#{quickTouch} #reset-btn"] = -> move 0
+  eventsObj["#{helpers.quickTouch} #forward-btn"] = -> helpers.move 'forward'
+  eventsObj["#{helpers.quickTouch} #back-btn"] = -> helpers.move 'back'
+  eventsObj["#{helpers.quickTouch} #reset-btn"] = -> helpers.move 0
   Template.controller.events eventsObj
 
 
@@ -254,19 +204,19 @@ if Meteor.isClient
       fields: fields
 
   Template.stage.allowedToSee = ->
-    (currentStage()?.registration is true or helpers.currentPlayer() or Session.equals('view','screen'))
+    (helpers.currentStage()?.registration is true or helpers.currentPlayer() or Session.equals('view','screen'))
 
   # Template.stage_form.events
   #   "click #submit" : (e,t) ->
   #     temporaryAdvance()
   #     e.preventDefault()
 
-  Template.stage_form.content = -> currentStage().content
+  Template.stage_form.content = -> helpers.currentStage().content
   
   Template.stage_form.rendered = ->
-    if @rendered != currentStage()._id
+    if @rendered != helpers.currentStage()._id
       $.jqBootstrapValidation('destroy')
-      @rendered = currentStage()._id
+      @rendered = helpers.currentStage()._id
       t = @
       $form = $("input,select,textarea",$(t.find('form'))).not("[type=submit]")
       submitted = false
@@ -275,12 +225,12 @@ if Meteor.isClient
             e.preventDefault()
             if !submitted
               submitted = true
-              if currentStage().registration
+              if helpers.currentStage().registration
                 thisCurrentPlayer = createNewPlayer 
                   firstname: t.find('[name="firstname"]').value
                   lastname: t.find('[name="lastname"]').value
                 Session.set 'currentPlayer', thisCurrentPlayer
-              processForm currentStage(), t
+              processForm helpers.currentStage(), t
               temporaryAdvance()
 
   Template.modal.message = -> Session.get('modalData')
@@ -305,16 +255,20 @@ if Meteor.isClient
         return true
     return false
 
+
+  Template.stage_question.created = ->
+    clock.startCountdown 5
+
   Template.question_content.voted = ->
-    alreadyVoted Session.get('currentPlayer'), currentStage().question_id
+    alreadyVoted Session.get('currentPlayer'), helpers.currentStage().question_id
 
     # return voted
   eventsObj = {}
-  eventsObj["#{quickTouch}"] = (evt, template) ->
-    question = collections.Questions.findOne currentStage().question_id
+  eventsObj[helpers.quickTouch] = (evt, template) ->
+    question = collections.Questions.findOne helpers.currentStage().question_id
     playerId = Session.get('currentPlayer')
     # already voted?
-    if !alreadyVoted Session.get('currentPlayer'), currentStage().question_id 
+    if !alreadyVoted Session.get('currentPlayer'), helpers.currentStage().question_id 
 
       collections.Players.update Session.get('currentPlayer'),
         $push:
@@ -331,15 +285,14 @@ if Meteor.isClient
 
   Template.option.events eventsObj
 
+
   Template.stage_answer.answered = ->
     if Session.get('currentPlayer')?
       answers = getPlayer(Session.get('currentPlayer')).answers
       currentQuestionId = currentQuestion()._id
       if answers
         for answer in answers
-          console.log answer.question_id, currentQuestionId
           if answer.question_id is currentQuestionId
-            console.log answer
             return true
     return false
 
@@ -372,13 +325,12 @@ if Meteor.isClient
       $video = $('video')[0]
       $video.play()
       $video.addEventListener 'ended', ->
-        move 'forward'
+        helpers.move 'forward'
     , 100
-
 
   Template.stage_results.iAmWinner = ->
     thisPlayerId = helpers.currentPlayer()._id 
-    for winner in highestScorers()
+    for winner in helpers.highestScorers currentPlayers()
       if winner._id is thisPlayerId
         return true
         break
@@ -395,11 +347,11 @@ if Meteor.isClient
   # Template.form_textbox.required = -> if @.required then 'required' else ''
 
 
-  Template.leaderboard.players = ->
+  Template.stage_results.currentScores = ->
     collections.Players.find {},
-      sort:
-        score: -1
-        name: 1
+        sort:
+          score: -1
+          name: 1
 
   Template.stage_leaderboard.top10 = ->
     collections.Players.find({},{sort:{score:-1},limit:10})
