@@ -307,7 +307,10 @@ if Meteor.isClient
 
 
   Template.form_modal.events
-    "click": (e,t) -> helpers.showModal @content
+    "click": (e,t) -> 
+      helpers.showModal
+        body: @content
+        title: @text
     
 
   # Template.controller_player_info.score = -> 

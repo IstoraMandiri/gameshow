@@ -3,28 +3,91 @@
 <template name="admin_forms">
   <h2>Forms <small>Create and edit user input fields</small></h2>
   <hr>
-    <button class="btn btn-primary pull-right">New Form</button>
-    <ul class="nav nav-tabs">
-      <li class='tab active'><a href="">Form 1</a></li>
-      <li class='tab {{active}}'><a href="">Form 2</a></li>
-      <li class='tab {{active}}'><a href="">Form 3</a></li>
-      <li class='tab {{active}}'><a href="">Form 4</a></li>
-      <li class='tab {{active}}'><a href="">Form 5</a></li>
-  </ul>
+  {{> forms_list}}
   <button class="btn btn-primary pull-right">New Field</button>
-  <h3>Form 1 Fields</h3>
+  <h3>{{currentFormTitle}}</h3>
   <div class="fields">
-    {{> admin_form}}
+    {{> current_form}}
   </div>
 </template>
 
+<template name="forms_list">
+    <button class="btn btn-primary pull-right">New Form</button>
+    <ul class="nav nav-tabs">
+      {{#each forms}}
+        {{> form_item}}
+      {{/each}}
+      <!-- <li class='tab active'><a href="">Form 1</a></li>
+      <li class='tab {{active}}'><a href="">Form 2</a></li>
+      <li class='tab {{active}}'><a href="">Form 3</a></li>
+      <li class='tab {{active}}'><a href="">Form 4</a></li>
+      <li class='tab {{active}}'><a href="">Form 5</a></li> -->
+  </ul>
+</template>
 
-<template name="admin_form">
-  <form class="form">    
+
+<template name="form_item">
+  <li class='tab {{active}}'><a href="">{{title}}</a></li>
+</template>
+
+<template name="current_form">
+  <h1>{{form.title}}</h1>
+  <form class="form">
+  {{#each form.content}}
+    {{> form_field}}
+  {{/each}}
+  </form>
+</template>
+
+<template name="form_field">
     <div class="well form-item">
       <div class="row-fluid">
         <div class="span6">
            <label>Text</label>
+            <input name='text' type="text" value="{{text}}">
+            <label for="">Type</label>
+            <select name='type' value="">
+              <option name="" id="" value='text'>Text (Single Line)</option>
+              <option name="" id="" value='textbox'>Text (Multi Line)</option>
+              <option name="" id="" value='dropdown'>Dropdown</option>
+              <option name="" id="" value='checkbox'>Checkbox</option>
+              <option name="" id="" value='modal'>Modal</option>
+              <option name="" id="" value='html'>HTML</option>
+            </select>
+            <label>Name (optional)</label>
+            <input name='name' type="text" value="{{name}}">
+
+        </div>
+        <div class="span6">
+          <label>Tooltip / Modal Text</label>
+          <textarea name='content' type="text">{{content}}</textarea>
+          
+          <label for="">Validation</label>
+          <select name='validation' value="">
+            <option name="" id="" value=''>Any Text</option>
+            <option name="" id="" value='email'>Email</option>
+            <option name="" id="" value='number'>Number</option>
+          </select>
+
+          <label><input name='required' type="checkbox"> Required?</label>
+
+        </div>
+      </div>
+
+      
+    </div>
+
+</template>
+
+
+
+<!-- 
+
+<template name="form_field">
+    <div class="well form-item">
+      <div class="row-fluid">
+        <div class="span6">
+           <label>{{text}}</label>
             <input type="text">
             <label for="">Type</label>
             <select value="">
@@ -58,5 +121,4 @@
       
     </div>
 
-  </form>
-</template>
+</template> -->
