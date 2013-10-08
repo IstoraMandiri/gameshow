@@ -65,7 +65,7 @@ if Meteor.isClient
 
   Template.admin_data_games.games = -> findGames().fetch()
   Template.admin_data_games.count = -> findGames().count()  
-
+  
   Template.admin_questions.questions = -> findQuestions().fetch()
   Template.admin_questions.count = -> findQuestions().count()  
   

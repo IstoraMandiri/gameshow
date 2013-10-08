@@ -4,11 +4,13 @@
     title: 'Holding Slide'
     _id: 'home'
     type: 'static'
+    class: 'holding_slide'
   
   collections.Stages.insert
     title: 'Registration Form'
     _id: 'register'
     type: 'form'
+    class: 'form-horizontal'
     registration: true
     content: [
         text:'First Name'
@@ -21,7 +23,7 @@
         name:'lastname'
         # required:true
       ,
-        text:'What is your profession'
+        text:'Profession'
         type:'dropdown'
         options:['Please select','Graphic Design','Programming','Sysadmin']
         # required:true
@@ -58,8 +60,9 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
           title:'Privacy Policy'
           body:'Blah blah blah'
       ,
-        text:'I agree'
+        text:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.'
         type:'checkbox'
+        content:''
         # required:true
       ]
 
@@ -72,15 +75,15 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
         type:'textbox'
         # required:true
       ,
-        text:'Custom Field 2'
-        type:'textbox'
+        text:'Textarea'
+        type:'textarea'
         # required:true
     ]
 
   collections.Stages.insert
     _id: 'videoSelect'
     type: 'video_select'
-    title: 'Selecting Video...'
+    title: 'Pick a Topic'
 
   collections.Stages.insert
     _id: 'videoPlay'
@@ -110,6 +113,53 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     _id: 'answer2'
     type: 'answer'
     question_id: 'objId2'
+
+  collections.Stages.insert
+    title: 'Question 3'   
+    _id: 'question3'
+    type: 'question'
+    question_id: 'objId3'
+
+  collections.Stages.insert
+    title: 'Question 3 Answer'   
+    _id: 'answer3'
+    type: 'answer'
+    question_id: 'objId3'
+  collections.Stages.insert
+    title: 'Question 4'   
+    _id: 'question4'
+    type: 'question'
+    question_id: 'objId4'
+
+  collections.Stages.insert
+    title: 'Question 4 Answer'   
+    _id: 'answer4'
+    type: 'answer'
+    question_id: 'objId4'
+
+  collections.Stages.insert
+    title: 'Question 5'   
+    _id: 'question5'
+    type: 'question'
+    question_id: 'objId5'
+
+  collections.Stages.insert
+    title: 'Question 5 Answer'   
+    _id: 'answer5'
+    type: 'answer'
+    question_id: 'objId5'
+  collections.Stages.insert
+    title: 'Question 6'   
+    _id: 'question6'
+    type: 'question'
+    question_id: 'objId6'
+
+  collections.Stages.insert
+    title: 'Question 6 Answer'   
+    _id: 'answer6'
+    type: 'answer'
+    question_id: 'objId6'
+
 
   collections.Stages.insert
     title: 'Tiebreak Intro'   
@@ -162,6 +212,63 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ,
       text: 'Answer 3'
     ,
-      text: 'Answer 4'                    
+      text: 'Answer 4'
     ]
 
+  collections.Questions.insert
+    _id: 'objId3'
+    text: 'Question 3 Text Here'
+    options: [
+      text: 'Answer 1'
+      correct: true
+    ,
+      text: 'Answer 2'
+    ,
+      text: 'Answer 3'
+    ,
+      text: 'Answer 4'
+    ]
+
+  collections.Questions.insert
+    _id: 'objId4'
+    text: 'Question 4 Text Here'
+    options: [
+      text: 'Answer 1'
+      correct: true
+    ,
+      text: 'Answer 2'
+    ,
+      text: 'Answer 3'
+    ,
+      text: 'Answer 4'
+    ]
+
+  collections.Questions.insert
+    _id: 'objId5'
+    text: 'Question 5 Text Here'
+    options: [
+      text: 'Answer 1'
+      correct: true
+    ,
+      text: 'Answer 2'
+    ,
+      text: 'Answer 3'
+    ,
+      text: 'Answer 4'
+    ]
+
+
+
+  collections.Questions.insert
+    _id: 'objId6'
+    text: 'Question 6 Text Here'
+    options: [
+      text: 'Answer 1'
+      correct: true
+    ,
+      text: 'Answer 2'
+    ,
+      text: 'Answer 3'
+    ,
+      text: 'Answer 4'
+    ]

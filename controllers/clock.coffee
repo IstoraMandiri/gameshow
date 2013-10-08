@@ -13,12 +13,14 @@
     
     $clock = $('<input class="face">').appendTo $clockParent
 
+    bigEffect = if big? then 6 else 1
+    
     $clock.knob
       'readOnly':true
-      'fgColor':'#000000'
-      'width': if big? then 350 else 150
-      'height': if big? then 350 else 150
-      'thickness':if big? then .45 else .35 
+      'fgColor':'#333333'
+      'width': 80 * bigEffect
+      'height': 80 * bigEffect
+      'thickness': .35
       'max':timer*fps
       'draw': ->
         a = @angle(@cv) # Angle
@@ -27,9 +29,19 @@
         eat = sat + a # End angle
         @g.lineWidth = @lineWidth
         @g.beginPath()
-        @g.strokeStyle = @fgColor
-        @g.arc @xy, @xy, @radius, sat, eat, true
+        @g.strokeStyle = "#f7bb33"
+        @g.arc @xy, @xy, @radius-(3*bigEffect), sat, eat, true
         @g.stroke()
+        @g.beginPath();
+        @g.fillStyle = 'white'
+        @g.arc @xy, @xy, @radius-(6*bigEffect), 0, Math.PI*2, true
+        @g.closePath();
+        @g.shadowColor = "rgba( 0, 0, 0, 0.3 )";
+        @g.shadowOffsetX = 0;
+        @g.shadowOffsetY = 1*bigEffect;
+        @g.shadowBlur = 4*bigEffect;
+        @g.fill();
+
         @$.val Math.floor(timer - (@cv/fps))
         false
 

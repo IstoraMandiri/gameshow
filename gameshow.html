@@ -8,14 +8,23 @@
 </head>
 
 <body>
-  <div id="wrapper">
-    {{> body}}
+  <div id="body" class='{{bodyClass}}'>
+    <div id="wrapper">
+      {{> content}}
+    </div>
+    {{> modal}}  
   </div>
-  {{> modal}}
 </body>
 
-<template name="body">
-  <div id="wrapper_inner" class="{{layoutName}}">
+<template name="content">
+  {{> body}}
+  {{> countdown}}
+</template>
+
+<template name='body'>
+  <div id="wrapper_inner" class="{{layoutName}} {{currentStage.class}} wrapper_{{currentStage.type}}">
+    <div id="logo"></div>
+    <div id="logo2"></div>
     {{renderPage layoutName}}
   </div>
 </template>

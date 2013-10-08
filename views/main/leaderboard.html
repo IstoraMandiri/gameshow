@@ -1,10 +1,13 @@
 
 <template name="leaderboard">
-  <div class="leaderboard">
-    {{#each this}}
-      {{> leaderboard_player}}
-    {{/each}}
-  </div>
+  <div id="leaderboard">
+    <div class="inner">
+      <div class="first_row">{{text}}</div>
+      {{#each scores}}
+        {{> leaderboard_player}}
+      {{/each}}
+      </div>
+    </div>
 </template>
 
 <template name="leaderboard_player">

@@ -1,19 +1,18 @@
 tiebreakStageList = ['tiebreakIntro','tiebreak','tiebreakResults']
 
-buttons = [{t:'0',d:0},{t:'1',d:1},{t:'2',d:2},{t:'3',d:3},{t:'4',d:4},{t:'5',d:5},{t:'6',d:6},{t:'7',d:7},{t:'8',d:8},{t:'9',d:9},{t:'×',d:'backspace',c:'backspace'}]
+buttons = [{t:'0',d:0},{t:'1',d:1},{t:'2',d:2},{t:'3',d:3},{t:'4',d:4},{t:'5',d:5},{t:'6',d:6},{t:'7',d:7},{t:'8',d:8},{t:'9',d:9},{t:'×',d:'backspace',c:'backspace btn-primary'}]
 
 duration =
-  phase1 : 5 
-  phase2 : 10
+  phase1 : 10
+  phase2 : 20
 
-numberLength = 10
+numberLength = 20
 
 tieBreakIntroStage = undefined
 
 @tiebreak = 
   begin : (winners) ->
     tieBreakIntroStage = helpers.currentGame().position + 2
-    console.log 'tieBreakIntroStage', tieBreakIntroStage
     helpers.updateCurrentGame 
       tiebreak: 
         currentRound: 0
@@ -29,6 +28,17 @@ tieBreakIntroStage = undefined
       !(tiebreakStageList.indexOf(stage) >= 0)
     helpers.updateCurrentGame 
       stages: filteredStages
+
+  results: ->
+    topList = []
+    for player in currentTiebreak().players
+      thisPlayer = collections.Players.findOne({_id:player._id})
+      if thisPlayer.tiebreakScore
+        thisPlayer.score = thisPlayer.tiebreakScore[currentRound()]?= []
+        topList.push thisPlayer
+    topList.sort (a,b) ->
+      a.score - b.score
+    return topList.reverse()
 
 
 newRound = ->
@@ -46,10 +56,13 @@ newRound = ->
 
   helpers.move tieBreakIntroStage
 
+  
+
 if Meteor.isServer
   
   Meteor.methods
     'tiebreakComplete': ->
+      console.log 'tiebreak complete'
       if tiebreakWinner()
         helpers.updateCurrentGame {'tiebreak.complete' : true}
         helpers.move 'forward'
@@ -97,9 +110,9 @@ tiebreakResults = ->
   topList = []
   for player in currentTiebreak().players
     thisPlayer = collections.Players.findOne({_id:player._id})
-    console.log currentRound(), thisPlayer.tiebreakScore, thisPlayer.tiebreakScore[currentRound()]
+    console.log currentRound(), thisPlayer, thisPlayer.tiebreakScore[currentRound()]
     if thisPlayer.tiebreakScore
-      thisPlayer.score = thisPlayer.tiebreakScore[currentRound()]
+      thisPlayer.score = thisPlayer.tiebreakScore[currentRound()]?= []
       topList.push thisPlayer
   console.log topList
   topList.sort (a,b) ->
@@ -107,9 +120,21 @@ tiebreakResults = ->
   topList.reverse()
 # method, start tiebreak
 
-tiebreakWinners = ->  helpers.highestScorers tiebreakResults()
+tiebreakWinners = ->  helpers.highestScorers tiebreak.results()
 
 tiebreakWinner = -> if tiebreakWinners().length is 1 then tiebreakWinners()[0] else false
+
+
+formatNumbers = (originalStr) ->
+  str = ''
+  for char, i in "#{originalStr}"
+    # console.log char
+    if i%5 is 0
+      str+= ' '
+    str+= char
+  str = str.match(/.{1,12}/g).join("<br/>")
+  # console.log str
+  return str
 
 if Meteor.isClient
 
@@ -127,6 +152,17 @@ if Meteor.isClient
           match = true
       return match
 
+
+  Template.stage_tiebreakIntro.numberOfDigits = numberLength
+
+  Template.changing_numbers.numbers = -> Session.get('temporaryNumber')
+
+
+
+  Template.changing_numbers.created = ->
+    tick = Meteor.setInterval ->
+      Session.set 'temporaryNumber', formatNumbers(generateNumbers());
+    , 75
 
 
   Template.tiebreak_numbers.created = -> 
@@ -149,7 +185,9 @@ if Meteor.isClient
 
   Template.tiebreak_number_input.buttons = -> buttons
 
-  Template.tiebreak_number_input.numberString = -> myNumberString()
+  Template.tiebreak_number_input.numberString = -> 
+    str = myNumberString() || " "
+    return str.match(/.{1,10}/g).join("<br/>")
       
   eventsObj = {}
   eventsObj[helpers.quickTouch] = (e,t) ->
@@ -164,7 +202,7 @@ if Meteor.isClient
 
   Handlebars.registerHelper 'tiebreakPlayer', -> playing()
 
-  Template.tiebreak_numbers.numbers = -> currentTiebreak().numbers
+  Template.tiebreak_numbers.numbers = -> formatNumbers(currentTiebreak().numbers)
   Template.stage_results.playingTiebreak = -> tiebreakConfig()
   Template.stage_tiebreak.phaseOne = -> tiebreakConfig().phase is 1
   Template.stage_tiebreak.phaseTwo = -> tiebreakConfig().phase is 2
@@ -175,7 +213,7 @@ if Meteor.isClient
 
   Template.stage_tiebreakResults.winner = -> tiebreakWinner()
 
-  Template.stage_tiebreakResults.tiebreakResults = -> tiebreakResults()
+  Template.stage_tiebreakResults.tiebreakResults = -> tiebreak.results()
 
 
 

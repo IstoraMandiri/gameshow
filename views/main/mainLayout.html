@@ -2,24 +2,25 @@
   {{#if controllerMode}}
     {{> controller}}
   {{else}}
-    {{#if playerMode}}
+    {{#if currentPlayer}}
       {{> player_info}}
     {{/if}}
     {{> stage}}
-    {{> countdown}}
   {{/if}}
 </template>
 
 
 <template name="stage">
   {{#if allowedToSee}}
-    <div id="stage" class="stage_{{currentStage.type}} {{currentStage.classes}}">
-      <h1 class='title'>{{currentStage.title}}</h1>
-      {{renderCurrentStage}}
+    <div id="stage" class="stage_{{currentStage.type}} {{currentStage.class}} scrollable">
+      <div class="inner">
+        <h1 class='title'>{{currentStage.title}}</h1>
+        {{renderCurrentStage}}
+      </div>
     </div>
   {{else}}
-    <div id="stage">
-      <h1>Registration Currently Closed</h1>
+    <div id="stage" class='stage_notregistered'>
+      {{> holding_slide}}
     </div>
   {{/if}}
 </template>
@@ -30,7 +31,7 @@
 </template>
 
 <template name="holding_slide">
-    <div id="holding_slide"></div>
+    <div id="holding_slide"><div class="inner"></div></div>
 </template>
 
 <template name="stage_static">
@@ -58,100 +59,6 @@
 </template>
 
 
-<template name="stage_video_select">
-  <h1>Select Video</h1>
-  <div id="video_select_wrapper">
-    {{#if voted}}
-      <h1>Your vote has been cast</h1>
-    {{else}}
-      {{#each videos}}
-        {{> video_button}}
-      {{/each}}
-    {{/if}}
-  </div>
-</template>
-
-<template name="video_button">
-  <div class="video btn video-btn">{{title}}</div>
-</template>
-
-<template name="stage_video_play">
-  {{#if screenMode}}
-    {{> playing_video}}
-  {{else}}
-    {{> holding_slide}}
-  {{/if}}
-</template>
-
-<template name='playing_video'>
-  <div id="video_wrapper">
-    <video autoplay>
-     <source src="/videos/test3.mp4">
-    </video>
-  </div>  
-</template>
-
-<template name='screen_video'>
-  <h1>Playing video</h1>
-</template>
-
-
-
-<template name="stage_question">
-  {{> question_content}}
-</template>
-
-<template name="question_content">
-  <div class="question">
-    <h2>{{currentQuestion.text}}</h2>
-    {{#if voted}}
-      <h3>Your vote has been counted</h3>
-    {{else}}
-    
-      <ul class="options">  
-        {{#each currentQuestion.options}}
-          {{> option}}
-        {{/each}}
-      </ul>
-    {{/if}}
-  </div>
-</template>
-
-<template name="option">
-  <li class="option btn">{{text}}</li>
-</template>
-
-<template name="stage_answer">
-  <h1>{{currentQuestion.text}}</h1>
-  <h2>The correct answer was {{currentCorrectAnswer.text}}</h2>
-  {{#if screenMode}}
-    {{> leaderboard currentPlayers}}
-  {{else}}
-    {{#if answered}}
-      {{#if answeredCorrectly}}
-        <div class="question-result answered-correctly">
-          <h1>Well done!</h1>
-          <h3>You were correct</h3>
-        </div>
-      {{else}}
-        <div class="question-result answered-incorrectly">
-          <h1>Too Bad!</h1>
-          <h3>You were incorrect</h3>
-        </div>
-      {{/if}}
-    {{else}}
-      <div class="question-result didnt-answer">
-        <h1>Oops!</h1>
-        <h3>You didnt answer in time</h3>
-      </div>
-    {{/if}}
-  {{/if}}
-</template>
-
-
-
-
-
 
 
 
@@ -159,7 +66,6 @@
 
 
 <template name="stage_results">
-  <h1>This Game's Results</h1>
   {{> leaderboard currentScores}}
   {{#if playerMode}}
     {{#if iAmWinner}}
@@ -178,13 +84,14 @@
         <h2>You didn't win.<br/>Better luck next time!</h2>
       </div>
     {{/if}}
+  {{else}}
+    {{> holding_slide}}
   {{/if}}
 </template>
 
 
 <template name="stage_leaderboard">
   {{#if screenMode}}
-    <h1>Overall Winners Today</h1>
     {{> leaderboard top10}}
   {{else}}
     <h1>Form here</h1>

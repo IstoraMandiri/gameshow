@@ -1,0 +1,67 @@
+
+<template name="stage_question">
+  {{> question_content}}
+</template>
+
+<template name="question_content">
+  <div class="question">
+    <h2>{{currentQuestion.text}}</h2>
+    {{#if voted}}
+      <div class="question-result answer-received">
+        <div class="text">We have received your answer.</div>
+      </div>
+    {{else}}
+      {{#if timeUp}}
+        <div class="question-result didnt-answer">
+          <div class="text">Time up!</div>
+        </div>
+      {{else}}
+        <ul class="options">  
+          {{#each currentQuestion.options}}
+            {{> option}}
+          {{/each}}
+        </ul>
+      {{/if}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="option">
+  <li class="option btn">{{text}}</li>
+</template>
+
+<template name="stage_answer">
+  <h2 class='question'>{{currentQuestion.text}}</h2>
+  <div class="answerbox">
+    <h3>The correct answer was {{currentCorrectAnswer.text}}</h3>
+    {{#if screenMode}}
+      {{> leaderboard}}
+    {{else}}
+      {{#if answered}}
+        {{#if answeredCorrectly}}
+          <div class="question-result answered-correctly">
+            <div class="text">You were correct!</div>
+            <div class="points">{{correctPoints}} points</div>
+          </div>
+          {{#if gotBonus}}
+            <div class="question-result bonus-points">
+              <div class="text">First correct answer!</div>
+              <div class="points">{{bonusPoints}} bonus</div>
+            </div>
+          {{/if}}
+        {{else}}
+          <div class="question-result answered-incorrectly">
+            <div class="text">You were incorrect!</div>
+            <div class="points">0 points</div>
+          </div>
+        {{/if}}
+      {{else}}
+        <div class="question-result didnt-answer">
+          <div class="text">You didn't asnwer in time!</div>
+          <div class="points">0 points</div>          
+        </div>
+      {{/if}}
+    {{/if}}
+  </div>
+</template>
+

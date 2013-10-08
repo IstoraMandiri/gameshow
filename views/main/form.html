@@ -1,5 +1,5 @@
 <template name='build_form'>
-  <form>
+  <form class='form {{class}}'>
   {{#each content}}
     <div class="field-item {{class}}">
       {{#if typeIs 'textbox'}}
@@ -17,7 +17,7 @@
     </div>
   {{/each}}
   <div class="controls">
-    <button id="submit" class="btn btn-success">Submit</button>
+    <button id="submit" class="btn btn-primary">Submit</button>
   </div>
   </form>
 </template>

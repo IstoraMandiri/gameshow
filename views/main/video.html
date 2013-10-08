@@ -1,0 +1,39 @@
+
+<template name="stage_video_select">
+  <div id="video_select_wrapper">
+    {{#if voted}}
+      <h2>Your vote has been cast</h2>
+    {{else}}
+      {{#each videos}}
+        {{> video_button}}
+      {{/each}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="video_button">
+  <div class="video video-btn">
+    <img src="/videos/{{id}}/thumb.png" alt="" class="img-polaroid">
+    <div class="text btn">{{title}}</div>
+  </div>
+</template>
+
+<template name="stage_video_play">
+  {{#if screenMode}}
+    {{> playing_video}}
+  {{else}}
+    {{> holding_slide}}
+  {{/if}}
+</template>
+
+<template name='playing_video'>
+  <div id="video_wrapper">
+    <video autoplay>
+     <source src="/videos/{{winningVideo}}/video.mp4">
+    </video>
+  </div>  
+</template>
+
+<template name='screen_video'>
+
+</template>

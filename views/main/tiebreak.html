@@ -1,14 +1,19 @@
 <template name="stage_tiebreakIntro">
 {{#if screenMode}}
-  <h1>Intro</h1>
+  {{> changing_numbers}}
 {{else}}
   {{> holding_slide}}
 {{/if}}
 </template>
 
+<template name="changing_numbers">
+  <div class="tiebreak-numbers">{{{numbers}}}</div>
+</template>
+
 <template name="stage_tiebreak">
 {{#if tiebreakPlayer}}
   {{#if phaseOne}}
+
     {{> tiebreak_phaseone}}
   {{/if}}
   {{#if phaseTwo}}
@@ -24,7 +29,7 @@
 </template>
 
 <template name='notPlayingTiebreak'>
-  <h1>Not Playing</h1>
+  {{> holding_slide}}
 </template>
 
 
@@ -32,14 +37,14 @@
   {{#if screenMode}}
     {{> tiebreak_numbers}}
   {{else}}
-    <h1>Watch the scren...</h1>
+    {{> holding_slide}}
   {{/if}}
 </template>
 
 
 <template name='tiebreak_numbers'>
-  <div class="tiebreak_number">
-    {{numbers}}
+  <div class="tiebreak-numbers">
+    {{{numbers}}}
   </div>
 </template>
 
@@ -50,7 +55,7 @@
 </template>
 
 <template name="tiebreak_number_input">
-  <div class="numbers">{{numberString}}</div>
+  <div class="tiebreak-numbers">{{{numberString}}}</div>
   <div class="number-input">
     {{#each buttons}}
       {{> number_input_button}}
@@ -63,13 +68,14 @@
 </template>
 
 <template name='tiebreak_complete'>
-  <h1>Complete</h1>
+  {{> holding_slide}}
 </template>
 
 <template name="stage_tiebreakResults">
 {{#if tiebreakPlayer}}
-  <h1>TB Results</h1>
-  {{> leaderboard tiebreakResults}}
+  {{#if screenMode}}
+    {{> leaderboard tiebreakResults}}
+  {{/if}}
   {{#if winner}}
     <h2 class="winner">{{winner.firstname}} {{winner.lastname}} is the winner!</h2>
   {{else}}

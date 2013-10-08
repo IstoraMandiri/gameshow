@@ -43,11 +43,13 @@
     <tr>
       <th>Question</th>
       <th>Answer</th>
+      <th>Time Taken</th>
     </tr>    
   {{#each answers}}
     <tr class='{{#if answer.correct}}success{{else}}danger{{/if}}'>
       <td>{{question}}</td>
       <td>{{answer.text}}</td>
+      <td>{{timeTaken}}ms</td>
     </tr>
   {{/each}}
   </table>
@@ -101,14 +103,19 @@
       <th>Started</th>
     </tr>
     {{#each games}}
-      <tr>
-        <td>{{winningVideo.title}}</td>  
-        <td><button class="players btn btn-small">{{players.length}} Players</a></td>
-        <td>{{winner.firstname}} {{winner.lastname}}</td>  
-        <td>{{created}}</td>
-      </tr>
+      {{> admin_data_game}}
     {{/each}}          
   </table>
+</template>
+
+<template name="admin_data_game">
+  <tr>
+    <td>{{winningVideo}}</td>
+    <td><button class="players btn btn-small">{{players.length}} Players</a></td>
+    <td>{{winner.firstname}} {{winner.lastname}}</td>  
+    <td>{{created}}</td>
+  </tr>
+
 </template>
 
 <template name="admin_data_games_players">
