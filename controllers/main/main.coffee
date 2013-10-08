@@ -49,6 +49,36 @@ currentQuestion = ->
     collections.Questions.findOne({_id:questionId})
 
 
+
+bonusTimeToBeat = ->
+  timeToBeat = null
+  for player in helpers.currentPlayers()
+    if player.answers?
+      for answer in player.answers
+        if answer.question_id is helpers.currentStage().question_id and answer.answer?.correct
+          if !timeToBeat? or timeToBeat > answer.timeTaken
+            timeToBeat = answer.timeTaken
+  return timeToBeat
+
+currentAnswer = (player) ->
+  for answer in getPlayer(player).answers
+    if answer.question_id is helpers.currentStage().question_id
+      return answer
+  
+wonBonus = (player) -> if bonusTimeToBeat() is currentAnswer(player).timeTaken then true else false
+
+
+awardBonusPoints = (player) ->
+  collections.Players.update {_id:player._id},
+    $inc:
+      score: helpers.currentGame().bonusPoints
+  
+  collections.Players.update {_id:player._id},
+    $set:
+      wonBonus: true
+
+
+
 winningVideo = -> 1
 
 if Meteor.isServer
@@ -56,6 +86,14 @@ if Meteor.isServer
   Meteor.methods
     'reset' : ->
       createNewGame()
+
+    'questionComplete': ->
+      # calculate bonus
+      bonusWinner = null
+      for player in helpers.currentPlayers()
+        if wonBonus(player) and !player.wonBonus
+          awardBonusPoints(player)
+
 
     'quizComplete': ->
       winners = helpers.highestScorers helpers.currentPlayers()
@@ -312,7 +350,7 @@ if Meteor.isClient
 
       started = Session.get('startedQuestion')
       timeTaken = new Date() - started
-      
+
       collections.Players.update Session.get('currentPlayer'),
         $push:
           answers:
@@ -351,8 +389,7 @@ if Meteor.isClient
           return true
     return false
 
-  Template.stage_answer.gotBonus = -> true
-
+  Template.stage_answer.wonBonus = -> wonBonus(Session.get('currentPlayer'))
 
   Template.stage_video_select.videos = -> helpers.currentGame().videos
 

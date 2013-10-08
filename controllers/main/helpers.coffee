@@ -12,7 +12,6 @@ prevGame = null
     # false
   clearSession : ->
     for key,val of Session.keys
-      console.log key,val
       if key isnt 'view'
         Session.set key, undefined
 
@@ -87,6 +86,9 @@ prevGame = null
       else
         helpers.updateCurrentGame 
           position: newPosition
+
+        if helpers.currentStage().type is 'answer'
+          Meteor.call 'questionComplete'
 
         if helpers.currentGame().stages[newPosition] is 'results'
           Meteor.call 'quizComplete'
