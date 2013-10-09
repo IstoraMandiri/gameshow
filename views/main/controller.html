@@ -12,6 +12,9 @@
 </template>
 
 <template name="controller_info">
+  {{#if winningVideo}}
+    <p>Currently Winning Video: {{winningVideo}}</p>
+  {{/if}}
   {{#each currentPlayers}}
     {{> controller_player_info}}
   {{/each}}

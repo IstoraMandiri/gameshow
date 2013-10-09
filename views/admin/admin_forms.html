@@ -4,15 +4,17 @@
   <h2>Forms <small>Create and edit user input fields</small></h2>
   <hr>
   {{> forms_list}}
-  <button class="btn btn-primary pull-right">New Field</button>
+  <button class="btn new-field btn-primary pull-right">New Field</button>
   <h3>{{currentFormTitle}}</h3>
   <div class="fields">
-    {{> current_form}}
+    {{#if currentForm}}
+      {{> current_form}}
+    {{/if}}
   </div>
 </template>
 
 <template name="forms_list">
-    <button class="btn btn-primary pull-right">New Form</button>
+    <!-- <button class="btn new-form btn-primary pull-right">New Form</button> -->
     <ul class="nav nav-tabs">
       {{#each forms}}
         {{> form_item}}
@@ -27,11 +29,13 @@
 
 
 <template name="form_item">
-  <li class='tab {{active}}'><a href="">{{title}}</a></li>
+<!--   {{title}}
+ -->  <li class='tab{{#if active}} active{{/if}}'><a href="">{{title}}</a></li>
 </template>
 
 <template name="current_form">
-  <h1>{{form.title}}</h1>
+  <input class='form_title' value="{{form.title}}">
+  <input class='form_class' value="{{form.class}}"> Classes
   <form class="form">
   {{#each form.content}}
     {{> form_field}}
@@ -43,30 +47,32 @@
     <div class="well form-item">
       <div class="row-fluid">
         <div class="span6">
-           <label>Text</label>
+           <label>Title</label>
             <input name='text' type="text" value="{{text}}">
             <label for="">Type</label>
-            <select name='type' value="">
-              <option name="" id="" value='text'>Text (Single Line)</option>
-              <option name="" id="" value='textbox'>Text (Multi Line)</option>
-              <option name="" id="" value='dropdown'>Dropdown</option>
-              <option name="" id="" value='checkbox'>Checkbox</option>
-              <option name="" id="" value='modal'>Modal</option>
-              <option name="" id="" value='html'>HTML</option>
+            <select name='type'>
+              <option name="" id="" value='textbox' {{#if selectedType 'textbox'}}selected='true'{{/if}}>Text (Single Line)</option>
+              <option name="" id="" value='textarea' {{#if selectedType 'textarea'}}selected='true'{{/if}}>Text (Multi Line)</option>
+              <option name="" id="" value='dropdown' {{#if selectedType 'dropdown'}}selected='true'{{/if}}>Dropdown</option>
+              <option name="" id="" value='radios' {{#if selectedType 'radios'}}selected='true'{{/if}}>Radios</option>
+              <option name="" id="" value='checkbox' {{#if selectedType 'checkbox'}}selected='true'{{/if}}>Checkbox</option>
+              <option name="" id="" value='modal' {{#if selectedType 'modal'}}selected='true'{{/if}}>Modal</option>
+              <option name="" id="" value='html' {{#if selectedType 'html'}}selected='true'{{/if}}>HTML</option>
             </select>
-            <label>Name (optional)</label>
+            <label>Name (optional - use 'firstname' and 'lastname' for registration)</label>
             <input name='name' type="text" value="{{name}}">
 
         </div>
         <div class="span6">
-          <label>Tooltip / Modal Text</label>
+          <div class="pull-right btn btn-danger btn-mini delete-field">Delete</div>
+          <label>Tooltip / Modal Text / Options</label>
           <textarea name='content' type="text">{{content}}</textarea>
           
           <label for="">Validation</label>
-          <select name='validation' value="">
+          <select name='validate'>
             <option name="" id="" value=''>Any Text</option>
-            <option name="" id="" value='email'>Email</option>
-            <option name="" id="" value='number'>Number</option>
+            <option name="" id="" value='email' {{#if selectedValidation 'email'}}selected='true'{{/if}}>Email</option>
+            <option name="" id="" value='number' {{#if selectedValidation 'number'}}selected='true'{{/if}}>Number</option>
           </select>
 
           <label><input name='required' type="checkbox"> Required?</label>
@@ -78,47 +84,3 @@
     </div>
 
 </template>
-
-
-
-<!-- 
-
-<template name="form_field">
-    <div class="well form-item">
-      <div class="row-fluid">
-        <div class="span6">
-           <label>{{text}}</label>
-            <input type="text">
-            <label for="">Type</label>
-            <select value="">
-              <option name="" id="">Text (Single Line)</option>
-              <option name="" id="">Text (Multi Line)</option>
-              <option name="" id="">Dropdown</option>
-              <option name="" id="">Checkbox</option>
-              <option name="" id="">Modal</option>
-              <option name="" id="">HTML</option>
-            </select>
-            <label>Name (optional)</label>
-            <input type="text">
-
-        </div>
-        <div class="span6">
-          <label>Tooltip / Modal Text</label>
-          <textarea type="text"></textarea>
-          
-          <label for="">Validation</label>
-          <select value="">
-            <option name="" id="">Any Text</option>
-            <option name="" id="">Email</option>
-            <option name="" id="">Number</option>
-          </select>
-
-          <label><input type="checkbox"> Required?</label>
-
-        </div>
-      </div>
-
-      
-    </div>
-
-</template> -->

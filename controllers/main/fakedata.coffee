@@ -76,6 +76,7 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
         # required:true
     ]
 
+
   collections.Stages.insert
     _id: 'videoSelect'
     type: 'video_select'
@@ -180,7 +181,7 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
   collections.Stages.insert
     title: 'Overall Leaderboard'  
     _id: 'leaderboard'
-    type: 'leaderboard'
+    type: 'form'
 
 
   collections.Questions.insert

@@ -52,7 +52,11 @@
 
 <template name="stage_form">
     {{#if screenMode}}
-      {{> holding_slide}}
+      {{#if showLeaderboard}}
+        {{> leaderboard}}
+      {{else}}
+        {{> holding_slide}}
+      {{/if}}
     {{else}}
       {{> build_form}}
     {{/if}}
@@ -89,11 +93,3 @@
   {{/if}}
 </template>
 
-
-<template name="stage_leaderboard">
-  {{#if screenMode}}
-    {{> leaderboard top10}}
-  {{else}}
-    <h1>Form here</h1>
-  {{/if}}
-</template>

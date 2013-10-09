@@ -5,14 +5,23 @@
       {{#if typeIs 'textbox'}}
         {{> form_textbox}}
       {{/if}}
+      {{#if typeIs 'textarea'}}
+        {{> form_textarea}}
+      {{/if}}
       {{#if typeIs 'dropdown'}}
         {{> form_dropdown}}
+      {{/if}}
+      {{#if typeIs 'radios'}}
+        {{> form_radios}}
       {{/if}}
       {{#if typeIs 'modal'}}
         {{> form_modal}}
       {{/if}}
       {{#if typeIs 'checkbox'}}
         {{> form_checkbox}}
+      {{/if}}
+      {{#if typeIs 'html'}}
+        {{> form_html}}
       {{/if}}
     </div>
   {{/each}}
@@ -27,6 +36,7 @@
     <label class="control-label">{{text}}</label>
     <div class="controls">
       <input {{#if name}}name="{{name}}"{{/if}} placeholder="Tap here to type" {{#if required}}required{{/if}} id="{{inputId}}" type="{{type}}" class="input"/>
+      <span class="help-block">{{content}}</span>
     </div>
   </div>
 </template>
@@ -35,7 +45,7 @@
   <div class='collect-data'>
     <label class="control-label">{{text}}</label>
     <div class="controls">
-      <select id="{{inputId}}" {{#if required}}required{{/if}} class="input">
+      <select id="{{inputId}}"{{#if name}}name="{{name}}"{{/if}} {{#if required}}required{{/if}}  class="input">
         <option value="">Tap here to select</option>
         {{#each options}}
           <option value="{{.}}">{{.}}</option>
@@ -44,6 +54,31 @@
     </div>
   </div>
 </template>
+
+<template name='form_radios'>
+  <div class='collect-data'>
+    <label class="control-label">{{text}}</label>
+    <div class="controls radio-controls">
+      {{#each options}} 
+        <input type="radio" value="{{.}}"/>  {{.}}
+        <br> 
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+
+
+<template name='form_textarea'>
+  <div class='collect-data'>
+    <label class="control-label">{{text}}</label>
+    <div class="controls">
+      <textarea {{#if name}}name="{{name}}"{{/if}} placeholder="Tap here to type" {{#if required}}required{{/if}} id="{{inputId}}" type="{{type}}" class="input"/>
+      <span class="help-block">{{content}}</span>
+    </div>
+  </div>
+</template>
+
 
 <template name='form_checkbox'>
   <div class='collect-data'>
@@ -58,6 +93,10 @@
   <div class="btn btn-modal">{{text}}</div>
 </template>
 
+
+<template name='form_html'>
+  <div class="form-html">{{{content}}}</div>
+</template>
 
 
 

@@ -1,14 +1,15 @@
 
 @admin = 
+  renderTemplate : (template, data) ->  new Handlebars.SafeString(Template[template](data))
   findPlayers : ->  collections.Players.find({},{sort:{created:-1}})
   findForms : ->  collections.Forms.find({},{sort:{created:-1}})
   findGames : ->  collections.Games.find({},{sort:{created:-1}})
   findQuestions : ->  collections.Questions.find({},{sort:{_id:-1}})
-  findFormModules: -> collections.Stages.find({type:'form'},{sort:created:1})
+  findFormModules: -> collections.Stages.find({type:'form'},{sort:{_id:1}})
 
-  getStage: (stageId) ->
-    console.log collections.Stages.findOne({_id:stageId})
-    collections.Stages.findOne({_id:stageId})
+  getPlayer: (playerId) -> collections.Players.findOne({_id:playerId.valueOf()})
+
+  getStage: (stageId) -> collections.Stages.findOne({_id:stageId})
 
 if Meteor.isClient
 
@@ -19,7 +20,6 @@ if Meteor.isClient
       options.inverse(this)
 
 
-  renderTemplate = (template, data) ->  new Handlebars.SafeString(Template[template](data))
 
   Session.setDefault 'subPage', 'data'
   Session.setDefault 'admin_data_subPage', 'players'

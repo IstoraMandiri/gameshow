@@ -2,7 +2,7 @@ if Meteor.isClient
 
   Template.leaderboard.scores = -> 
     stageType = helpers.currentStage().type
-    if stageType is 'leaderboard' 
+    if helpers.currentStage()._id is 'leaderboard' 
       collections.Players.find({},{sort:{score:-1},limit:10})
     else if stageType is 'tiebreakResults'
       tiebreak.results()
@@ -12,7 +12,7 @@ if Meteor.isClient
   Template.leaderboard.text = -> 
     stageType = helpers.currentStage().type
     console.log 'STAGE', stageType
-    if stageType is 'leaderboard' 
+    if helpers.currentStage()._id is 'leaderboard' 
       'Overall Leaders' 
     else if stageType is 'tiebreakResults' 
       'Tiebreak Results'

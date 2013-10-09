@@ -7,7 +7,7 @@
 
 
 
-
+ 
 createNewPlayer = (options) ->
   options.score = 0
   newPlayer = collections.Players.insert options
@@ -61,9 +61,10 @@ bonusTimeToBeat = ->
   return timeToBeat
 
 currentAnswer = (player) ->
-  for answer in getPlayer(player).answers
-    if answer.question_id is helpers.currentStage().question_id
-      return answer
+  if getPlayer(player).answers
+    for answer in getPlayer(player).answers
+      if answer.question_id is helpers.currentStage().question_id
+        return answer
   
 wonBonus = (player) -> if bonusTimeToBeat() is currentAnswer(player).timeTaken then true else false
 
@@ -79,7 +80,7 @@ awardBonusPoints = (player) ->
 
 
 
-winningVideo = -> 1
+winningVideo = -> helpers.currentGame().winningVideo
 
 if Meteor.isServer
   
@@ -105,27 +106,28 @@ if Meteor.isServer
         tiebreak.begin winners
         
     'newVideoVote': ->
-      
-      ###
-      # needs fixing with some real math
-      ### 
-
-      if !helpers.currentGame().winningVideo?
-        potentialVotes = helpers.currentPlayers().length
-        numberOfVideos = 3
-
-        minForVictory = 3
         
         videoVotes = _.countBy helpers.currentPlayers(), (player) ->
           player.video?.id
-      
+        
+        
+        delete videoVotes['undefined']
 
-        for key,value of videoVotes      
-          if key isnt 'undefined'
+        minForVictory = _.max videoVotes, (item) ->
+          item
+
+        findVideoById = (id) ->
+          for video in helpers.currentGame().videos
+            if parseInt(id) is parseInt(video.id)
+              return video
+              break
+
+        console.log 'videovote', videoVotes
+
+        for key,value of videoVotes 
             if value >= minForVictory
               helpers.updateCurrentGame 
-                winningVideo:key
-              helpers.move 'forward'
+                winningVideo: findVideoById(key)
               break
 
   createNewGame = ->
@@ -243,14 +245,6 @@ if Meteor.isClient
       new Handlebars.SafeString(Template["stage_#{helpers.currentStage()?.type}"](helpers.currentStage()));
   Handlebars.registerHelper 'createForm', (formObj) -> createForm formObj
 
-  Template.controller.position = -> helpers.currentGame()?.position
-
-  # ugh
-  eventsObj = {}
-  eventsObj["#{helpers.quickTouch} #forward-btn"] = -> helpers.move 'forward'
-  eventsObj["#{helpers.quickTouch} #back-btn"] = -> helpers.move 'back'
-  eventsObj["#{helpers.quickTouch} #reset-btn"] = -> Meteor.call 'reset'
-  Template.controller.events eventsObj
 
 
   processForm = (stage, template) ->
@@ -276,12 +270,19 @@ if Meteor.isClient
     (helpers.currentStage()?.registration is true or helpers.currentPlayer() or Session.equals('view','screen'))
 
 
-  # Template.stage_form.events
-  #   "click #submit" : (e,t) ->
-  #     temporaryAdvance()
-  #     e.preventDefault()
+  convertLinesToArray = (content) -> content?.split '\n'
+
+  Template.form_dropdown.options = -> convertLinesToArray @.content
+  Template.form_radios.options = -> convertLinesToArray @.content
+
+  Template.form_radios.events = 
+    "change input": (e,t) ->
+      $this = $(event.target)
+      $('input',$this.parents('.radio-controls')).not($this).attr('checked',false)
 
   Template.stage_form.content = -> helpers.currentStage().content
+
+  Template.stage_form.showLeaderboard = -> helpers.currentStage()._id is 'leaderboard'
   
   Template.stage_form.rendered = ->
     if @rendered != helpers.currentStage()._id
@@ -302,24 +303,8 @@ if Meteor.isClient
                 Session.set 'currentPlayer', thisCurrentPlayer
               processForm helpers.currentStage(), t
               temporaryAdvance()
-
-  Template.modal.message = -> Session.get('modalData')
-
-
-  Template.form_modal.events
-    "click": (e,t) -> 
-      helpers.showModal
-        body: @content
-        title: @text
+              
     
-
-  # Template.controller_player_info.score = -> 
-  #   getScore @._id
-  # Template.question_content.voted = -> Session.equals 'voted', true
-  # Template.question_content.created = -> Session.set 'voted', false
-  # Template.player_info.myScore = ->
-  #   getScore Session.get('currentPlayer')
-
   alreadyVoted = (playerId, questionId) ->
     if !getPlayer(playerId)?.answers
       return false
