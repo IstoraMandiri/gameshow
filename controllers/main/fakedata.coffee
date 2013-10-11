@@ -1,5 +1,52 @@
 @insertFakeData = ->
-  
+
+  collections.Config.insert
+    _id:'defaultGame'
+    correctPoints : 100
+    bonusPoints : 50
+    questions : 6
+    categoryQuestions : 2
+    timers:
+      question: 15
+      watch_tiebreak: 16
+      input_tiebreak: 17
+    position: 0
+    stages: ['home',
+    'register',
+    'form',
+    'home',
+    'videoSelect',
+    'home',
+    'videoPlay',
+    'home',
+    'questions',
+    'home',
+    'results',
+    'tiebreakIntro',
+    'tiebreak',
+    'tiebreakResults',
+    'leaderboard',
+    'home'],
+    videos: [
+      id: 1
+      title:'Internet'
+    ,
+      id: 2
+      title:'IP Law'
+    ,
+      id: 3
+      title:'Antivirus'
+    ,
+      id: 4
+      title:'Backup and Recovery'
+    ,
+      id: 5
+      title:'Data Security'
+    ,
+      id: 6
+      title:'Enterprise'
+    ]
+
   collections.Stages.insert
     title: 'Holding Slide'
     _id: 'home'

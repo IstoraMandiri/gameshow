@@ -133,69 +133,21 @@ if Meteor.isServer
   createNewGame = ->
     console.log 'new game being created'
     defaultGame = collections.Config.findOne({_id:'defaultGame'})
-
-    if !defaultGame?
-      defaultGame =
-        _id:'defaultGame'
-        correctPoints : 100
-        bonusPoints : 50
-        position: 0
-        stages: ['home',
-        'register',
-        'form',
-        'home',
-        'videoSelect',
-        'home',
-        'videoPlay',
-        'home',
-        'question',
-        'answer',
-        'question2',
-        'answer2',
-        'question3',
-        'answer3',
-        'question4',
-        'answer4',
-        'question5',
-        'answer5',
-        'question6',
-        'answer6',
-        'home',
-        'results',
-        'tiebreakIntro',
-        'tiebreak',
-        'tiebreakResults',
-        'leaderboard',
-        'home'],
-        videos: [
-          id: 1
-          title:'Internet'
-        ,
-          id: 2
-          title:'IP Law'
-        ,
-          id: 3
-          title:'Antivirus'
-        ,
-          id: 4
-          title:'Backup and Recovery'
-        ,
-          id: 5
-          title:'Data Security'
-        ,
-          id: 6
-          title:'Enterprise'
-        ]
-
-      collections.Config.insert defaultGame
-
     delete defaultGame._id
-    collections.Games.insert defaultGame
+
+    console.log defaultGame
+
+    # create X questions
+    # populate with max random category questions
+    # fill rest with other questions
+
+    # collections.Games.insert defaultGame
 
   Meteor.startup ->
     if !helpers.currentGame()?
-      createNewGame()
       insertFakeData()
+      createNewGame()
+      
 
 
 

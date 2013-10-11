@@ -6,9 +6,9 @@
   findGames : ->  collections.Games.find({},{sort:{created:-1}})
   findQuestions : ->  collections.Questions.find({},{sort:{_id:-1}})
   findFormModules: -> collections.Stages.find({type:'form'},{sort:{_id:1}})
-
+  defaultConfig: -> collections.Config.findOne({_id:'defaultGame'})
+  updateDefaultConfig: (update) -> collections.Config.update {_id:'defaultGame'}, update
   getPlayer: (playerId) -> collections.Players.findOne({_id:playerId.valueOf()})
-
   getStage: (stageId) -> collections.Stages.findOne({_id:stageId})
 
 if Meteor.isClient

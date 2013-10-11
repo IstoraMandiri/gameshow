@@ -6,36 +6,45 @@
       <h3>Scoring</h3>
       <form class='form form-inline'>
         <div class="control-group">
-          <input type="text" value='{{defaultConfig.correctPoints}}' class='input input-small'/>
-          <label class='control-label'>Correct answer</label>
+          <input type="text" name="correctPoints" value='{{defaultConfig.correctPoints}}' class='input input-small'/>
+          <label class='control-label'>Correct answer points</label>
         </div>
         <div class="control-group">
-          <input type="text" value='50' class='input input-small'/>
-          <label class='control-label'>First correct answer</label>
+          <input type="text" name="bonusPoints" class='input input-small' value="{{defaultConfig.bonusPoints}}"/>
+          <label class='control-label'>First correct answer bonus</label>
         </div>
+        <div class="control-group">
+          <input type="text" name='questions' value="{{defaultConfig.questions}}" class='input input-small'/>
+          <label class='control-label'>Number of Questions</label>
+        </div>        
+        <div class="control-group">
+          <input type="text" name='categoryQuestions' value="{{defaultConfig.categoryQuestions}}" class='input input-small'/>
+          <label class='control-label'>Maximum Category Questions</label>
+        </div>        
+
       </form>
     </div>
     <div class="span6">
-      <h3>Questions</h3>
+      <h3>Countdown Timers (Seconds)</h3>
       <form class='form form-inline'>
         <div class="control-group">
-          <input type="text" value='6' class='input input-small'/>
-          <label class='control-label'>Number of Questions</label>
+          <input type="text" name="timers.question" value="{{defaultConfig.timers.question}}" class='input input-small'/>
+          <label class='control-label'>Question</label>
         </div>
         <div class="control-group">
-          <input type="text" value='15' class='input input-small'/>
-          <label class='control-label'>Countdown Length</label>
+          <input type="text" name="timers.watch_tiebreak" value="{{defaultConfig.timers.watch_tiebreak}}" class='input input-small'/>
+          <label class='control-label'>Watch Tiebreak Nmbers</label>
         </div>
         <div class="control-group">
-          <input type="text" value='15' class='input input-small'/>
-          <label class='control-label'>Tiebreak Countdown Length</label>
+          <input type="text" name="timers.input_tiebreak" value="{{defaultConfig.timers.input_tiebreak}}" class='input input-small'/>
+          <label class='control-label'>Input Tiebreak Numbers</label>
         </div>        
       </form>
     </div>
   </div>
   <hr>
   <div class="row-fluid">
-    <button class="btn btn-primary pull-right">New Video</button>
+    <button class="btn btn-primary new-video pull-right">New Video</button>
     <h3>Videos</h3>
     <div class="row-fluid">
       <div class="span12">
@@ -54,7 +63,7 @@
       <img src="http://placehold.it/150x150" alt=""></img>
       screenshot here  
     </div>
-    <h4>{{title}}</h4>
+    <input type='text' class='input video-title' value="{{title}}">
     <label class='tool' for="">Upload File
       <input type='file' class='input input-small' style="width:100px;"></input>
     </label>

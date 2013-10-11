@@ -2,7 +2,7 @@
 <template name="admin_questions">
   <h2>Questions <small>Create a pool of questions</small></h2>
   <hr>
-  <button class="btn btn-primary pull-right">New Question</button>
+  <button class="btn btn-primary create-question pull-right">New Question</button>
   <h3>{{count}} Questions Created</h3>
   {{#each questions}}
     {{> admin_question}}
@@ -11,24 +11,40 @@
 
 <template name="admin_question">
   <div class="well question">
-      <button class="btn tool delete btn-danger pull-right">Delete</button>  
-    <h4>
-      <button class="btn tool edit btn-success pull-left">Edit</button> 
-      {{text}}</h4>
+      <button class="btn tool delete-question btn-danger pull-right">Delete Question</button>  
+     <label>Question Text</label>
+    <input name='text' type="text" value="{{text}}">
+
     <label for="">Category: </label>
-    <select name="" id="">
-      <option value="">Internet</option>
-      <option value="">Other</option>
-      <option value="">Videos</option>
+    <select name="video" id="" class='category-select'>
+      <option value="">Any</option>
+      {{#each augVideos}}
+        {{> video_category}}
+      {{/each}}
     </select>
-    <ul class="questions">
-      {{#each options}}
-        <li {{#if correct}}class='correct'{{/if}}>
-           {{text}}
-        </li> 
-      {{/each}}    
-    </ul>
+    <button class="btn tool create-option btn-success pull-right">New Option</button>  
+    <label for="">Options</label>
+    <div class="questions">
+      {{#each augOptions}}
+        {{> question_option}}
+      {{/each}}
+    </div>
     
   </div>
   
+</template>
+
+<template name="video_category">
+  <option value="{{id}}" {{#if selected}}selected{{/if}}>{{title}}</option>
+</template>
+
+<template name="question_option">
+  <div class='question'>
+    
+      <input type='checkbox' class='correct-box' {{#if correct}}checked{{/if}}>  
+      <input name='question_text' class='option-title' type="text" value="{{text}}">  
+    
+      <button class="btn tool delete-option btn-danger btn-mini pull-right">Delete Option</button>  
+    
+  </div> 
 </template>
