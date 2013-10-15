@@ -135,77 +135,6 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     title: 'Playing Video...'
 
   collections.Stages.insert
-    title: 'Question 1'
-    _id: 'question'
-    type: 'question'
-    question_id: 'objId'
-
-  collections.Stages.insert
-    title: 'Question 1 Answer' 
-    _id: 'answer'
-    type: 'answer'
-    question_id: 'objId'
-
-  collections.Stages.insert
-    title: 'Question 2'   
-    _id: 'question2'
-    type: 'question'
-    question_id: 'objId2'
-
-  collections.Stages.insert
-    title: 'Question 2 Answer'   
-    _id: 'answer2'
-    type: 'answer'
-    question_id: 'objId2'
-
-  collections.Stages.insert
-    title: 'Question 3'   
-    _id: 'question3'
-    type: 'question'
-    question_id: 'objId3'
-
-  collections.Stages.insert
-    title: 'Question 3 Answer'   
-    _id: 'answer3'
-    type: 'answer'
-    question_id: 'objId3'
-  collections.Stages.insert
-    title: 'Question 4'   
-    _id: 'question4'
-    type: 'question'
-    question_id: 'objId4'
-
-  collections.Stages.insert
-    title: 'Question 4 Answer'   
-    _id: 'answer4'
-    type: 'answer'
-    question_id: 'objId4'
-
-  collections.Stages.insert
-    title: 'Question 5'   
-    _id: 'question5'
-    type: 'question'
-    question_id: 'objId5'
-
-  collections.Stages.insert
-    title: 'Question 5 Answer'   
-    _id: 'answer5'
-    type: 'answer'
-    question_id: 'objId5'
-  collections.Stages.insert
-    title: 'Question 6'   
-    _id: 'question6'
-    type: 'question'
-    question_id: 'objId6'
-
-  collections.Stages.insert
-    title: 'Question 6 Answer'   
-    _id: 'answer6'
-    type: 'answer'
-    question_id: 'objId6'
-
-
-  collections.Stages.insert
     title: 'Tiebreak Intro'   
     _id: 'tiebreakIntro'
     type: 'tiebreakIntro'
@@ -231,88 +160,88 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     type: 'form'
 
 
-  collections.Questions.insert
-    _id: 'objId'
-    text: 'Question Text Here'
-    options: [
-      text: 'Answer 1'
-      correct: true
-    ,
-      text: 'Answer 2'
-    ,
-      text: 'Answer 3'
-    ,
-      text: 'Answer 4'
-    ]
+  # collections.Questions.insert
+  #   _id: 'objId'
+  #   text: 'Question Text Here'
+  #   options: [
+  #     text: 'Answer 1'
+  #     correct: true
+  #   ,
+  #     text: 'Answer 2'
+  #   ,
+  #     text: 'Answer 3'
+  #   ,
+  #     text: 'Answer 4'
+  #   ]
 
-  collections.Questions.insert
-    _id: 'objId2'
-    text: 'Question 2 Text Here'
-    options: [
-      text: 'Answer 1'
-      correct: true
-    ,
-      text: 'Answer 2'
-    ,
-      text: 'Answer 3'
-    ,
-      text: 'Answer 4'
-    ]
+  # collections.Questions.insert
+  #   _id: 'objId2'
+  #   text: 'Question 2 Text Here'
+  #   options: [
+  #     text: 'Answer 1'
+  #     correct: true
+  #   ,
+  #     text: 'Answer 2'
+  #   ,
+  #     text: 'Answer 3'
+  #   ,
+  #     text: 'Answer 4'
+  #   ]
 
-  collections.Questions.insert
-    _id: 'objId3'
-    text: 'Question 3 Text Here'
-    options: [
-      text: 'Answer 1'
-      correct: true
-    ,
-      text: 'Answer 2'
-    ,
-      text: 'Answer 3'
-    ,
-      text: 'Answer 4'
-    ]
+  # collections.Questions.insert
+  #   _id: 'objId3'
+  #   text: 'Question 3 Text Here'
+  #   options: [
+  #     text: 'Answer 1'
+  #     correct: true
+  #   ,
+  #     text: 'Answer 2'
+  #   ,
+  #     text: 'Answer 3'
+  #   ,
+  #     text: 'Answer 4'
+  #   ]
 
-  collections.Questions.insert
-    _id: 'objId4'
-    text: 'Question 4 Text Here'
-    options: [
-      text: 'Answer 1'
-      correct: true
-    ,
-      text: 'Answer 2'
-    ,
-      text: 'Answer 3'
-    ,
-      text: 'Answer 4'
-    ]
+  # collections.Questions.insert
+  #   _id: 'objId4'
+  #   text: 'Question 4 Text Here'
+  #   options: [
+  #     text: 'Answer 1'
+  #     correct: true
+  #   ,
+  #     text: 'Answer 2'
+  #   ,
+  #     text: 'Answer 3'
+  #   ,
+  #     text: 'Answer 4'
+  #   ]
 
-  collections.Questions.insert
-    _id: 'objId5'
-    text: 'Question 5 Text Here'
-    options: [
-      text: 'Answer 1'
-      correct: true
-    ,
-      text: 'Answer 2'
-    ,
-      text: 'Answer 3'
-    ,
-      text: 'Answer 4'
-    ]
+  # collections.Questions.insert
+  #   _id: 'objId5'
+  #   text: 'Question 5 Text Here'
+  #   options: [
+  #     text: 'Answer 1'
+  #     correct: true
+  #   ,
+  #     text: 'Answer 2'
+  #   ,
+  #     text: 'Answer 3'
+  #   ,
+  #     text: 'Answer 4'
+  #   ]
 
 
 
-  collections.Questions.insert
-    _id: 'objId6'
-    text: 'Question 6 Text Here'
-    options: [
-      text: 'Answer 1'
-      correct: true
-    ,
-      text: 'Answer 2'
-    ,
-      text: 'Answer 3'
-    ,
-      text: 'Answer 4'
-    ]
+  # collections.Questions.insert
+  #   _id: 'objId6'
+  #   text: 'Question 6 Text Here'
+  #   options: [
+  #     text: 'Answer 1'
+  #     correct: true
+  #   ,
+  #     text: 'Answer 2'
+  #   ,
+  #     text: 'Answer 3'
+  #   ,
+  #     text: 'Answer 4'
+  #   ]

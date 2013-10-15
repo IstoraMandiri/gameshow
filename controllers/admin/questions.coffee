@@ -41,13 +41,21 @@ if Meteor.isClient
   Template.admin_question.events
     "click .delete-question": -> deleteQuestion @._id
     "click .create-option": -> createOption @._id
+    "change .question-title": (e,target) -> 
+      collections.Questions.update {_id:@_id},
+        $set: 
+          text: e.target.value
     "change .category-select": (e,target) -> 
       category = if e.target.value isnt "" then parseInt(e.target.value) else undefined
-      # console.log 'new category is', category, @_id
-      collections.Questions.update {_id:@_id},
-        $set:
-          category: category
-
+      console.log 'setting ', category
+      if category?
+        collections.Questions.update {_id:@_id},
+          $set:
+            category: category
+      else
+        collections.Questions.update {_id:@_id},
+          $unset: 
+            'category':1
 
   Template.admin_question.augOptions = -> mapParent @, @options
 

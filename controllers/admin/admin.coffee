@@ -4,7 +4,7 @@
   findPlayers : ->  collections.Players.find({},{sort:{created:-1}})
   findForms : ->  collections.Forms.find({},{sort:{created:-1}})
   findGames : ->  collections.Games.find({},{sort:{created:-1}})
-  findQuestions : ->  collections.Questions.find({},{sort:{_id:-1}})
+  findQuestions : ->  collections.Questions.find({},{sort:{created:-1}})
   findFormModules: -> collections.Stages.find({type:'form'},{sort:{_id:1}})
   defaultConfig: -> helpers.defaultConfig()
   updateDefaultConfig: (update) -> collections.Config.update {_id:'defaultGame'}, update
