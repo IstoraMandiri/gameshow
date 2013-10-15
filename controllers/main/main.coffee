@@ -79,14 +79,34 @@ awardBonusPoints = (player) ->
       wonBonus: true
 
 
-
 winningVideo = -> helpers.currentGame().winningVideo
+
+getRandomQuestions = (number,category) ->
+  allQuestions = collections.Questions.find({category:category}).fetch()
+  result = _.shuffle allQuestions
+  # console.log result
+  if number?
+    result.splice(number, result.length)
+  console.log result
+  return result
+
+
 
 if Meteor.isServer
   
   Meteor.methods
-    'reset' : ->
-      createNewGame()
+    'generateQuestions': -> 
+      questionsInsertPoint = helpers.currentGame().stages.indexOf('questions')
+
+      if questionsInsertPoint >= 0
+
+        console.log winningVideo().id
+        console.log 'questions are at ', questionsInsertPoint
+        categoryQuestions = getRandomQuestions helpers.currentGame().categoryQuestions, winningVideo().id
+        gameQuestions = categoryQuestions.concat(getRandomQuestions()).splice(0,helpers.currentGame().questions)
+        
+
+    'reset' : ->  createNewGame()
 
     'questionComplete': ->
       # calculate bonus
@@ -131,25 +151,19 @@ if Meteor.isServer
               break
 
   createNewGame = ->
-    console.log 'new game being created'
     defaultGame = collections.Config.findOne({_id:'defaultGame'})
     delete defaultGame._id
-
-    console.log defaultGame
-
-    # create X questions
-    # populate with max random category questions
-    # fill rest with other questions
-
-    # collections.Games.insert defaultGame
+    collections.Games.insert defaultGame
 
   Meteor.startup ->
-    if !helpers.currentGame()?
+    if !helpers.defaultConfig()?
       insertFakeData()
+    if !helpers.currentGame()?
       createNewGame()
       
 
 
+    
 
 
 if Meteor.isClient 

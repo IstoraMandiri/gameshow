@@ -2,6 +2,10 @@
 prevGame = null
 
 @helpers = 
+
+
+  defaultConfig: -> collections.Config.findOne({_id:'defaultGame'})
+
   showModal : (data) -> 
     Session.set 'modalData', data
     Meteor.setTimeout ->
@@ -93,7 +97,8 @@ prevGame = null
         if helpers.currentGame().stages[newPosition] is 'results'
           Meteor.call 'quizComplete'
 
-
+        if helpers.currentGame().stages[newPosition] is 'videoPlay'
+          Meteor.call 'generateQuestions'
 
 
 if Meteor.isClient

@@ -1,5 +1,5 @@
 @insertFakeData = ->
-
+  
   collections.Config.insert
     _id:'defaultGame'
     correctPoints : 100

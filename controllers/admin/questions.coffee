@@ -59,7 +59,6 @@ if Meteor.isClient
   Template.question_option.events
 
     "change .option-title": (e,target) ->
-      console.log 'changed'
       index = $(target.firstNode).index()
       text = event.target.value
       update = _.clone @parent.options
