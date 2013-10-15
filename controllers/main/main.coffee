@@ -45,6 +45,7 @@ getScore = (player) ->
 
 currentQuestion = ->
   questionId = helpers.currentStage().question_id
+  console.log 'current question is ', questionId
   if questionId
     collections.Questions.findOne({_id:questionId})
 
@@ -84,10 +85,8 @@ winningVideo = -> helpers.currentGame().winningVideo
 getRandomQuestions = (number,category) ->
   allQuestions = collections.Questions.find({category:category}).fetch()
   result = _.shuffle allQuestions
-  # console.log result
   if number?
     result.splice(number, result.length)
-  console.log result
   return result
 
 
@@ -97,13 +96,36 @@ if Meteor.isServer
   Meteor.methods
     'generateQuestions': -> 
       questionsInsertPoint = helpers.currentGame().stages.indexOf('questions')
-
       if questionsInsertPoint >= 0
-
-        console.log winningVideo().id
-        console.log 'questions are at ', questionsInsertPoint
         categoryQuestions = getRandomQuestions helpers.currentGame().categoryQuestions, winningVideo().id
         gameQuestions = categoryQuestions.concat(getRandomQuestions()).splice(0,helpers.currentGame().questions)
+        questionStages = []
+        collections.Stages.remove {type:'question'}
+        collections.Stages.remove {type:'answer'}
+        for question in gameQuestions
+        
+          questionId = collections.Stages.insert
+            title: question.text
+            type: 'question'
+            question_id: question._id
+          
+          answerId = collections.Stages.insert
+            title: question.text
+            type: 'answer'
+            question_id: question._id
+          
+          questionStages.push questionId
+          questionStages.push answerId
+        
+        postArr = helpers.currentGame().stages
+        postArr.splice(0,questionsInsertPoint + 1)
+        preArry = helpers.currentGame().stages
+        preArry.splice(questionsInsertPoint,preArry.length - questionsInsertPoint)
+        gameStages  = preArry.concat(questionStages).concat(postArr)
+        console.log 'whole show', gameStages
+        helpers.updateCurrentGame
+          stages: gameStages
+
         
 
     'reset' : ->  createNewGame()
