@@ -42,6 +42,12 @@ getScore = (player) ->
         score+= helpers.currentGame().correctPoints
   return score
 
+getTimeTaken = (player) ->
+  timeTaken = 0
+  if getPlayer(player)?.answers
+    for answer in getPlayer(player).answers
+      timeTaken+= answer.timeTaken
+  return timeTaken
 
 currentQuestion = ->
   questionId = helpers.currentStage().question_id

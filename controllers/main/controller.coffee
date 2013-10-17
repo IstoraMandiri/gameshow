@@ -4,6 +4,8 @@ if Meteor.isClient
 
   Template.controller_info.winningVideo = ->  helpers.currentGame()?.winningVideo?.title
 
+  Template.controller_player_info.timeTaken = -> helpers.getTimeTaken @._id
+
   # ugh
   eventsObj = {}
   eventsObj["#{helpers.quickTouch} #forward-btn"] = -> helpers.move 'forward'
