@@ -1,8 +1,17 @@
 
 prevGame = null
 
-@helpers = 
+@filters =
+  milisToSeconds : (number) ->
+    seconds = number / 1000
+    Math.round(seconds*10)/10
 
+
+@helpers = 
+  
+  getPlayer : (player) -> 
+    if player?
+      collections.Players.findOne player
 
   defaultConfig: -> collections.Config.findOne({_id:'defaultGame'})
 
@@ -74,6 +83,26 @@ prevGame = null
       if player.score is highScore
         winners.push player
     return winners
+
+  totalAnswerTime : (player) ->
+    timeTaken = 0
+    thisPlayer = helpers.getPlayer player
+    if thisPlayer.answers?
+      for answer in thisPlayer.answers
+        timeTaken+= answer.timeTaken
+    return timeTaken
+
+
+  currentAnswerTime : (player) ->
+    timeTaken = 0
+    currentQuestionId = helpers.currentStage().question_id
+    thisPlayer = helpers.getPlayer player
+    if thisPlayer.answers?
+      for answer in thisPlayer.answers
+        if answer.question_id is currentQuestionId
+         timeTaken = answer.timeTaken
+    return timeTaken
+
 
   move : (position) ->
 

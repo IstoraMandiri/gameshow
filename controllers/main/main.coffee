@@ -16,11 +16,6 @@ createNewPlayer = (options) ->
       players : newPlayer
   return newPlayer
 
-correctAnswer = (player) ->
-  collections.Players.update {_id:player},
-    $inc: 
-      score: helpers.currentGame().correctPoints 
-  # create new game class
 
 currentCorrectAnswer = ->
   if currentQuestion()
@@ -30,28 +25,17 @@ currentCorrectAnswer = ->
   return false 
 
 
-getPlayer = (player) -> 
-  if player?
-    collections.Players.findOne player
-
 getScore = (player) ->
   score = 0
-  if getPlayer(player)?.answers
-    for answer in getPlayer(player).answers
+  if helpers.getPlayer(player)?.answers
+    for answer in helpers.getPlayer(player).answers
       if answer.answer.correct
         score+= helpers.currentGame().correctPoints
   return score
 
-getTimeTaken = (player) ->
-  timeTaken = 0
-  if getPlayer(player)?.answers
-    for answer in getPlayer(player).answers
-      timeTaken+= answer.timeTaken
-  return timeTaken
 
 currentQuestion = ->
   questionId = helpers.currentStage().question_id
-  console.log 'current question is ', questionId
   if questionId
     collections.Questions.findOne({_id:questionId})
 
@@ -68,8 +52,8 @@ bonusTimeToBeat = ->
   return timeToBeat
 
 currentAnswer = (player) ->
-  if getPlayer(player).answers
-    for answer in getPlayer(player).answers
+  if helpers.getPlayer(player).answers
+    for answer in helpers.getPlayer(player).answers
       if answer.question_id is helpers.currentStage().question_id
         return answer
   
@@ -80,10 +64,6 @@ awardBonusPoints = (player) ->
   collections.Players.update {_id:player._id},
     $inc:
       score: helpers.currentGame().bonusPoints
-  
-  collections.Players.update {_id:player._id},
-    $set:
-      wonBonus: true
 
 
 winningVideo = -> helpers.currentGame().winningVideo
@@ -126,7 +106,7 @@ if Meteor.isServer
         postArr = helpers.currentGame().stages
         postArr.splice(0,questionsInsertPoint + 1)
         preArry = helpers.currentGame().stages
-        preArry.splice(questionsInsertPoint,preArry.length - questionsInsertPoint)
+        preArry.splice(questionsInsertPoint,preArry.length - questionsInsertPoint + 1)
         gameStages  = preArry.concat(questionStages).concat(postArr)
         console.log 'whole show', gameStages
         helpers.updateCurrentGame
@@ -140,7 +120,7 @@ if Meteor.isServer
       # calculate bonus
       bonusWinner = null
       for player in helpers.currentPlayers()
-        if wonBonus(player) and !player.wonBonus
+        if wonBonus(player)
           awardBonusPoints(player)
 
 
@@ -300,10 +280,10 @@ if Meteor.isClient
               
     
   alreadyVoted = (playerId, questionId) ->
-    if !getPlayer(playerId)?.answers
+    if !helpers.getPlayer(playerId)?.answers
       return false
-    for answer in getPlayer(playerId).answers
-      if answer.question_id is questionId
+    for answer in helpers.getPlayer(playerId).answers
+      if answer.question_id is questionId and answer.answer
         return true
     return false
 
@@ -311,7 +291,22 @@ if Meteor.isClient
   Template.stage_question.created = ->
     Session.set 'startedQuestion', new Date()
     Session.set 'timeUp', false
-    clock.startCountdown 5, ->
+    sizeObj = {}
+    if Session.equals 'view', 'screen'
+      sizeObj.med = true
+    clock.startCountdown helpers.defaultConfig().timers.question, sizeObj, ->
+      if Session.get('currentPlayer')
+        # missed the vote
+        if !alreadyVoted Session.get('currentPlayer'), helpers.currentStage().question_id
+          question = collections.Questions.findOne helpers.currentStage().question_id
+          collections.Players.update Session.get('currentPlayer'),
+            $push:
+              answers:
+                question: question.text
+                question_id: question._id
+                answer: null
+                timeTaken: helpers.defaultConfig().timers.question * 1000
+
       Session.set 'timeUp', true
       # alert 'voted'
       # Template.question_content.voted()
@@ -319,7 +314,6 @@ if Meteor.isClient
 
   Template.question_content.voted = ->
     voted = alreadyVoted Session.get('currentPlayer'), helpers.currentStage().question_id
-    console.log voted
     return voted
 
     # return voted
@@ -340,10 +334,13 @@ if Meteor.isClient
             question_id: question._id
             answer: @
             timeTaken: timeTaken
+
+      if @?.correct
+        collections.Players.update Session.get('currentPlayer'),
+          $inc: 
+            score: helpers.currentGame().correctPoints 
+
       
-      collections.Players.update Session.get('currentPlayer'),
-        $set:
-          score: getScore playerId
     else
       console.log 'no multiple votes for you', Template.question_content.voted()
 
@@ -354,20 +351,20 @@ if Meteor.isClient
 
   Template.stage_answer.answered = ->
     if Session.get('currentPlayer')?
-      answers = getPlayer(Session.get('currentPlayer')).answers
+      answers = helpers.getPlayer(Session.get('currentPlayer')).answers
       currentQuestionId = currentQuestion()._id
       if answers
         for answer in answers
-          if answer.question_id is currentQuestionId
+          if answer.question_id is currentQuestionId and answer.answer
             return true
     return false
 
 
   Template.stage_answer.answeredCorrectly = ->
-    answers = getPlayer(Session.get('currentPlayer')).answers?= []
+    answers = helpers.getPlayer(Session.get('currentPlayer')).answers?= []
     for answer in answers
       if answer.question_id is currentQuestion()._id
-        if answer.answer.correct
+        if answer.answer?.correct
           return true
     return false
 

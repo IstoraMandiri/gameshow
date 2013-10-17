@@ -7,13 +7,18 @@
     fps = 40
  
     $clockParent = $("#clock").empty().addClass('showing')
+    
+    bigEffect = 1
+
     if options?.big
-      big = true
+      bigEffect = 6
       $clockParent.addClass('big')
+    else if options?.med
+      bigEffect = 1.8
+      $clockParent.addClass('med')
     
     $clock = $('<input class="face">').appendTo $clockParent
 
-    bigEffect = if big? then 6 else 1
     
     $clock.knob
       'readOnly':true
@@ -51,7 +56,7 @@
     step: ->
       $clock.val(Math.floor(this.value)).trigger('change')
     complete: ->
-      $clockParent.removeClass('showing big')
+      $clockParent.removeClass('showing big med')
       completed() if completed?
       
 

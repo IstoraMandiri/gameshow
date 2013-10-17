@@ -2,7 +2,9 @@
 <template name="stage_video_select">
   <div id="video_select_wrapper">
     {{#if voted}}
-      <h2>Your vote has been cast</h2>
+      <div class="question-result answer-received">
+        <div class="text">Your vote has been cast!</div>
+      </div>
     {{else}}
       {{#each videos}}
         {{> video_button}}

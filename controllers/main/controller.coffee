@@ -4,7 +4,11 @@ if Meteor.isClient
 
   Template.controller_info.winningVideo = ->  helpers.currentGame()?.winningVideo?.title
 
-  Template.controller_player_info.timeTaken = -> helpers.getTimeTaken @._id
+  Template.controller_player_info.totalAnswerTime = -> 
+    filters.milisToSeconds helpers.totalAnswerTime @._id
+
+  Template.controller_player_info.currentAnswerTime = -> 
+    filters.milisToSeconds helpers.currentAnswerTime @._id
 
   # ugh
   eventsObj = {}

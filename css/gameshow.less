@@ -1,6 +1,6 @@
 /* CSS declarations go here */
 
-@color1:#f7bb33;
+@color1:#FDBB30;
 @color2:#666;
 
 
@@ -129,8 +129,6 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
 
 
 
-
-
   #stage, #controls{
     position:absolute; 
     padding:20px;
@@ -245,14 +243,14 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
 
   .video-btn{
     display:inline-block;
-    // padding:80px 120px;
-    margin:10px;
+    width:270px;
+    margin:10px 20px;
     font-family:'HeaderFont';
     .text{
-      font-size:24px;
-      margin-top:20px;
-      padding:30px;
-      border-radius: 20px;
+      font-size:20px;
+      margin-top:10px;
+      padding:15px;
+      border-radius: 10px;
       display:block;
     }
   }
@@ -329,7 +327,15 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
 }
 #body.screen{
 
-
+  #stage{
+    left:100px;
+    right:100px;
+    padding-left:100px;
+    padding-right:100px;
+    > .inner{
+      overflow:hidden;
+    }
+  }
   #stage.stage_video_play{
     position:absolute;
     top:0px;
@@ -376,11 +382,82 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
     height:120px;
     background-image:url('/img/logo2.png');
   }
+  .video-btn{
+    margin:30px 50px;
+    width:300px;
+  }
+
 }
 
 #body.player{
   #stage.stage_form h1.title{
     display:block;
+  }
+  .question .option.btn{
+    line-height:0px;
+    padding:0;
+    white-space: nowrap;
+    overflow: hidden;
+    width:182px;
+    height:184px;
+    display:inline-block;
+    border:none;
+    margin:10px;
+    background:none;
+    box-shadow:none;
+    position:relative;
+    &::after{
+      z-index:1;
+      position:absolute;
+      width:100%;
+      height:100%;
+      line-height:184px;    
+      color:black;
+      font-size:78px;
+      display:block;
+      font-family:'HeaderFont';
+      background:white;
+      background-image:url('/img/answer_btn.png');
+    }
+    &:nth-child(1)::after{content:'A';}
+    &:nth-child(2)::after{content:'B';}
+    &:nth-child(3)::after{content:'C';}
+    &:nth-child(4)::after{content:'D';}
+    &:nth-child(5)::after{content:'E';}
+    &:nth-child(6)::after{content:'F';}
+    &:nth-child(7)::after{content:'G';}
+    &:nth-child(8)::after{content:'H';}
+    &:nth-child(9)::after{content:'I';}
+  }
+
+}
+
+h2.question-text{
+  box-shadow:0px 0px 3px rgba(0,0,0,.2);
+  background: -webkit-linear-gradient(top, #eee 0%,#fff 100%);
+  border-radius:10px;
+  overflow: hidden;
+  display:inline-block;
+  position:relative;
+  padding:20px;
+  padding-left:280px;
+  &::before{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom:0;
+    width: 260px;
+    box-sizing:border-box;
+    text-shadow:1px 2px 2px rgba(0,0,0,.6);
+    padding:20px;
+    padding-right:110px;
+    content:'Question';
+    background:@color1;
+    color:white;
+    background-image:url('/img/question_icon.png');
+    background-position:top right;
+    background-repeat: no-repeat;
+    box-shadow:1px solid white;
   }
 }
 

@@ -70,7 +70,7 @@
 
 
 <template name="stage_results">
-  {{> leaderboard currentScores}}
+  {{> leaderboard}}
   {{#if playerMode}}
     {{#if iAmWinner}}
       <div class="winner">
@@ -88,8 +88,6 @@
         <h2>You didn't win.<br/>Better luck next time!</h2>
       </div>
     {{/if}}
-  {{else}}
-    {{> holding_slide}}
   {{/if}}
 </template>
 
