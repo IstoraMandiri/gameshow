@@ -13,7 +13,7 @@
 <template name="leaderboard_player">
   <div class="player">
     <span class="name">{{firstname}} {{lastname}}</span>
-    <span class="score">{{score}}</span>
+    <span class="score">{{score}}{{#if isLeaderboard}} ({{time}}s){{/if}}</span>
   </div>
 </template>
 

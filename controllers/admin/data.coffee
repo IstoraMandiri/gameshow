@@ -8,6 +8,9 @@ if Meteor.isClient
     name:'Forms'
     id:'forms'
   ,
+    name:'Form Fields'
+    id:'allforms'
+  ,
     name:'Games'
     id:'games'
   ]
@@ -37,6 +40,12 @@ if Meteor.isClient
 
 
   Template.admin_data.events
+    'click .delete-all-data': ->
+      if confirm 'Are you sure you wish to delete all data?'
+        if confirm 'Please confirm again. You cannot recover the deleted data.'
+          Meteor.call 'removeData'
+          Alert 'Forms, Players and Games Deleted.'
+
     'click .btn.answers': ->
       helpers.showModal
         title: "Answers: #{@firstname} #{@lastname}"
@@ -54,4 +63,28 @@ if Meteor.isClient
 
 
     # admin_data_games_players
+
+  Template.admin_data_allforms.formtypes = ->
+    formTypes = []
+    for formItem in collections.Forms.find({}).fetch()
+      if formTypes.indexOf(formItem.stage_id) is -1
+        formTypes.push formItem.stage_id
+    return formTypes
+
+  Template.formtype.one = -> collections.Forms.findOne({stage_id:@.toString()})
+
+  Template.formtype.form = -> 
+    rowObjs = collections.Forms.find({stage_id:@.toString()}).fetch()
+    rows = [['Created','Player ID','Name']]
+    ## create top row
+    for row, i in rowObjs
+      if i is 0
+        for field in row.fields
+          rows[0].push field.title
+      newRow = [row.created,row.player._id,"#{row.player.firstname} #{row.player.lastname}"]
+      for field in row.fields
+        newRow.push field.value
+      rows.push newRow
+    return rows
+
 

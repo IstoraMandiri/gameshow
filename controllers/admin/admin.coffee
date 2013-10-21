@@ -23,7 +23,7 @@ if Meteor.isClient
 
   Session.setDefault 'subPage', 'data'
   Session.setDefault 'admin_data_subPage', 'players'
-
+  
   Template.admin_navbar.active = (page) -> 
     if Session.equals('subPage', page) then 'active ' else ''
 

@@ -45,7 +45,7 @@
   <hr>
   <div class="row-fluid">
     <button class="btn btn-primary new-video pull-right">New Video</button>
-    <h3>Videos</h3>
+    <h3>Categories</h3>
     <div class="row-fluid">
       <div class="span12">
     {{#each videos}}
@@ -59,17 +59,18 @@
 
 <template name="admin_video">
   <div class="well span6 videobox">
-    <div class="thumbnail pull-right align-center">
-      <img src="http://placehold.it/150x150" alt=""></img>
-      screenshot here  
+    <div class="pull-right">
+      <img src="/videos/{{id}}/thumb.png" alt=""></img>  
     </div>
+    <h3>Video {{id}}</h3>
     <input type='text' class='input video-title' value="{{title}}">
-    <label class='tool' for="">Upload File
+    <!-- <label class='tool' for="">Upload File
       <input type='file' class='input input-small' style="width:100px;"></input>
     </label>
-    
-    <button class="btn tool delete btn-success pull-left">Edit</button>  
-    <button class="btn tool delete btn-danger  pull-left">Delete</button>  
+     -->
+    <!-- <button class="btn tool delete btn-success pull-left">Edit</button>   -->
+    <br>
+    <button class="btn tool delete btn-danger">Delete</button>  
 
     <div class="clearfix"></div>
   </div>

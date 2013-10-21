@@ -1,25 +1,58 @@
 
 <template name="controller">
   <div id="controls">
-    {{> controller_info}}
-    <span class='position'>{{position}} - {{currentStage.title}}</span class='position'>
-    <br>
-    <div class="btn" id="back-btn">Back</div>
-    <div class="btn" id="forward-btn">Forward</div>  
-    <hr>
-    <div class="btn" id="reset-btn">Reset</div>
-  </div>
+    <div class="inner">
+      
+
+
+      {{> controller_info}}
+      <div class="control-buttons">
+        <table class='table'>
+          <tr>
+            <th>Current Position</th>
+            <th>Next Position</th>
+          </tr>
+          <tr>
+            <td>{{currentStage.title}}</td>
+            <td>{{nextStage.title}}</td>
+          </tr>
+        </table>
+        <!-- <div class="btn" id="back-btn">Back</div> -->
+        <div class="btn btn-primary pull-left" id="reset-btn">New Game</div>
+        <div class="btn pull-right" id="forward-btn">Forward</div>  
+        <!-- <hr> -->
+        <!-- <div class="btn" id="reset-btn">New Game</div> -->
+      </div>
+    </div>
+
+
+
+    </div>
 </template>
 
 <template name="controller_info">
   {{#if winningVideo}}
     <p>Currently Winning Video: {{winningVideo}}</p>
   {{/if}}
-  {{#each currentPlayers}}
-    {{> controller_player_info}}
-  {{/each}}
+  <table class='table table-striped'>
+    <tr>
+      <th>Player Name</th>
+      <th>Chosen Category</th>
+      <th>Score</th>
+      <th>Time</th>
+    </tr>
+    {{#each currentPlayers}}
+      {{> controller_player_info}}
+    {{/each}}
+  </table>
+  
 </template>
 
 <template name="controller_player_info">
-  <p>{{firstname}} {{lastname}} | S: {{score}} | CT: {{currentAnswerTime}}s | TT: {{totalAnswerTime}}s | V: {{video.title}}</p>
+  <tr>
+    <td>{{firstname}} {{lastname}}</td>
+    <td>{{video.title}}</td> 
+    <td>{{score}}</td>
+    <td>{{currentAnswerTime}} - {{totalAnswerTime}}</td>
+  </tr>
 </template>

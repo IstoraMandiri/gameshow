@@ -1,6 +1,6 @@
 if Meteor.isClient
 
-  Template.controller.position = -> helpers.currentGame()?.position
+  Template.controller_info.position = -> helpers.currentGame()?.position
 
   Template.controller_info.winningVideo = ->  helpers.currentGame()?.winningVideo?.title
 
@@ -14,6 +14,8 @@ if Meteor.isClient
   eventsObj = {}
   eventsObj["#{helpers.quickTouch} #forward-btn"] = -> helpers.move 'forward'
   eventsObj["#{helpers.quickTouch} #back-btn"] = -> helpers.move 'back'
-  eventsObj["#{helpers.quickTouch} #reset-btn"] = -> Meteor.call 'reset'
+  eventsObj["#{helpers.quickTouch} #reset-btn"] = -> 
+    if confirm 'Are you sure you wish to reset the game?'
+      Meteor.call 'reset'
   Template.controller.events eventsObj
 

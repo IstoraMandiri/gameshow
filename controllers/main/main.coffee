@@ -57,7 +57,7 @@ currentAnswer = (player) ->
       if answer.question_id is helpers.currentStage().question_id
         return answer
   
-wonBonus = (player) -> if bonusTimeToBeat() is currentAnswer(player).timeTaken then true else false
+wonBonus = (player) -> if bonusTimeToBeat() is currentAnswer(player)?.timeTaken then true else false
 
 
 awardBonusPoints = (player) ->
@@ -82,7 +82,7 @@ if Meteor.isServer
   Meteor.methods
     'generateQuestions': -> 
       questionsInsertPoint = helpers.currentGame().stages.indexOf('questions')
-      if questionsInsertPoint >= 0
+      if questionsInsertPoint >= 0 and winningVideo()
         categoryQuestions = getRandomQuestions helpers.currentGame().categoryQuestions, winningVideo().id
         gameQuestions = categoryQuestions.concat(getRandomQuestions()).splice(0,helpers.currentGame().questions)
         questionStages = []
@@ -113,6 +113,11 @@ if Meteor.isServer
           stages: gameStages
 
         
+    'removeData': ->
+      collections.Players.remove({})
+      collections.Forms.remove({})
+      collections.Games.remove({})
+      Meteor.call 'reset'
 
     'reset' : ->  createNewGame()
 
@@ -202,11 +207,15 @@ if Meteor.isClient
   else
     Session.set 'view', 'player'
 
+  Handlebars.registerHelper 'breakLines', (text) -> filters.breakLines text
+
   Handlebars.registerHelper 'bodyClass', -> Session.get 'view'
   Handlebars.registerHelper 'screenMode', -> Session.equals 'view', 'screen'
   Handlebars.registerHelper 'controllerMode', -> Session.equals 'view', 'control'
   Handlebars.registerHelper 'playerMode', -> Session.equals 'view', 'player'  
   Handlebars.registerHelper 'currentStage', -> helpers.currentStage()
+  Handlebars.registerHelper 'nextStage', -> helpers.nextStage()
+
   Handlebars.registerHelper 'currentPlayers', -> 
     console.log(helpers.currentPlayers())
     return helpers.currentPlayers()
@@ -410,5 +419,5 @@ if Meteor.isClient
   # Template.form_textbox.inputId = -> 
 
 
-  # Template.form_textbox.required = -> if @.required then 'required' else ''
+  Template.form_textbox.required = -> if @.required then 'required' else ''
 

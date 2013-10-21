@@ -53,15 +53,21 @@ if Meteor.isClient
 
 
     "change input, change select, change textarea": (event,target) -> 
+
       # get item index
 
       index = $(target.firstNode).index()
 
       key = $(event.target).attr('name')
-      val = event.target.value
+      if $(event.target).attr('type') is 'checkbox'
+        val = $(event.target).is(':checked')
+      else
+        val = event.target.value
+
+      console.log key, val
       update = currentForm().content
       update[index][key] = val
-      
+
       updateCurrentForm
         $set: 
           content: update

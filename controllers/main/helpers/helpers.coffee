@@ -4,7 +4,12 @@ prevGame = null
 @filters =
   milisToSeconds : (number) ->
     seconds = number / 1000
-    Math.round(seconds*10)/10
+    Math.round(seconds*100)/100
+  
+  breakLines : (text) ->
+    if text?
+      text = text.replace(/(\r\n|\n|\r)/gm, '<br>')
+      return new Handlebars.SafeString(text)
 
 
 @helpers = 
@@ -40,6 +45,13 @@ prevGame = null
       stage = collections.Stages.findOne
         _id: helpers.currentGame().stages?[pos]
       return stage
+
+  nextStage : ->
+    if helpers.currentGame()?
+      pos = helpers.currentGame().position + 1
+      collections.Stages.findOne
+        _id: helpers.currentGame().stages?[pos]
+
   
   currentPlayer : -> 
     if Session.get('currentPlayer')

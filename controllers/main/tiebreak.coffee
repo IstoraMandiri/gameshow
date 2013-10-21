@@ -169,16 +169,15 @@ if Meteor.isClient
     # dispaly
     setPhase 1
     Session.set "tiebreakComplete", false
-    clock.startCountdown duration.phase1, ->
+    clock.startCountdown helpers.currentGame().timers.watch_timebreak, ->
       setPhase 2
-      clock.startCountdown duration.phase2, {big : true}, ->
+      clock.startCountdown helpers.currentGame().timers.input_timebreak, {big : true}, ->
         Session.set "tiebreakComplete", true
 
   Template.tiebreak_number_input.created = (template) ->
     # client
     Session.set 'tiebreakNumbers', ''
-    console.log 'phase is ', tiebreakConfig().phase
-    clock.startCountdown duration.phase2, ->
+    clock.startCountdown helpers.currentGame().timers.input_timebreak, ->
       Session.set "tiebreakComplete", true
       sendTiebreakScore()
 

@@ -1,13 +1,13 @@
 <template name="admin_data">
   <h2>Data <small>Review collected information</small></h2>
   <hr>
-  <button class="btn btn-primary pull-right">Export Data</button>
+  <!-- <button class="btn btn-primary pull-right">Export Data</button> -->
   <ul class="nav nav-tabs">
     {{#each tabs}}
       <li class='tab {{active id}}'><a href="">{{name}}</a></li>
     {{/each}}
   </ul>
-  <button class="btn btn-danger btn-mini pull-right">Delete All</button>
+  <button class="btn btn-danger btn-mini delete-all-data pull-right">Delete All</button>
   <div class="content">
     {{render}}
   </div>
@@ -92,6 +92,33 @@
     {{/each}}          
   </table>
 </template>
+
+<template name="admin_data_allforms">
+  {{#each formtypes}}
+    {{> formtype}}
+  {{/each}}
+</template>
+
+<template name="formtype">
+  <h3>{{one.title}}</h3>
+  <table class="table table-striped">
+    {{#each form}}
+      <tr>
+        {{> row}}
+      </tr>
+    {{/each}}          
+  </table>
+  <hr>
+</template>
+
+<template name="row">
+  {{#each .}}
+    <td>{{.}}</td>
+  {{/each}}  
+</template>
+
+
+
 
 <template name="admin_data_games">
   <h4>{{count}} Games Played</h4>

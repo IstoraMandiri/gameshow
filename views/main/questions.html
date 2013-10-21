@@ -5,7 +5,9 @@
 
 <template name="question_content">
   <div class="question">
-    <h2 class='question-text'>{{currentQuestion.text}}</h2>
+    {{#if screenMode}}
+      <h2 class='question-text'>{{currentQuestion.text}}</h2>
+    {{/if}}
     {{#if voted}}
       <div class="question-result answer-received">
         <div class="text">We have received your answer.</div>
@@ -31,10 +33,12 @@
 </template>
 
 <template name="stage_answer">
-  <h2 class='question-text'>{{currentQuestion.text}}</h2>
+  {{#if screenMode}}
+    <h2 class='question-text'>{{currentQuestion.text}}</h2>
+  {{/if}}
   <div class="answerbox">
-    <h3>The correct answer was: <span class='btn'>{{currentCorrectAnswer.text}}</span></h3>
     {{#if screenMode}}
+      <h3>The correct answer was: <span class='btn'>{{currentCorrectAnswer.text}}</span></h3>
       {{> leaderboard}}
     {{else}}
       {{#if answered}}
