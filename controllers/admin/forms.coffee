@@ -1,7 +1,11 @@
 
 currentForm = -> admin.getStage Session.get('admin_currentForm')
 
-updateCurrentForm = (update) -> collections.Stages.update {_id:currentForm()._id}, update
+updateCurrentForm = (update) -> 
+  if update.$set?.content?
+    for field, i in update.$set.content
+      field.id = "#{currentForm()._id}_field_#{i}" 
+  collections.Stages.update {_id:currentForm()._id}, update
 
 if Meteor.isClient
 

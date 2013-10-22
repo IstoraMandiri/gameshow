@@ -3,17 +3,20 @@
   <div id="leaderboard">
     <div class="inner">
       <div class="first_row">{{text}}</div>
+      <table>
       {{#each scores}}
         {{> leaderboard_player}}
-      {{/each}}
+      {{/each}}  
+      </table>
       </div>
     </div>
 </template>
 
 <template name="leaderboard_player">
-  <div class="player">
-    <span class="name">{{firstname}} {{lastname}}</span>
-    <span class="score">{{score}}{{#if isLeaderboard}} ({{time}}s){{/if}}</span>
-  </div>
+    <tr class='player'>
+      <td>{{firstname}} {{lastname}}</td>
+      <td>{{score}}</td>
+      <td>{{time}}s</td>
+    </tr>
 </template>
 

@@ -2,8 +2,7 @@
 <template name="controller">
   <div id="controls">
     <div class="inner">
-      
-
+    
 
       {{> controller_info}}
       <div class="control-buttons">
@@ -23,6 +22,10 @@
         <!-- <hr> -->
         <!-- <div class="btn" id="reset-btn">New Game</div> -->
       </div>
+    
+
+
+
     </div>
 
 
@@ -32,7 +35,7 @@
 
 <template name="controller_info">
   {{#if winningVideo}}
-    <p>Currently Winning Video: {{winningVideo}}</p>
+    <p><small class='muted'>Top Category:</small> <strong>{{winningVideo}}</strong></p>
   {{/if}}
   <table class='table table-striped'>
     <tr>
@@ -40,6 +43,7 @@
       <th>Chosen Category</th>
       <th>Score</th>
       <th>Time</th>
+      <th>Position</th>
     </tr>
     {{#each currentPlayers}}
       {{> controller_player_info}}
@@ -49,10 +53,11 @@
 </template>
 
 <template name="controller_player_info">
-  <tr>
+  <tr class="{{#if caughtUp}}success{{/if}}">
     <td>{{firstname}} {{lastname}}</td>
     <td>{{video.title}}</td> 
     <td>{{score}}</td>
     <td>{{currentAnswerTime}} - {{totalAnswerTime}}</td>
+    <td>{{position}}</td>
   </tr>
 </template>

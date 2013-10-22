@@ -1,6 +1,6 @@
 if Meteor.isClient
   Meteor.Router.add
-    '/':'main'
+    '/': -> 'main'
     '/admin':'admin'
     '/admin/:sub': (sub) ->
       Session.set 'subPage', sub

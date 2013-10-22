@@ -10,6 +10,13 @@ if Meteor.isClient
   Template.controller_player_info.currentAnswerTime = -> 
     filters.milisToSeconds helpers.currentAnswerTime @._id
 
+  Template.controller_player_info.caughtUp = -> 
+    leadingPos = 0
+    for player in helpers.currentPlayers()
+      if player.position > leadingPos
+        leadingPos = player.position
+    if @position >= leadingPos then true else false
+
   # ugh
   eventsObj = {}
   eventsObj["#{helpers.quickTouch} #forward-btn"] = -> helpers.move 'forward'

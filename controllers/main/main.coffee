@@ -139,6 +139,7 @@ if Meteor.isServer
         tiebreak.begin winners
         
     'newVideoVote': ->
+        console.log helpers.currentPlayers()
         
         videoVotes = _.countBy helpers.currentPlayers(), (player) ->
           player.video?.id
@@ -159,6 +160,7 @@ if Meteor.isServer
 
         for key,value of videoVotes 
             if value >= minForVictory
+              console.log 'winning ideo is', findVideoById(key)
               helpers.updateCurrentGame 
                 winningVideo: findVideoById(key)
               break
@@ -180,6 +182,7 @@ if Meteor.isServer
 
 
 if Meteor.isClient 
+
   # Session.delete()
   
   # pr
@@ -193,40 +196,36 @@ if Meteor.isClient
     if !scrollable
         e.preventDefault()
 
-
-
   getURLParameter = (name) -> return decodeURIComponent((new RegExp("[?|&]#{name}=([^&;]+?)(&|##|;|$)").exec(location.search) || [null,""] )[1].replace(/\+/g, '%20'))||null;
 
-  temporaryAdvance = ->
-    inc = parseInt(Session.get('temporaryAdvance')) || 1
-    Session.set 'temporaryAdvance', helpers.currentGame()?.position + inc
-    console.log 'tempadv',Session.get('temporaryAdvance')
-
-  if getURLParameter 'view'
+  if getURLParameter('view')?
+    helpers.clearSession()
+    console.log 'cleared session'
     Session.set 'view', getURLParameter('view')
   else
     Session.set 'view', 'player'
 
-  Handlebars.registerHelper 'breakLines', (text) -> filters.breakLines text
 
+  temporaryAdvance = ->
+    inc = parseInt(Session.get('temporaryAdvance')) || 1
+    Session.set 'temporaryAdvance', helpers.currentGame()?.position + inc
+
+
+  Handlebars.registerHelper 'breakLines', (text) -> filters.breakLines text
   Handlebars.registerHelper 'bodyClass', -> Session.get 'view'
   Handlebars.registerHelper 'screenMode', -> Session.equals 'view', 'screen'
   Handlebars.registerHelper 'controllerMode', -> Session.equals 'view', 'control'
   Handlebars.registerHelper 'playerMode', -> Session.equals 'view', 'player'  
   Handlebars.registerHelper 'currentStage', -> helpers.currentStage()
   Handlebars.registerHelper 'nextStage', -> helpers.nextStage()
-
-  Handlebars.registerHelper 'currentPlayers', -> 
-    console.log(helpers.currentPlayers())
-    return helpers.currentPlayers()
+  Handlebars.registerHelper 'currentPlayers', -> helpers.currentPlayers()
   Handlebars.registerHelper 'currentCorrectAnswer', -> currentCorrectAnswer()
   Handlebars.registerHelper 'currentPlayer', -> helpers.currentPlayer()
   Handlebars.registerHelper 'currentQuestion', -> currentQuestion()
-
+  Handlebars.registerHelper 'createForm', (formObj) -> createForm formObj
   Handlebars.registerHelper 'renderCurrentStage', ->   
     if helpers.currentStage()?.type
       new Handlebars.SafeString(Template["stage_#{helpers.currentStage()?.type}"](helpers.currentStage()));
-  Handlebars.registerHelper 'createForm', (formObj) -> createForm formObj
 
 
 
@@ -267,25 +266,52 @@ if Meteor.isClient
 
   Template.stage_form.showLeaderboard = -> helpers.currentStage()._id is 'leaderboard'
   
-  Template.stage_form.rendered = ->
-    if @rendered != helpers.currentStage()._id
-      $.jqBootstrapValidation('destroy')
-      @rendered = helpers.currentStage()._id
-      t = @
-      $form = $("input,select,textarea",$(t.find('form'))).not("[type=submit]")
-      submitted = false
-      $form.jqBootstrapValidation
-          submitSuccess: (form, e) ->
-            e.preventDefault()
-            if !submitted
-              submitted = true
-              if helpers.currentStage().registration
-                thisCurrentPlayer = createNewPlayer 
-                  firstname: t.find('[name="firstname"]').value
-                  lastname: t.find('[name="lastname"]').value
-                Session.set 'currentPlayer', thisCurrentPlayer
-              processForm helpers.currentStage(), t
-              temporaryAdvance()
+
+  Template.stage_form.events =
+    "submit form"  : (e,t) ->
+      e.preventDefault()
+      valid = true
+      $('.has-value', $(event.target)).each ->
+        $this = $(this)
+        if $this.attr('required')? 
+          if $.trim($this.val()) is '' or ($this.attr('type') is 'checkbox' and !$this.is(':checked'))
+            valid = false
+            $this.popover
+              content: 'This field is required'
+              delay:
+                hide: 2000
+            .popover 'show'
+              
+      if valid
+        if helpers.currentStage().registration
+          Session.set 'currentPlayer', createNewPlayer 
+            firstname: t.find('[name="firstname"]').value
+            lastname: t.find('[name="lastname"]').value
+        processForm helpers.currentStage(), t
+        temporaryAdvance()
+
+  # Template.stage_form.rendered = ->
+  #   if @rendered != helpers.currentStage()._id
+  #     # $.jqBootstrapValidation('destroy')
+  #     @rendered = helpers.currentStage()._id
+  #     t = @
+  #     # $form = $("input,select,textarea",$(t.find('form'))).not("[type=submit]")
+  #     Session.set 'submitted', false
+  #     $(t.find('form')).on 'submit', (e) ->
+  #       e.preventDefault()
+  #       alert ' you hit submit'
+      # $form.jqBootstrapValidation
+      #   submitSuccess: (form, e) ->
+      #     e.preventDefault()
+      #     if !Session.set 'submitted'
+      #       Session.set 'submitted', true
+      #       if helpers.currentStage().registration
+      #         thisCurrentPlayer = createNewPlayer 
+      #           firstname: t.find('[name="firstname"]').value
+      #           lastname: t.find('[name="lastname"]').value
+      #         Session.set 'currentPlayer', thisCurrentPlayer
+      #       processForm helpers.currentStage(), t
+      #       temporaryAdvance()
               
     
   alreadyVoted = (playerId, questionId) ->
@@ -401,7 +427,7 @@ if Meteor.isClient
       $video.play()
       $video.addEventListener 'ended', ->
         helpers.move 'forward'
-    , 100
+    , 1000
 
   Template.stage_results.iAmWinner = ->
     thisPlayerId = helpers.currentPlayer()._id 
@@ -413,6 +439,8 @@ if Meteor.isClient
 
 
   Template.build_form.typeIs = (type) -> @.type is type
+
+  # Template.build_form.randomFormId = -> "form_item_"+Math.random()*100
 
   Template.form_textbox.type = ->  @.validate || 'text'
 

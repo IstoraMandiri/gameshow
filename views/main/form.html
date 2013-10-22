@@ -35,7 +35,7 @@
   <div class='collect-data'>
     <label class="control-label">{{text}}</label>
     <div class="controls">
-      <input {{#if name}}name="{{name}}"{{/if}} placeholder="Tap here to type" {{#if required}}required{{/if}} id="{{inputId}}" type="{{type}}" class="input"/>
+      <input id="{{id}}" {{#if name}}name="{{name}}"{{/if}} placeholder="Tap here to type" {{#if required}}required{{/if}} type="{{type}}" class="has-value input"/>
       <span class="help-block">{{content}}</span>
     </div>
   </div>
@@ -45,7 +45,7 @@
   <div class='collect-data'>
     <label class="control-label">{{text}}</label>
     <div class="controls">
-      <select id="{{inputId}}"{{#if name}}name="{{name}}"{{/if}} {{#if required}}required{{/if}}  class="input">
+      <select  id="{{id}}" {{#if name}}name="{{name}}"{{/if}} {{#if required}}required{{/if}}  class="has-value input">
         <option value="">Tap here to select</option>
         {{#each options}}
           <option value="{{.}}">{{.}}</option>
@@ -59,10 +59,12 @@
   <div class='collect-data'>
     <label class="control-label">{{text}}</label>
     <div class="controls radio-controls">
-      {{#each options}} 
-        <input type="radio" value="{{.}}"/>  {{.}}
-        <br> 
-      {{/each}}
+      {{#isolate}}
+        {{#each options}}
+          <input type="radio" value="{{.}}"/>  {{.}}
+          <br> 
+        {{/each}}
+      {{/isolate}}
     </div>
   </div>
 </template>
@@ -73,7 +75,7 @@
   <div class='collect-data'>
     <label class="control-label">{{text}}</label>
     <div class="controls">
-      <textarea {{#if name}}name="{{name}}"{{/if}} placeholder="Tap here to type" {{#if required}}required{{/if}} id="{{inputId}}" type="{{type}}" class="input"/>
+      <textarea {{#if name}}name="{{name}}"{{/if}} placeholder="Tap here to type" {{#if required}}required{{/if}}  id="{{id}}" type="{{type}}" class="has-value input"/>
       <span class="help-block">{{content}}</span>
     </div>
   </div>
@@ -83,7 +85,7 @@
 <template name='form_checkbox'>
   <div class='collect-data'>
     <label class="checkbox">
-      <input {{#if required}}required{{/if}} id="{{inputId}}" type="checkbox" class='input'> {{text}}
+      <input {{#if required}}required{{/if}}  id="{{id}}" type="checkbox" class='has-value input'> {{text}}
     </label>
   </div>
 </template>
