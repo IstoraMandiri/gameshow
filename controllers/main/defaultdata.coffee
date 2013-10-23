@@ -22,6 +22,7 @@
     'questions',
     'home',
     'results',
+    'tiebreakSlide',
     'tiebreakIntro',
     'tiebreak',
     'tiebreakResults',
@@ -46,6 +47,12 @@
       id: 6
       title:'Enterprise'
     ]
+
+  collections.Stages.insert
+    title: 'Tiebreak Slide'
+    _id: 'tiebreakSlide'
+    type: 'static'
+    class: 'holding_slide'
 
   collections.Stages.insert
     title: 'Holding Slide'
@@ -145,17 +152,17 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     title: 'Playing Video...'
 
   collections.Stages.insert
-    title: 'Tiebreak Intro'   
+    title: 'Tiebreak - Random Number Generator'   
     _id: 'tiebreakIntro'
     type: 'tiebreakIntro'
 
   collections.Stages.insert
-    title: 'Tiebreaker'   
+    title: 'Tiebreak - Number Entry'   
     _id: 'tiebreak'
     type: 'tiebreak'
 
   collections.Stages.insert
-    title: 'Tiebreak Results'   
+    title: 'Tiebreak - Results'   
     _id: 'tiebreakResults'
     type: 'tiebreakResults'
 

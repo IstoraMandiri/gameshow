@@ -13,8 +13,15 @@ if Meteor.isClient
     else if stageType is 'tiebreakResults'
       tiebreak.results()
     else
-      helpers.currentScores()
+      players = helpers.currentScores()
+      for player in players
+        player.time = filters.milisToSeconds helpers.totalAnswerTime player
+      return players
+
   
+
+  Template.leaderboard_player.isTiebreak = -> helpers.currentStage().type is 'tiebreakResults'
+
   Template.leaderboard_player.isLeaderboard = -> helpers.currentStage()._id is 'leaderboard'
 
   Template.leaderboard.text = -> 

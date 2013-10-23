@@ -400,6 +400,9 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
       background-image:url('/img/holding_display.jpg');
       background-size:cover;
     }
+    &.stage_id_tiebreakSlide{
+      background-image:url('/img/tiebreak_screen.jpg');
+    }
     &.stage_id_leaderboard, &.stage_video_play, &.stage_results, &.stage_leaderboard, &.stage_tiebreakIntro, &.stage_tiebreak, &.stage_tiebreakResults{
       background:none;
       border-radius:0;
@@ -448,9 +451,12 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
       background-image:url('/img/holding_ipad.jpg');
       background-size:cover;
     }
-    .stage_tiebreakIntro{
-      background-image:url('/img/tiebreak_ipad.jpg')
+    .stage_tiebreakIntro, .stage_id_tiebreakSlide{
+      background-image:url('/img/tiebreak_ipad.jpg') !important;
     }
+  }
+  #stage > .inner{
+    height:auto;
   }
 
   #stage.stage_form h1.title{

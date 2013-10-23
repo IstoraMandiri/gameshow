@@ -77,9 +77,25 @@
     {{> leaderboard tiebreakResults}}
   {{/if}}
   {{#if winner}}
-    <h2 class="winner">{{winner.firstname}} {{winner.lastname}} is the winner!</h2>
+    {{#if screenMode}}
+      <div class="question-result answered-correctly">
+        <div class="text">Winner: {{winner.firstname}} {{winner.lastname}}!</div>
+      </div>
+    {{else}}
+      {{#if iAmTiebreakWinner}}
+        <div class="question-result answered-correctly">
+          <div class="text">Congratulations! You are the winner!</div>
+        </div>
+      {{else}}
+        <div class="question-result answered-incorrectly">
+          <div class="text">Unlucky! You didn't win the tiebreak.</div>
+        </div>
+      {{/if}}
+    {{/if}}
   {{else}}
-    <h2>Another tiebreak!</h2>
+    <div class="question-result bonus-points">
+      <div class="text">Another Tie!</div>
+    </div>
   {{/if}}
 {{else}}
   {{> notPlayingTiebreak}}

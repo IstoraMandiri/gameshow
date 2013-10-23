@@ -15,8 +15,11 @@
 <template name="leaderboard_player">
     <tr class='player'>
       <td>{{firstname}} {{lastname}}</td>
-      <td>{{score}}</td>
-      <td>{{time}}s</td>
+      <td>{{score}}{{#if isTiebreak}} correct{{/if}}</td>
+      {{#if isTiebreak}}
+      {{else}}
+        <td>{{time}}s</td>
+      {{/if}}
     </tr>
 </template>
 

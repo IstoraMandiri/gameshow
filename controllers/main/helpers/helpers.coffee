@@ -42,11 +42,13 @@ prevGame = null
           pos = tempAdvance
         else
           Session.set 'temporaryAdvance', false
+
+        if helpers.currentPlayer()?
+          collections.Players.update {_id:helpers.currentPlayer()._id},
+            $set: {position:pos}
+  
       stage = collections.Stages.findOne
         _id: helpers.currentGame().stages?[pos]
-      if helpers.currentPlayer()?
-        collections.Players.update {_id:helpers.currentPlayer()._id},
-          $set: {position:pos}
       return stage
 
   nextStage : ->

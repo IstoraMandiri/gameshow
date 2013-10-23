@@ -29,9 +29,6 @@ if Meteor.isClient
   Template.admin_data_games.games = -> admin.findGames().fetch()
   Template.admin_data_games.count = -> admin.findGames().count()  
   
-  # Template.admin_data_games_players.players = -> 
-  #   console.log @
-  #   return @
   Template.game_player.player =  -> admin.getPlayer(@)
 
   Template.admin_questions.questions = -> admin.findQuestions().fetch()

@@ -39,8 +39,6 @@ currentQuestion = ->
   if questionId
     collections.Questions.findOne({_id:questionId})
 
-
-
 bonusTimeToBeat = ->
   timeToBeat = null
   for player in helpers.currentPlayers()
@@ -52,12 +50,14 @@ bonusTimeToBeat = ->
   return timeToBeat
 
 currentAnswer = (player) ->
-  if helpers.getPlayer(player).answers
+  if helpers.getPlayer(player)?.answers
     for answer in helpers.getPlayer(player).answers
       if answer.question_id is helpers.currentStage().question_id
         return answer
   
-wonBonus = (player) -> if bonusTimeToBeat() is currentAnswer(player)?.timeTaken then true else false
+wonBonus = (player) -> 
+  console.log bonusTimeToBeat(), currentAnswer(player)?.timeTaken
+  if bonusTimeToBeat() is currentAnswer(player)?.timeTaken then true else false
 
 
 awardBonusPoints = (player) ->
@@ -122,10 +122,10 @@ if Meteor.isServer
     'reset' : ->  createNewGame()
 
     'questionComplete': ->
-      # calculate bonus
       bonusWinner = null
       for player in helpers.currentPlayers()
-        if wonBonus(player)
+        console.log player._id, 'won?', wonBonus(player._id)
+        if wonBonus(player._id)
           awardBonusPoints(player)
 
 

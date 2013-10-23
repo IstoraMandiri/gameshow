@@ -34,7 +34,7 @@ tieBreakIntroStage = undefined
     for player in currentTiebreak().players
       thisPlayer = collections.Players.findOne({_id:player._id})
       if thisPlayer.tiebreakScore
-        thisPlayer.score = thisPlayer.tiebreakScore[currentRound()]?= []
+        thisPlayer.score = thisPlayer.tiebreakScore[currentRound()]?= 0
         topList.push thisPlayer
     topList.sort (a,b) ->
       a.score - b.score
@@ -106,21 +106,23 @@ sendTiebreakScore = ->
     $push: 
       tiebreakScore: tiebreakScore
 
-tiebreakResults = ->
-  topList = []
-  for player in currentTiebreak().players
-    thisPlayer = collections.Players.findOne({_id:player._id})
-    console.log currentRound(), thisPlayer, thisPlayer.tiebreakScore[currentRound()]
-    if thisPlayer.tiebreakScore
-      thisPlayer.score = thisPlayer.tiebreakScore[currentRound()]?= []
-      topList.push thisPlayer
-  console.log topList
-  topList.sort (a,b) ->
-    a.score - b.score
-  topList.reverse()
+# tiebreakResults = ->
+#   topList = []
+#   for player in currentTiebreak().players
+#     thisPlayer = collections.Players.findOne({_id:player._id})
+#     console.log currentRound(), thisPlayer, thisPlayer.tiebreakScore[currentRound()]
+#     if thisPlayer.tiebreakScore
+#       thisPlayer.score = thisPlayer.tiebreakScore[currentRound()]?= []
+#       topList.push thisPlayer
+#   console.log topList
+#   topList.sort (a,b) ->
+#     a.score - b.score
+#   topList.reverse()
 # method, start tiebreak
 
-tiebreakWinners = ->  helpers.highestScorers tiebreak.results()
+tiebreakWinners = ->  
+  console.log 'results:',tiebreak.results()
+  helpers.highestScorers tiebreak.results()
 
 tiebreakWinner = -> if tiebreakWinners().length is 1 then tiebreakWinners()[0] else false
 
@@ -214,6 +216,8 @@ if Meteor.isClient
 
   Template.stage_tiebreakResults.tiebreakResults = -> tiebreak.results()
 
-
+  Template.stage_tiebreakResults.iAmTiebreakWinner = ->
+    console.log tiebreakWinner(), helpers.currentPlayer()
+    tiebreakWinner()._id is helpers.currentPlayer()._id
 
 

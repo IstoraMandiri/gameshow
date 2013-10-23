@@ -68,18 +68,19 @@
   {{#if playerMode}}
     {{#if iAmWinner}}
       <div class="winner">
-        <h1>Congratualtions</h1>
         {{#if playingTiebreak}}
-          <h2>You have reached the tiebreak stage!</h2>
+          <div class="question-result answered-correctly">
+            <div class="text">You have reached the tiebreak stage!</div>
+          </div>
         {{else}}
-          <h2>You are the winner!</h2>
+          <div class="question-result answered-correctly">
+            <div class="text">You are the winner!</div>
+          </div>
         {{/if}}
-
       </div>
     {{else}}
-      <div class="loser">
-        <h1>Sorry</h1>
-        <h2>You didn't win.<br/>Better luck next time!</h2>
+      <div class="question-result answered-incorrectly">
+        <div class="text">Unlucky! You didn't win this time...</div>
       </div>
     {{/if}}
   {{else}}
