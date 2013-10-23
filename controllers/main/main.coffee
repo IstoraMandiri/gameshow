@@ -80,6 +80,15 @@ getRandomQuestions = (number,category) ->
 if Meteor.isServer
   
   Meteor.methods
+    'randomizeQuestionOptions' : ->
+      currentQuestions = collections.Questions.find().fetch()
+      for question in currentQuestions
+        collections.Questions.update {_id:question._id},
+          $set: 
+            options: _.shuffle question.options
+
+
+
     'generateQuestions': -> 
       questionsInsertPoint = helpers.currentGame().stages.indexOf('questions')
       if questionsInsertPoint >= 0 and winningVideo()
@@ -169,6 +178,7 @@ if Meteor.isServer
     defaultGame = collections.Config.findOne({_id:'defaultGame'})
     delete defaultGame._id
     collections.Games.insert defaultGame
+    Meteor.call 'randomizeQuestionOptions'
 
   Meteor.startup ->
     if !helpers.defaultConfig()?

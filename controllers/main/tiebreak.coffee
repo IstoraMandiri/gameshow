@@ -1,4 +1,4 @@
-tiebreakStageList = ['tiebreakIntro','tiebreak','tiebreakResults']
+tiebreakStageList = ['tiebreakSlide','tiebreakIntro','tiebreak','tiebreakResults']
 
 buttons = [{t:'0',d:0},{t:'1',d:1},{t:'2',d:2},{t:'3',d:3},{t:'4',d:4},{t:'5',d:5},{t:'6',d:6},{t:'7',d:7},{t:'8',d:8},{t:'9',d:9},{t:'×',d:'backspace',c:'backspace btn-primary'}]
 

@@ -4,6 +4,8 @@ if Meteor.isClient
     '/admin':'admin'
     '/admin/:sub': (sub) ->
       Session.set 'subPage', sub
+      Meteor.autorun ->
+        Meteor.subscribe "players"
       return 'admin'
 
   Template.body.layoutName = ->

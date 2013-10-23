@@ -16,9 +16,9 @@
             <td>{{nextStage.title}}</td>
           </tr>
         </table>
-        <!-- <div class="btn" id="back-btn">Back</div> -->
+        <div class="btn {{#if backDisabled}}btn-disabled{{/if}}" id="back-btn">Back</div>
         <div class="btn btn-primary pull-left" id="reset-btn">New Game</div>
-        <div class="btn pull-right" id="forward-btn">Forward</div>  
+        <div class="btn pull-right {{#if forwardDisabled}}btn-disabled{{/if}}" id="forward-btn">Forward</div>  
         <!-- <hr> -->
         <!-- <div class="btn" id="reset-btn">New Game</div> -->
       </div>
