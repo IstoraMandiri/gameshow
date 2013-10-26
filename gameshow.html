@@ -13,8 +13,23 @@
       {{> content}}
     </div>
     {{> modal}}  
+    {{#if screenMode}}
+      {{> video_buffer}}
+    {{/if}}    
   </div>
 </body>
+
+<template name="video_buffer">
+  
+  
+  {{#if videoBuffer}}
+  <div class="video-buffer">
+    <video>
+      <source preload='auto' src="/videos/{{videoBuffer.id}}/video.mp4">
+    </video>
+  </div>
+  {{/if}}
+</template>
 
 <template name="content">
   {{> body}}

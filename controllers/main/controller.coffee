@@ -2,7 +2,7 @@ if Meteor.isClient
 
   Template.controller_info.position = -> helpers.currentGame()?.position
 
-  Template.controller_info.winningVideo = ->  helpers.currentGame()?.winningVideo?.title
+  Template.controller_info.winningVideo = ->  helpers.currentWinningVideo()?.title
 
   Template.controller_player_info.totalAnswerTime = -> 
     filters.milisToSeconds helpers.totalAnswerTime @._id
@@ -12,9 +12,10 @@ if Meteor.isClient
 
   Template.controller_player_info.caughtUp = -> 
     leadingPos = 0
-    for player in helpers.currentPlayers()
-      if player.position > leadingPos
-        leadingPos = player.position
+    if  helpers.currentPlayers()?
+      for player in helpers.currentPlayers()
+        if player.position > leadingPos
+          leadingPos = player.position
     if @position >= leadingPos then true else false
 
   # ugh
@@ -22,7 +23,7 @@ if Meteor.isClient
     if helpers.currentStage()?
       if helpers.currentStage()?._id is 'register' and helpers.currentPlayers().length < 2
         return true
-      if helpers.currentStage()?._id is 'videoSelect' and !helpers.currentGame()?.winningVideo?
+      if helpers.currentStage()?._id is 'videoSelect' and !helpers.currentWinningVideo()?
         return true
     return Session.equals 'forwardDisabled', true
 

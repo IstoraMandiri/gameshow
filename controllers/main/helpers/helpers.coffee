@@ -14,6 +14,45 @@ prevGame = null
 
 @helpers = 
   
+  currentWinningVideo : ->
+    videoVotes = _.countBy helpers.currentPlayers(), (player) ->
+      player.video?.id
+    
+    
+    delete videoVotes['undefined']
+
+    minForVictory = _.max videoVotes, (item) ->
+      item
+
+    findVideoById = (id) ->
+      for video in helpers.currentGame().videos
+        if parseInt(id) is parseInt(video.id)
+          return video
+          break
+
+    winners = []
+    for key,value of videoVotes
+      ## calculate time taken to vote
+      if value >= minForVictory
+        winners.push findVideoById(key)
+    if winners.length is 1
+      return winners[0]
+    else
+      if helpers.currentPlayers()?
+        for player in helpers.currentPlayers()
+          for video in winners
+            video.voteTime?= 0
+            if video.id is player.video?.id
+              video.voteTime += player.video.voteTime
+      return _.min winners, (video) ->
+        video.voteTime
+
+
+
+      # compare times
+
+
+  
   getPlayer : (player) -> 
     if player?
       collections.Players.findOne player
@@ -134,6 +173,11 @@ prevGame = null
       if helpers.currentGame().stages[newPosition] is 'leaderboard' and helpers.currentGame().tiebreak and !helpers.currentGame().tiebreak.complete
         Meteor.call 'tiebreakComplete'
       else
+        
+        if helpers.currentStage()._id is 'videoSelect'
+          console.log 'found videoselect'
+          Meteor.call 'endVideoVote'
+
         helpers.updateCurrentGame 
           position: newPosition
 

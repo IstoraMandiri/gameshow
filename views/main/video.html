@@ -7,19 +7,19 @@
           <div class="text">Your vote has been cast!</div>
         </div>
       {{else}}
-          {{#each videos}}
+        {{#each videos}}
+          {{#constant}}
             {{> video_button}}
-          {{/each}}
+          {{/constant}}
+        {{/each}}
       {{/if}}
     </div>
 </template>
 
 <template name="video_button">
   <div class="video video-btn">
-    {{#constant}}
-      <img src="/videos/{{id}}/thumb.png" alt="">
-      <div class="text btn">{{title}}</div>
-    {{/constant}}
+    <img src="/videos/{{id}}/thumb.png" alt="">
+    <div class="text btn">{{title}}</div>
   </div>
 </template>
 

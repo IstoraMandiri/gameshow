@@ -86,7 +86,7 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
     &:nth-child(9)::before{content:'I';}
   }
   .video-btn img{
-    max-height:120px;
+    width:290px;
   }
 
 
@@ -309,18 +309,18 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
   }
 
   .btn{
-    color:white;
+    color:black;
     font-family:'HeaderFont';
     background: -webkit-radial-gradient(50% -20px, ellipse cover, lighten(@color1, 20%) 0%,@color1 100%);
     border:none;
-    text-shadow:0px 1px 2px black;
+    text-shadow:0px -1px 1px white;
     box-shadow:0px 3px 5px rgba(0,0,0,.1), inset 0px 0px 30px rgba(0,0,0,.1);
     border-bottom:2px solid rgba(0,0,0,.4);
     border-top:1px solid rgba(255,255,255,.4);
     &:hover, &:active{
       background-position:0;
       background: -webkit-radial-gradient(50% -20px, ellipse cover, lighten(@color1, 20%) 0%,@color1 100%);
-      color:white;
+      color:black;
     }
     &.btn-primary{
       color:#333;
@@ -333,14 +333,13 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
 
   .video-btn{
     display:inline-block;
-    width:270px;
+    width:300px;
     margin:10px 20px;
     font-family:'HeaderFont';
-
     .text{
-      font-size:20px;
+      font-size:24px;
       margin-top:10px;
-      padding:15px;
+      padding:20px;
       border-radius: 10px;
       display:block;
     }
@@ -506,7 +505,9 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
   }
   .video-btn{
     margin:30px 50px;
-    width:300px;
+  }
+  #video_select_wrapper{
+    padding:0px 200px;
   }
 }
 

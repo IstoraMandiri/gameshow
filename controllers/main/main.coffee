@@ -66,7 +66,7 @@ awardBonusPoints = (player) ->
       score: helpers.currentGame().bonusPoints
 
 
-winningVideo = -> helpers.currentGame().winningVideo
+# winningVideo = -> helpers.currentGame().winningVideo
 
 getRandomQuestions = (number,category) ->
   allQuestions = collections.Questions.find({category:category}).fetch()
@@ -75,11 +75,18 @@ getRandomQuestions = (number,category) ->
     result.splice(number, result.length)
   return result
 
+winningVideo = -> helpers.currentWinningVideo()
 
 
 if Meteor.isServer
   
-  Meteor.methods
+  Meteor.methods  
+    'endVideoVote' : ->
+      console.log 'updating current game'
+      helpers.updateCurrentGame
+        winningVideo: helpers.currentWinningVideo()
+
+
     'randomizeQuestionOptions' : ->
       currentQuestions = collections.Questions.find().fetch()
       for question in currentQuestions
@@ -147,30 +154,6 @@ if Meteor.isServer
         console.log 'Tiebreak situation'
         tiebreak.begin winners
         
-    'newVideoVote': ->
-        videoVotes = _.countBy helpers.currentPlayers(), (player) ->
-          player.video?.id
-        
-        
-        delete videoVotes['undefined']
-
-        minForVictory = _.max videoVotes, (item) ->
-          item
-
-        findVideoById = (id) ->
-          for video in helpers.currentGame().videos
-            if parseInt(id) is parseInt(video.id)
-              return video
-              break
-
-        console.log 'videovote', videoVotes
-
-        for key,value of videoVotes 
-            if value >= minForVictory
-              console.log 'winning ideo is', findVideoById(key)
-              helpers.updateCurrentGame 
-                winningVideo: findVideoById(key)
-              break
 
   createNewGame = ->
     defaultGame = collections.Config.findOne({_id:'defaultGame'})
@@ -421,25 +404,32 @@ if Meteor.isClient
 
   Template.stage_video_select.voted = -> Session.get 'votedOnVideo', true
 
-  Template.video_button.events = 
-    "click" : (evt, template) ->
+  Template.stage_video_select.created = -> Session.set 'startedVideoVote', new Date()
+
+  eventsObj = {}
+  eventsObj["#{helpers.quickTouch} .video"] = (event,template) ->
+    video = @
+    video.voteTime = new Date() - Session.get('startedVideoVote')
+    if @id?
       collections.Players.update Session.get('currentPlayer'),
         $set:
-          video: @      
-      Session.set 'votedOnVideo', true
-      Meteor.call 'newVideoVote'
-      # temporaryAdvance()
+          video: video
+      # Session.set 'votedOnVideo', true
+
+  Template.stage_video_select.events = eventsObj
+
+  
+  Template.video_buffer.videoBuffer = -> helpers.currentGame()?.winningVideo
 
 
   Template.playing_video.winningVideo = -> winningVideo()
 
   Template.playing_video.created = ->
     Meteor.setTimeout ->
-      $video = $('video')[0]
+      $video = $('#video_wrapper video')[0]
       $video.play()
       $video.addEventListener 'ended', ->
         helpers.move 'forward'
-      , 200
     , 2000
 
 
