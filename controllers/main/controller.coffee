@@ -18,19 +18,16 @@ if Meteor.isClient
     if @position >= leadingPos then true else false
 
   # ugh
-  forwardDisabled = -> Session.equals 'forwardDisabled', true
+  forwardDisabled = -> 
+    if helpers.currentStage()?
+      if helpers.currentStage()?._id is 'register' and helpers.currentPlayers().length < 2
+        return true
+      if helpers.currentStage()?._id is 'videoSelect' and !helpers.currentGame()?.winningVideo?
+        return true
+    return Session.equals 'forwardDisabled', true
 
-  Template.controller.forwardDisabled = -> 
-    if helpers.currentStage()._id is 'register' and helpers.currentPlayers().length < 2
-      return true
-    if helpers.currentStage()._id is 'videoSelect' and !helpers.currentGame().winningVideo?
-      return true
-    return forwardDisabled()
-    # if forwardDisabled()
-      # registration
-      # videos
-    # return true
 
+  Template.controller.forwardDisabled = -> forwardDisabled()
 
 
   Template.controller.backDisabled = -> Session.equals 'backDisabled', true

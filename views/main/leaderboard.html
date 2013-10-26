@@ -16,9 +16,8 @@
     <tr class='player'>
       <td>{{firstname}} {{lastname}}</td>
       <td>{{score}}{{#if isTiebreak}} correct{{/if}}</td>
-      {{#if isTiebreak}}
-      {{else}}
-        <td>{{time}}s</td>
+      {{#if isLeaderboard}}
+          <td>{{time}}s</td>      
       {{/if}}
     </tr>
 </template>

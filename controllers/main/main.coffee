@@ -148,8 +148,6 @@ if Meteor.isServer
         tiebreak.begin winners
         
     'newVideoVote': ->
-        console.log helpers.currentPlayers()
-        
         videoVotes = _.countBy helpers.currentPlayers(), (player) ->
           player.video?.id
         
@@ -181,6 +179,10 @@ if Meteor.isServer
     Meteor.call 'randomizeQuestionOptions'
 
   Meteor.startup ->
+    console.log 'questions', collections.Questions.find().count()
+    if collections.Questions.find().count() is 0
+      console.log 'inserting questions'
+      insertFakeQuestions()
     if !helpers.defaultConfig()?
       insertFakeData()
     if !helpers.currentGame()?
@@ -437,7 +439,9 @@ if Meteor.isClient
       $video.play()
       $video.addEventListener 'ended', ->
         helpers.move 'forward'
-    , 1000
+      , 200
+    , 2000
+
 
   Template.stage_results.iAmWinner = ->
     thisPlayerId = helpers.currentPlayer()._id 

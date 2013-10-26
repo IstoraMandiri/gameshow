@@ -1,22 +1,25 @@
 
 <template name="stage_video_select">
-  <div id="video_select_wrapper">
-    {{#if voted}}
-      <div class="question-result answer-received">
-        <div class="text">Your vote has been cast!</div>
-      </div>
-    {{else}}
-      {{#each videos}}
-        {{> video_button}}
-      {{/each}}
-    {{/if}}
-  </div>
+
+    <div id="video_select_wrapper">
+      {{#if voted}}
+        <div class="question-result answer-received">
+          <div class="text">Your vote has been cast!</div>
+        </div>
+      {{else}}
+          {{#each videos}}
+            {{> video_button}}
+          {{/each}}
+      {{/if}}
+    </div>
 </template>
 
 <template name="video_button">
   <div class="video video-btn">
-    <img src="/videos/{{id}}/thumb.png" alt="">
-    <div class="text btn">{{title}}</div>
+    {{#constant}}
+      <img src="/videos/{{id}}/thumb.png" alt="">
+      <div class="text btn">{{title}}</div>
+    {{/constant}}
   </div>
 </template>
 
@@ -30,7 +33,7 @@
 
 <template name='playing_video'>
   <div id="video_wrapper">
-    <video autoplay>
+    <video>
      <source src="/videos/{{winningVideo.id}}/video.mp4">
     </video>
   </div>  

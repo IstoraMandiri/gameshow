@@ -111,12 +111,13 @@ prevGame = null
 
   currentAnswerTime : (player) ->
     timeTaken = 0
-    currentQuestionId = helpers.currentStage().question_id
-    thisPlayer = helpers.getPlayer player
-    if thisPlayer.answers?
-      for answer in thisPlayer.answers
-        if answer.question_id is currentQuestionId
-         timeTaken = answer.timeTaken
+    if helpers.currentStage()?
+      currentQuestionId = helpers.currentStage().question_id
+      thisPlayer = helpers.getPlayer player
+      if thisPlayer.answers?
+        for answer in thisPlayer.answers
+          if answer.question_id is currentQuestionId
+           timeTaken = answer.timeTaken
     return timeTaken
 
 

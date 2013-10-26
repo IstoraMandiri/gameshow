@@ -189,21 +189,19 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
         # required:true
     ]
 
-
+@insertFakeQuestions = ->
   symantecQuesitons = [
     [
       "1",
-      "Symantec",
-      "Symantec Solutions for Malware are:",
+      "Symantec solutions\n  for Malware are:",
       "All of these",
       "Faster ",
       "Stronger",
-      "Anticipate threats"
+      "To anticipate\n  threats"
     ],
     [
       "1",
-      "Symantec",
-      "Symantec Solution for Cyber Attacks is called?",
+      "Symantec's solution for Cyber Attacks is called?",
       "Global Intelligence Network",
       "Global Attack Network",
       "Global Eye Network",
@@ -211,43 +209,39 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "1",
-      "Symantec",
-      "What does Symantec have built into their products?",
-      "Multiple Technologies",
-      "Nice Colours",
-      "Great Designs",
-      "Pleasing Patterns"
+      "What does Symantec have built into their\n  products?",
+      "Multiple technologies",
+      "Nice colours",
+      "Great designs",
+      "Pleasing patterns"
     ],
     [
       "1",
-      "Symantec",
       "Symantec Insight uses",
       "Reputation Security Technology",
-      "Media Reports",
+      "Media reports",
       "Crystal ball",
-      "Musical Notes"
+      "Musical notes"
     ],
     [
       "1",
-      "Symantec",
-      "Companies using Symantec Protection Policies are reporting improved:",
+      "Companies using Symantec Protection Policies are\n  reporting improved:",
       "All of these",
       "Detection",
       "Performance",
-      "Accuracy"
+      "Accuracy",
+      ""
     ],
     [
       "1",
-      "Symantec",
-      "Symantec Insight tracks millions of files and billions of data to:",
+      "Symantec Insight tracks millions of files and\n  billions of data to:",
       "Identify new threats being created",
-      "Identify Trends ",
-      "Identify Ideas",
-      "Identify People"
+      "Identify trends ",
+      "Identify ideas",
+      "Identify people"
     ],
     [
       "1",
-      "Symantec",
       "Symantec collects and deciphers",
       "Global Intelligence",
       "Weather Patterns",
@@ -256,7 +250,6 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "1",
-      "Symantec",
       "Symantec can help businesses ",
       "Of all sizes",
       "Only on a small scale",
@@ -265,7 +258,6 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "1",
-      "Symantec",
       "Symantec knows",
       "How to interpret all the data",
       "Distribute the data",
@@ -274,16 +266,15 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "1",
-      "Symantec",
-      "Symantec Insight resolves Malware Issues",
+      "Symantec Insight resolves Malware issues",
       "In time",
       "In a week",
       "In a month",
-      "In a year"
+      "In a year",
+      ""
     ],
     [
       "1",
-      "Symantec",
       "Symantec takes the data and",
       "Builds the right defence",
       "Ignores it",
@@ -292,8 +283,7 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "1",
-      "Symantec",
-      "Symantec gives",
+      "Symantec gives all its partners",
       "Real Solutions",
       "Good advice",
       "Good prizes",
@@ -301,17 +291,14 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "1",
-      "Symantec",
-      "Symantec is the Leader in collecting and deciphering Global Intelligence",
+      "Symantec is the Leader in collecting and\n  deciphering Global Intelligence",
       "TRUE",
       "FALSE",
-      "",
       ""
     ],
     [
       "1",
-      "Symantec",
-      "Symantec helps businesses recover from attacks and also",
+      "Symantec helps businesses recover from attacks\n  and also",
       "Avoid them completely",
       "Ignore them",
       "Send them away",
@@ -319,25 +306,21 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "1",
-      "Product",
       "Advanced Malware is responsible for",
       "Cyber Attack",
       "Verbal attack",
       "Art attack",
-      "Time attack"
+      "Panic attack"
     ],
     [
       "1",
-      "Product",
-      "Cyber Attacks only happen to big Corporations",
+      "Cyber Attacks only happen to big corporations",
       "FALSE",
       "TRUE",
-      "",
       ""
     ],
     [
       "1",
-      "Product",
       "Cyber Attacks target",
       "All of these",
       "Employees",
@@ -346,62 +329,56 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "1",
-      "Product",
       "Cyber Attacks can be present in",
       "All of these",
       "Spam",
-      "Website Attacks",
+      "Website attacks",
       "Malvertising"
     ],
     [
       "1",
-      "Product",
-      "Anti Virus solutions are enough against Cyber Attacks",
+      "Anti Virus solutions are sufficient against\n  Cyber Attacks",
       "FALSE",
       "TRUE",
-      "",
       ""
     ],
     [
       "1",
-      "Product",
       "Security is ",
       "Knowledge",
       "A Guard dog",
       "A Fence",
-      "A Wall"
+      "A Wall",
+      ""
     ],
     [
       "1",
-      "Product",
       "Knowledge is",
       "Power",
       "Strength",
       "Physical Fitness",
-      "Agility"
+      "Agility",
+      ""
     ],
     [
       "1",
-      "Product",
       "Protection is about real time",
       "Security Intelligence",
-      "Higher intelligence",
+      "Higher Intelligence",
       "Basic Intelligence",
       "Average Intelligence"
     ],
     [
       "1",
-      "Product",
       "What do Cyber criminals want",
       "Valuable Information",
-      "Television Listings",
+      "Television listings",
       "Clever sayings",
-      "Football Statistics"
+      "Football statistics"
     ],
     [
       "1",
-      "Product",
-      "Targeted attacks and Data Breaches are",
+      "Targeted attacks and data breaches are",
       "Rising",
       "Falling",
       "Staying the same",
@@ -409,34 +386,32 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "1",
-      "Observe",
       "The gentleman newsreader is",
       "Sitting in a studio",
       "Jogging",
       "Kneeling down",
-      "Standing"
+      "Standing",
+      ""
     ],
     [
       "1",
-      "Observe",
-      "What colour is the blouse of the small business lady?",
+      "What colour is the blouse of the small\n  business lady?",
       "Pink",
       "Yellow",
       "Blue",
-      "Black"
+      "Black",
+      ""
     ],
     [
       "1",
-      "Observe",
       "How does the video blogger end his 'speech'",
       "Peace out",
-      "Peace to the World",
-      "Global Peace",
+      "Peace to the world",
+      "Global peace",
       "Peace be with you"
     ],
     [
       "1",
-      "Observe",
       "What is the name of the news channel?",
       "10 Action News",
       "Newsbeat",
@@ -445,421 +420,135 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "1",
-      "Observe",
-      "What colour is the handheld microphone that the lady newsreader is holding?",
+      "What colour is the handheld microphone that\n  the lady newsreader is holding?",
       "Grey",
       "Black",
       "Red",
-      "White"
+      "White",
+      ""
     ],
     [
       "1",
-      "Observe",
-      "How many monitors are on the desk of the small business lady?",
+      "How many monitors are on the desk of the Small\n  Business lady?",
       "Two",
       "One",
       "Three",
-      "None"
+      "None",
+      ""
     ],
     [
       "1",
-      "Observe",
-      "According to the young lady from Georgia, companies need someone who",
-      "All of these",
+      "According to the young lady from Georgia,\n  companies need someone who",
+      "Has all of these",
       "Has the tools",
       "Recognises the problem",
       "Acts on the data"
     ],
     [
       "2",
-      "Symantec",
-      "Symantec know the …….. of malicious insiders",
-      "demographics",
-      "names",
-      "number",
-      "dimensions"
-    ],
-    [
-      "2",
-      "Symantec",
-      "Symantec products have the ability to …… malicious insiders ",
-      "lock out",
-      "look up",
-      "like",
-      "remember"
-    ],
-    [
-      "2",
-      "Symantec",
-      "Security is",
-      "knowledge",
-      "happiness",
-      "cool",
-      "smart"
-    ],
-    [
-      "2",
-      "Symantec",
-      "Knowledge is ",
-      "power",
-      "perfect",
-      "people",
-      "vital"
-    ],
-    [
-      "2",
-      "Symantec",
-      "Protection is about ",
-      "real time security data",
-      "knowing the math",
-      "double locking doors",
-      "finger print access"
-    ],
-    [
-      "2",
-      "Symantec",
-      "No-one collects and deciphers more real time data that ",
-      "Symantec",
-      "RSA",
-      "Santa Claus",
-      "Employees"
-    ],
-    [
-      "2",
-      "Symantec",
-      "Symantec recommend building a team made up of ",
-      "HR, Security & Legal",
-      "the best players",
-      "technical engineers",
-      "senior managers"
-    ],
-    [
-      "2",
-      "Symantec",
-      "Symantec's solution provides dashboards with",
-      "a business view",
-      "a sea view",
-      "colour options",
-      "HR reviews"
-    ],
-    [
-      "2",
-      "Symantec",
-      "Symantec recommends using a security technology like",
-      "Data Loss Prevention (DLP)",
-      "Data Loss Protection",
-      "Data Validation",
-      "Norton 360"
-    ],
-    [
-      "2",
-      "Symantec",
-      "Deploy technology to find incrimination evidence ",
-      "quickly and easily",
-      "slowly and surely",
-      "fast and furiously",
-      "nice and quietly"
-    ],
-    [
-      "2",
-      "Product",
-      "This video identifies malicious insider",
-      "Protection",
-      "Identification",
-      "Manipulation",
-      "Manifestation"
-    ],
-    [
-      "2",
-      "Product",
-      "Gangsters, Hackers, Malcontents and ……. engage in organised crime",
-      "The Competition",
-      "The Employees",
-      "The Pope",
-      "The Customers"
-    ],
-    [
-      "2",
-      "Product",
-      "A recent report states employees consider intellectual property",
-      "Fair game",
-      "a fair gain",
-      "free",
-      "protected"
-    ],
-    [
-      "2",
-      "Product",
-      "Other potential risks include Customers,  Contractors, Vendors and ",
-      "Partners",
-      "Players",
-      "Staff",
-      "Friends"
-    ],
-    [
-      "2",
-      "Product",
-      "Many stealing intellectual property are people you ",
-      "Trust",
-      "Know",
-      "Love",
-      "Hate"
-    ],
-    [
-      "2",
-      "Product",
-      "The majority of malicious insiders are ",
-      "Male",
-      "Female",
-      "Old",
-      "Young"
-    ],
-    [
-      "2",
-      "Product",
-      "What are ex-employees taking to their new employers?",
-      "IP",
-      "IT",
-      "Personnel Files",
-      "Colleagues"
-    ],
-    [
-      "2",
-      "Product",
-      "Removing a company's IP is ",
-      "both illicit and illegal",
-      "acceptable",
-      "illicit",
-      "illegal"
-    ],
-    [
-      "2",
-      "Product",
-      "Employees can be",
-      "sued",
-      "rewarded",
-      "sacked",
-      "framed"
-    ],
-    [
-      "2",
-      "Product",
-      "Many employees think that managers ",
-      "do not care",
-      "do not know",
-      "report the problem",
-      "do not think"
-    ],
-    [
-      "2",
-      "Product",
-      "Companies lack a culture of ",
-      "security",
-      "smileys",
-      "social networking",
-      "protection"
-    ],
-    [
-      "2",
-      "Observe",
-      "Which company does Linda Newquist worked for?",
-      "TNC",
-      "BBC",
-      "NBC",
-      "Google"
-    ],
-    [
-      "2",
-      "Observe",
-      "Which exit does the CCTV camera cover?",
-      "M1 North Lobby",
-      "M1 South Lobby",
-      "M6 North Lobby",
-      "M6 South Lobby"
-    ],
-    [
-      "2",
-      "Observe",
-      "Which Channel is making the outdoor broadcast?",
-      "10 Action News",
-      "NBC",
-      "Fox",
-      "News 24"
-    ],
-    [
-      "2",
-      "Observe",
-      "How many circles are there on the opening shot",
-      "3",
-      "5",
-      "2",
-      "0"
-    ],
-    [
-      "2",
-      "Observe",
-      "Which news station is broadcasting the breaking news story?",
-      "iNCN",
-      "iCNC",
-      "BBC",
-      "NBC"
-    ],
-    [
-      "2",
-      "Observe",
-      "IP was taking out of the building on a ",
-      "tablet",
-      "mobile phone",
-      "mac air",
-      "pallet truck"
-    ],
-    [
-      "2",
-      "Observe",
-      "What was the name if the IT analyst",
-      "Jeff Hinson",
-      "Jeff Taylor",
-      "Brian Hinson",
-      "Brian Taylor"
-    ],
-    [
-      "2",
-      "Observe",
-      "What was the colour of the female employee?",
-      "Red",
-      "Black",
-      "Brown",
-      "Blond"
-    ],
-    [
-      "2",
-      "Observe",
-      "The narrator ends saying ",
-      "peace out",
-      "pace out",
-      "make out",
-      "work out"
-    ],
-    [
-      "2",
-      "Observe",
-      "What is the name of the narrators company?",
-      "Tech Mayhem",
-      "Tech Know How",
-      "Tech Data",
-      "Data Mayhem"
-    ],
-    [
-      "3",
-      "Symantec",
-      "Which Symantec product can provide the solution you need?",
+      "Which Symantec product can provide the\n  solution you need?",
       "Symantec Net Backup",
       "Norton 360",
       "Asset Management Suite",
       "Back Up Exec"
     ],
     [
-      "3",
-      "Symantec",
-      "Which Symantec product can provide the solution you need?",
+      "2",
+      "Which Symantec product can provide the\n  solution you need?",
       "Veritas Cluster Server",
       "ApplicationHA",
       "Norton 360",
       "Enterprise Vault"
     ],
     [
-      "3",
-      "Symantec",
+      "2",
       "Symantec means availability you can",
-      "count on",
-      "count up",
-      "do without",
-      "measure"
+      "Count on",
+      "Count up",
+      "Do without",
+      "Measure",
+      ""
     ],
     [
-      "3",
-      "Symantec",
-      "Symantec Net Back Up and Verirtas Cluster Server",
-      "know where the problems are",
-      "don’t have any problems",
-      "know where your office is",
-      "know your company"
+      "2",
+      "Symantec Net Back Up and Veritas Cluster\n  Server",
+      "Know where the problems are",
+      "Don’t have any problems",
+      "Know where your office is",
+      "Know your company"
     ],
     [
-      "3",
-      "Symantec",
-      "Symantec's solution offers",
-      "virtual business services",
-      "virtual support",
-      "online business services",
-      "virtual assistants"
+      "2",
+      "Symantec's business continuity solution offers",
+      "Virtual business services",
+      "Virtual support",
+      "Online business services",
+      "Virtual assistants"
     ],
     [
-      "3",
-      "Symantec",
-      "Symantec' solution makes sure your business is always",
-      "up and running",
-      "safe from fire",
-      "aware of intruders",
-      "active"
+      "2",
+      "Symantec's solution makes sure your business is always",
+      "Up and running",
+      "Safe from fire",
+      "Aware of intruders",
+      "Active",
+      ""
     ],
     [
-      "3",
-      "Symantec",
+      "2",
       "Symantec's solutions mean minimal downtime and ",
-      "faster recovery",
-      "no recovery",
-      "better recovery",
-      "faster employees"
+      "Faster recovery",
+      "No recovery",
+      "Better recovery",
+      "Faster employees"
     ],
     [
-      "3",
-      "Symantec",
-      "With Veritas Cluster server testing is no longer",
-      "risky or expensive",
-      "possible",
-      "risky",
-      "expensive"
+      "2",
+      "With Veritas Cluster Server testing is no\n  longer",
+      "Risky or expensive",
+      "Possible",
+      "Risky",
+      "Expensive",
+      ""
     ],
     [
-      "3",
-      "Product",
-      "This video is about business",
-      "continuity",
-      "contingency",
-      "collaboration",
-      "climate"
+      "2",
+      "This video is about Business",
+      "Continuity",
+      "Contingency",
+      "Collaboration",
+      "Climate",
+      ""
     ],
     [
-      "3",
-      "Product",
-      "What percentage of decision-makers think improving BC/DR a priority?",
+      "2",
+      "What percentage of decision-makers think\n  improving Business Continuity a priority?",
       "0.6",
       "0.7",
       "0.25",
-      "0.06"
+      "0.06",
+      ""
     ],
     [
-      "3",
-      "Product",
-      "What percentage of IT budget planned for BC/DR?",
+      "2",
+      "What percentage of IT budget is planned for\n  Business Continuity/Disaster Recovery?",
       "0.066",
       "0.086",
       "0.26",
-      "none"
+      "none",
+      ""
     ],
     [
-      "3",
-      "Product",
-      "The average enterprise uses how many virtual and back up applications?",
+      "2",
+      "The average enterprise uses how many virtual\n  and back up applications?",
       "7",
       "17",
-      "1.7",
-      "8"
+      "0",
+      "8",
+      ""
     ],
     [
-      "3",
-      "Product",
+      "2",
       "What is the name of the new plague?",
       "Data Center Down",
       "Watership Down",
@@ -867,116 +556,107 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
       "Data Center Up"
     ],
     [
-      "3",
-      "Product",
-      "What contributes to system downtime as well as mother nature?",
-      "Human Error & System Failure",
-      "Human Error",
-      "System Failure",
+      "2",
+      "What contributes to system downtime as well as\n  mother nature?",
+      "Human error & System Failure",
+      "Human error",
+      "System failure",
       "None of these"
     ],
     [
-      "3",
-      "Product",
-      "What application has Fire Drill capability built in?",
+      "2",
+      "What application has Fire Drill capability\n  built in?",
       "Veritas Cluster",
-      "VirtualStore",
+      "Virtual Store",
       "DLP",
       "Desktop Email Encryption"
     ],
     [
-      "3",
-      "Product",
-      "With Veritas Cluster all testing can be done whilst applications remain",
-      "on line",
-      "on stand by",
-      "off line",
-      "hibernating"
+      "2",
+      "With Veritas Cluster all testing can be done\n  whilst applications remain",
+      "On line",
+      "On stand by",
+      "Off line",
+      "Hibernating"
     ],
     [
-      "3",
-      "Product",
-      "What is critical to success when disaster hits?",
+      "2",
+      "What needs to be done before disaster happens?",
       "Testing",
       "Power off",
       "Run for cover",
       "Boarding windows"
     ],
     [
-      "3",
-      "Product",
+      "2",
       "Keeping your data up and running is about",
-      "real time solutions",
-      "reality shows",
-      "quick solutions",
-      "real software"
+      "Real time solutions",
+      "Reality shows",
+      "Quick solutions",
+      "Real software"
     ],
     [
-      "3",
-      "Product",
-      "Solutions for applications ruining on different",
-      "physical and virtual tiers",
-      "physical tiers",
-      "virtual tiers",
-      "physical workouts"
+      "2",
+      "Symantec provides solutions for applications\n  running on different",
+      "Physical and virtual tiers",
+      "Physical tiers",
+      "Virtual tiers",
+      "Physical workouts"
     ],
     [
-      "3",
-      "Observe",
+      "2",
       "What threatens the entire coast?",
-      "A storm",
-      "A swarm",
-      "A hurricane",
-      "A tidal wave"
+      "A Storm",
+      "A Swarm",
+      "A stampede",
+      "A Tidal wave"
     ],
     [
-      "3",
-      "Observe",
-      "How many hurricanes per year on average?",
+      "2",
+      "How many hurricanes occur per year on average?",
       "6",
       "7",
       "16",
-      "75"
+      "75",
+      ""
     ],
     [
-      "3",
-      "Observe",
-      "How many earthquakes per year on average?",
+      "2",
+      "How many earthquakes happen per year on\n  average?",
       "150",
       "155",
       "200",
-      "550"
+      "550",
+      ""
     ],
     [
-      "3",
-      "Observe",
-      "How many tornadoes per year on average?",
+      "2",
+      "How many tornadoes happen per year on average?",
       "1253",
       "2523",
       "253",
-      "1000"
+      "1000",
+      ""
     ],
     [
-      "3",
-      "Observe",
-      "Video feed was unexpectedly",
-      "terminated",
-      "decontaminated",
-      "broken",
-      "interrupted"
+      "2",
+      "The video feed was unexpectedly",
+      "Terminated",
+      "Decontaminated",
+      "Broken",
+      "Interrupted"
     ],
     [
-      "3",
-      "Observe",
-      "How many hours warning did we have of the storm?",
+      "2",
+      "How many hours warning did we have of the\n  storm?",
       "24",
       "48",
       "4",
-      "36"
+      "36",
+      ""
     ],
     [
-      "3",
-      "Observe",
+      "2",
       "Where was the video blogger situated",
       "San Francisco CA",
       "Palo Alto CA",
@@ -984,45 +664,306 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
       "Salt Lake City, UT"
     ],
     [
-      "3",
-      "Observe",
-      "Cost in damage over past 30 years",
-      "$8.22BILLION",
-      "$8.22MILLION",
-      "$5BILLION",
+      "2",
+      "How much cost in damage due to natural\n  disasters has there been over the past 30 years?",
+      "$8.22 billion",
+      "$8.22 million",
+      "$5 hundred thousand",
       "Not recorded"
     ],
     [
-      "3",
-      "Observe",
-      "Which research company provided the facts",
+      "2",
+      "Which research company provided the facts?",
       "Forrester Research",
       "Gartner",
       "MORI",
       "Clarion Research"
     ],
     [
-      "3",
-      "Observe",
-      "Female employee can't work if she can't get to her",
-      "email",
-      "office",
-      "desk",
-      "home"
+      "2",
+      "The female employee can't work if she can't get to her",
+      "Email",
+      "Office",
+      "Desk",
+      "Home",
+      ""
+    ],
+    [
+      "2",
+      "How many dollars are lost for every lost hour\n  of business?",
+      "Millions",
+      "Hundreds",
+      "Thousands",
+      "Five",
+      ""
     ],
     [
       "3",
-      "Observe",
-      "Millions of dollars are lost every …….. we can't do business due to disaster",
-      "hour",
-      "week",
-      "day",
-      "minute"
+      "Symantec know the ……?.….. of malicious\n  insiders",
+      "Demographics",
+      "Names",
+      "Number",
+      "Dimensions"
+    ],
+    [
+      "3",
+      "Symantec products have the ability to …..?……\n  malicious insiders ",
+      "Lock out",
+      "Look up",
+      "Like",
+      "Remember",
+      ""
+    ],
+    [
+      "3",
+      "Security is",
+      "Knowledge",
+      "Happiness",
+      "Cool",
+      "Smart",
+      ""
+    ],
+    [
+      "3",
+      "Knowledge is ",
+      "Power",
+      "Perfect",
+      "People",
+      "Vital",
+      ""
+    ],
+    [
+      "3",
+      "Protection is about ",
+      "Real time security data",
+      "Knowing the math",
+      "Double locking doors",
+      "Finger print access"
+    ],
+    [
+      "3",
+      "No-one collects and deciphers more real time\n  data than",
+      "Symantec",
+      "Children",
+      "Santa Claus",
+      "Employees",
+      ""
+    ],
+    [
+      "3",
+      "Symantec recommend building a team made up\n  of ",
+      "HR, Security & Legal",
+      "The best players",
+      "Technical engineers",
+      "Senior managers"
+    ],
+    [
+      "3",
+      "Symantec's solution provides dashboards with",
+      "A business view",
+      "A sea view",
+      "Colour options",
+      "HR reviews"
+    ],
+    [
+      "3",
+      "Symantec recommends using a security\n  technology like",
+      "Data Loss Prevention (DLP)",
+      "Data Recovery",
+      "Data Validation",
+      "Norton 360"
+    ],
+    [
+      "3",
+      "Symantec deploy technology to find\n  incriminating evidence ",
+      "Quickly and easily",
+      "Slowly and surely",
+      "Fast and furiously",
+      "Nice and quietly"
+    ],
+    [
+      "3",
+      "This video identifies malicious insider",
+      "Protection",
+      "Identification",
+      "Manipulation",
+      "Manifestation"
+    ],
+    [
+      "3",
+      "Gangsters, Hackers, Malcontents and …?... engage in\n  organised crime",
+      "The Competition",
+      "The Employees",
+      "The Police",
+      "The Customers"
+    ],
+    [
+      "3",
+      "A recent report states employees consider\n  intellectual property",
+      "Fair game",
+      "A fair gain",
+      "Free",
+      "Protected",
+      ""
+    ],
+    [
+      "3",
+      "Other potential risks include Customers,  Contractors, Vendors and ",
+      "Partners",
+      "Players",
+      "Staff",
+      "Friends",
+      ""
+    ],
+    [
+      "3",
+      "Many stealing intellectual property are people\n  you ",
+      "Trust",
+      "Know",
+      "Love",
+      "Hate",
+      ""
+    ],
+    [
+      "3",
+      "The majority of malicious insiders are ",
+      "Male",
+      "Female",
+      "Old",
+      "Young",
+      ""
+    ],
+    [
+      "3",
+      "What are ex-employees taking to their new\n  employers?",
+      "Intellectual Property",
+      "IT",
+      "Personnel Files",
+      "Colleagues"
+    ],
+    [
+      "3",
+      "Removing a company's Intellectual Property\n  is ",
+      "Both illicit and illegal",
+      "Acceptable",
+      "Illicit",
+      "Illegal",
+      ""
+    ],
+    [
+      "3",
+      "Employees can be",
+      "Sued",
+      "Rewarded",
+      "Sacked",
+      "Framed",
+      ""
+    ],
+    [
+      "3",
+      "Many employees think that Managers ",
+      "Do not care",
+      "Do not know",
+      "Report the problem",
+      "Do not think"
+    ],
+    [
+      "3",
+      "Companies lack a culture of ",
+      "Security",
+      "Casual dressing",
+      "Social networking",
+      "Protection",
+      ""
+    ],
+    [
+      "3",
+      "What is IP",
+      "Intellectual Property",
+      "Identity Point",
+      "Information Protection",
+      "Intellectual Priority"
+    ],
+    [
+      "3",
+      "Which company does Linda Newquist worked for?",
+      "TNC",
+      "BBC",
+      "NBC",
+      "Google",
+      ""
+    ],
+    [
+      "3",
+      "Which exit does the CCTV camera cover?",
+      "M1 North Lobby",
+      "M1 South Lobby",
+      "M6 North Lobby",
+      "M6 South Lobby"
+    ],
+    [
+      "3",
+      "Which Channel is making the outdoor broadcast?",
+      "10 Action News",
+      "NBC",
+      "Fox",
+      "News 24",
+      ""
+    ],
+    [
+      "3",
+      "How many circles are there on the opening shot",
+      "3",
+      "5",
+      "2",
+      "0",
+      ""
+    ],
+    [
+      "3",
+      "Which news station is broadcasting the\n  breaking news story?",
+      "iNCN",
+      "iCNC",
+      "BBC",
+      "NBC",
+      ""
+    ],
+    [
+      "3",
+      "Intellectual Property \n  was taken out of the building on a ",
+      "Tablet",
+      "Mobile phone",
+      "Mac air",
+      "Pallet truck"
+    ],
+    [
+      "3",
+      "What was the name if the IT analyst",
+      "Jeff Hinson",
+      "Jeff Taylor",
+      "Brian Hinson",
+      "Brian Taylor"
+    ],
+    [
+      "3",
+      "The narrator ends saying ",
+      "Peace out",
+      "Pace out",
+      "Make out",
+      "Work out",
+      ""
+    ],
+    [
+      "3",
+      "What is the name of the video blogger's company?",
+      "Tech Mayhem",
+      "Tech Know How",
+      "Tech Data",
+      "Data Mayhem"
     ],
     [
       "4",
-      "Symantec",
-      "Mobility without …………….?",
+      "Mobility without …..?……",
       "Vulnerability",
       "Mutiny",
       "Desirability",
@@ -1030,70 +971,68 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "4",
-      "Symantec",
-      "Symantec reports what percentage increase in Malware of the last 9 months of 2012?",
+      "According to Symantec reports what is the\n  percentage increase in Malware during the last 9 months of 2012?",
       "2.1",
       "1.5",
-      "10",
-      "0.5"
+      "0.25",
+      "0.5",
+      ""
     ],
     [
       "4",
-      "Symantec",
-      "Security is ………….?",
+      "Security is ……?…….",
       "Knowledge",
       "Power",
       "Smart",
-      "Sensible"
+      "Sensible",
+      ""
     ],
     [
       "4",
-      "Symantec",
-      "Knowledge is …………?",
+      "Knowledge is ……?……",
       "Power",
       "Knowledge",
       "Intimidating",
-      "Safe"
+      "Safe",
+      ""
     ],
     [
       "4",
-      "Symantec",
-      "The average mobile connection speed with surpass how many Mbps in 2014",
+      "The average mobile connection speed will\n  surpass how many Mbps in 2014?",
       "1",
       "2",
-      "10",
-      "6"
+      "0.5",
+      "0",
+      ""
     ],
     [
       "4",
-      "Symantec",
-      "What percentage of companies give network access through their own device?",
+      "What percentage of companies give network\n  access through their employees own devices?",
       "0.65",
       "0.52",
       "0.17",
-      "0.87"
+      "0.87",
+      ""
     ],
     [
       "4",
-      "Symantec",
-      "Symantec Meet all Regulatory Compliance Requirements",
+      "How often does Symantec meet all Regulatory\n  Compliance Requirements",
       "All the time",
-      "On a Tuesday",
+      "On a tuesday",
       "Only after lunch",
       "When CTO is visiting"
     ],
     [
       "4",
-      "Symantec",
-      "Symantec has backup and recovery & what to control mobile apps ",
+      "Symantec has backup and recovery and ….?....\n  to control mobile apps ",
       "Encryption",
       "Decryption",
       "Deduplication",
-      "Dedication"
+      "Dedication",
+      ""
     ],
     [
       "4",
-      "Symantec",
       "Symantec's logo is  ",
       "Yellow and black",
       "Yellow and Grey",
@@ -1102,17 +1041,15 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "4",
-      "Product",
       "What does BYOD stand for?",
       "Bring your own device",
-      "Bring your own service",
-      "Bring your own slice",
+      "Bring your own desk",
+      "Bring your own dog",
       "Bring your own design"
     ],
     [
       "4",
-      "Product",
-      "What do companies need to also consider in order to protect data?",
+      "What do companies need to also consider in\n  order to protect data?",
       "Unsecure apps",
       "Unsecure flaps",
       "Unsecure maps",
@@ -1120,80 +1057,76 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "4",
-      "Product",
-      "What might be happening whilst connected to a unsecure network?",
+      "What might be happening whilst connected to a\n  unsecure network?",
       "Phishing for data",
-      "Fishing for fish",
+      "Fishing for compliments",
       "Draining your battery",
       "Viewing your Facebook "
     ],
     [
       "4",
-      "Product",
-      "How many mobile apps has Symantec been tracking?",
+      "How many mobile apps has Symantec been\n  tracking?",
       " 1.5 million",
-      "1.5 billion",
-      "100000000",
-      "150000"
+      "1500",
+      "150000",
+      "125000",
+      ""
     ],
     [
       "4",
-      "Product",
-      "What do companies now need to provision for?",
+      "How many connections per person do companies\n  now need to make provision for?",
       "2 or 3 secure connections",
-      "Several secure connections",
-      "Limited secure connections",
-      "Starvation"
+      "1 secure connection",
+      "Unlimited secure connections",
+      "No secure connections"
     ],
     [
       "4",
-      "Product",
       "What do users insist on being untouched?",
       "Personal information",
       "Movie selections",
-      "Playlists kept the same",
-      "Photo's not viewed"
+      "Playlists ",
+      "Photos",
+      ""
     ],
     [
       "4",
-      "Product",
-      "Connecting to an unsecure network leaves your data….",
+      "Connecting to an unsecure network leaves your\n  data….",
       "Wide open for viewing",
-      "Slightly closed for copying",
-      "Ajar for seeing",
-      "Shut forever"
+      "Vulnerable",
+      "Not saved",
+      "Decoded",
+      ""
     ],
     [
       "4",
-      "Product",
-      "Companies do not want to be liable for a users……?",
+      "Companies do not want to be liable for a users …?...",
       "Personal data",
       "Personal preferences",
       "Personal choices",
-      "Personal "
+      "Personal affairs"
     ],
     [
       "4",
-      "Product",
-      "In what year did the number of mobile connected devices, exceed the worlds population?",
+      "In what year did the number of mobile\n  connected devices, exceed the worlds population?",
       "2012",
       "2011",
-      "2013",
-      "2030"
+      "2000",
+      "1999",
+      ""
     ],
     [
       "4",
-      "Product",
-      "In what year will global mobile data traffic surpass 10 exabytes?",
+      "In what year will global mobile data traffic\n  surpass 10 exabytes?",
       "2016",
-      "2017",
+      "2020",
       "2018",
-      "2014"
+      "2014",
+      ""
     ],
     [
       "4",
-      "Product",
-      "What are users moving into consumer grade cloud accounts?",
+      "What are users moving into consumer grade\n  cloud accounts?",
       "Company data",
       "Company cars",
       "Company reputation",
@@ -1201,17 +1134,16 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "4",
-      "Product",
-      "What should business communications be encrypted with?",
+      "What should business communications be\n  encrypted with?",
       "SSL",
       "BRB",
       "FYI",
-      "XXL"
+      "XXL",
+      ""
     ],
     [
       "4",
-      "Product",
-      "Mobile productivity must come without compromising what?",
+      "Mobile productivity must come without\n  compromising .....?....",
       "Protection",
       "Reaction",
       "Transactions",
@@ -1219,7 +1151,6 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "4",
-      "Observe",
       "What did the employee leave at the airport?",
       "Tablet",
       "Laptop",
@@ -1228,66 +1159,65 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
     ],
     [
       "4",
-      "Observe",
-      "Shown on the video, what percentage regularly use three or more devices?",
+      "What percentage of people regularly use three\n  or more devices?",
       "0.52",
       "0.94",
       "0.34",
-      "0.48"
+      "0.48",
+      ""
     ],
     [
       "4",
-      "Observe",
-      "What was the IT analyst's name?",
+      "What was the IT Analyst's name?",
       "Jeff Hinson",
       "Jeff Hansen",
       "Geoff Honsen",
-      "Heff Hanson"
+      "Seth Hanson"
     ],
     [
       "4",
-      "Observe",
       "What colour is the anchor-man's tie?",
       "Brown",
-      "Purple",
+      "Yellow",
       "Blue",
-      "Red"
+      "Red",
+      ""
     ],
     [
       "4",
-      "Observe",
       "Symantec is trying to do what to BYOD?",
       "Embrace",
       "Reject",
       "Remember",
-      "Postpone"
+      "Postpone",
+      ""
     ],
     [
       "4",
-      "Observe",
       "What is the news channel's name?",
       "10 Action news",
       "5 local news",
       "7 Serious news",
-      "SYM News"
+      "SYM News",
+      ""
     ],
     [
       "4",
-      "Observe",
       "What colour is the IT analyst's shirt?",
       "Blue",
       "White ",
       "Black",
-      "Beige"
+      "Beige",
+      ""
     ],
     [
       "4",
-      "Observe",
-      "What did the employee leave a copy of, on her tablet?",
+      "What did the employee leave on her tablet?",
       "Financial Projections",
       "Personnel Data",
       "Whitepapers",
-      "Blueprints"
+      "Blueprints",
+      ""
     ]
   ]
 
@@ -1298,10 +1228,8 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
         when 0
           insertQuestion.category = parseInt field
         when 1
-          question[2] = "#{field}: #{question[2]}" 
-        when 2
           insertQuestion.text = field
-        when 3
+        when 2
           insertQuestion.options = [
             text: field
             correct: true

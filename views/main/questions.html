@@ -29,7 +29,7 @@
 </template>
 
 <template name="option">
-  <li class="option btn">{{text}}</li>
+  <li class="option btn"> {{#if screenMode}}{{text}}{{/if}}</li>
 </template>
 
 <template name="stage_answer">
