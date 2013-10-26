@@ -284,6 +284,8 @@ if Meteor.isClient
             lastname: t.find('[name="lastname"]').value
         processForm helpers.currentStage(), t
         temporaryAdvance()
+        $('#stage')[0].scrollTop = 0;
+
 
   # Template.stage_form.rendered = ->
   #   if @rendered != helpers.currentStage()._id
