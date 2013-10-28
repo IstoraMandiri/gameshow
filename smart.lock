@@ -4,7 +4,8 @@
     "basePackages": {
       "jqbootstrapvalidation": {},
       "collection-hooks": {},
-      "router": {}
+      "router": {},
+      "streams": {}
     },
     "packages": {
       "jqbootstrapvalidation": {
@@ -21,6 +22,11 @@
         "git": "https://github.com/tmeasday/meteor-router.git",
         "tag": "v0.5.4.1",
         "commit": "d00e380dda2184b70e909fc4a0fb5358d602c586"
+      },
+      "streams": {
+        "git": "https://github.com/arunoda/meteor-streams.git",
+        "tag": "v0.1.17",
+        "commit": "9fcbbc9b7bf542827babc92089c19e730892a22f"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

@@ -15,37 +15,38 @@ prevGame = null
 @helpers = 
   
   currentWinningVideo : ->
-    videoVotes = _.countBy helpers.currentPlayers(), (player) ->
-      player.video?.id
-    
-    
-    delete videoVotes['undefined']
+    if helpers.currentPlayers()?
+      videoVotes = _.countBy helpers.currentPlayers(), (player) ->
+        player.video?.id
+      
+      
+      delete videoVotes['undefined']
 
-    minForVictory = _.max videoVotes, (item) ->
-      item
+      minForVictory = _.max videoVotes, (item) ->
+        item
 
-    findVideoById = (id) ->
-      for video in helpers.currentGame().videos
-        if parseInt(id) is parseInt(video.id)
-          return video
-          break
+      findVideoById = (id) ->
+        for video in helpers.currentGame().videos
+          if parseInt(id) is parseInt(video.id)
+            return video
+            break
 
-    winners = []
-    for key,value of videoVotes
-      ## calculate time taken to vote
-      if value >= minForVictory
-        winners.push findVideoById(key)
-    if winners.length is 1
-      return winners[0]
-    else
-      if helpers.currentPlayers()?
-        for player in helpers.currentPlayers()
-          for video in winners
-            video.voteTime?= 0
-            if video.id is player.video?.id
-              video.voteTime += player.video.voteTime
-      return _.min winners, (video) ->
-        video.voteTime
+      winners = []
+      for key,value of videoVotes
+        ## calculate time taken to vote
+        if value >= minForVictory
+          winners.push findVideoById(key)
+      if winners.length is 1
+        return winners[0]
+      else
+        if helpers.currentPlayers()?
+          for player in helpers.currentPlayers()
+            for video in winners
+              video.voteTime?= 0
+              if video.id is player.video?.id
+                video.voteTime += player.video.voteTime
+        return _.min winners, (video) ->
+          video.voteTime
 
 
 

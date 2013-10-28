@@ -3,7 +3,7 @@ if Meteor.isClient
   Template.leaderboard.scores = -> 
     stageType = helpers.currentStage().type
     if helpers.currentStage()._id is 'leaderboard' 
-      players = collections.Players.find({},{sort:{score:-1}}).fetch()
+      players = top10Players.fetch()
       for player in players
         player.time = filters.milisToSeconds helpers.totalAnswerTime player
       players.sort (a,b) ->

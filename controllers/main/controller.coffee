@@ -49,8 +49,15 @@ if Meteor.isClient
       , 1000
       helpers.move 'back'
 
+
+  eventsObj["#{helpers.quickTouch} #refresh-btn"] = ->  
+    commandStream.emit 'refreshScreen'
+
+
   eventsObj["#{helpers.quickTouch} #reset-btn"] = -> 
     if confirm 'Are you sure you wish to reset the game?'
       Meteor.call 'reset'
   Template.controller.events eventsObj
+
+
 

@@ -162,7 +162,6 @@ if Meteor.isServer
     Meteor.call 'randomizeQuestionOptions'
 
   Meteor.startup ->
-    console.log 'questions', collections.Questions.find().count()
     if collections.Questions.find().count() is 0
       console.log 'inserting questions'
       insertFakeQuestions()
@@ -177,6 +176,15 @@ if Meteor.isServer
 
 
 if Meteor.isClient 
+
+  
+  
+  commandStream.on 'refreshScreen', ->
+    if Session.equals('view', 'screen')
+      console.log 'refreshing'
+      window.location.reload()
+
+
 
   # Session.delete()
   
@@ -421,8 +429,6 @@ if Meteor.isClient
   Template.stage_video_select.events = eventsObj
 
   
-  Template.video_buffer.videoBuffer = -> helpers.currentGame()?.winningVideo
-
 
   Template.playing_video.winningVideo = -> winningVideo()
 
@@ -432,7 +438,7 @@ if Meteor.isClient
       $video.play()
       $video.addEventListener 'ended', ->
         helpers.move 'forward'
-    , 2000
+    , 2500
 
 
   Template.stage_results.iAmWinner = ->
