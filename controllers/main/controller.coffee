@@ -30,7 +30,6 @@ if Meteor.isClient
 
   Template.controller.forwardDisabled = -> forwardDisabled()
 
-
   Template.controller.backDisabled = -> Session.equals 'backDisabled', true
   
   eventsObj = {}

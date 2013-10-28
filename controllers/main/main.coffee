@@ -271,8 +271,9 @@ if Meteor.isClient
         if $this.attr('required')? 
           if $.trim($this.val()) is '' or ($this.attr('type') is 'checkbox' and !$this.is(':checked'))
             valid = false
-            $this.popover
+            $this.parent().popover
               content: 'This field is required'
+              placement: 'top'
               delay:
                 hide: 2000
             .popover 'show'
@@ -340,8 +341,7 @@ if Meteor.isClient
                 timeTaken: helpers.defaultConfig().timers.question * 1000
 
       Session.set 'timeUp', true
-      # alert 'voted'
-      # Template.question_content.voted()
+
   Template.question_content.timeUp = -> Session.equals 'timeUp', true
 
   Template.question_content.voted = ->
@@ -416,7 +416,7 @@ if Meteor.isClient
       collections.Players.update Session.get('currentPlayer'),
         $set:
           video: video
-      # Session.set 'votedOnVideo', true
+      Session.set 'votedOnVideo', true
 
   Template.stage_video_select.events = eventsObj
 

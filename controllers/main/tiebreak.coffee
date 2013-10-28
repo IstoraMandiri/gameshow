@@ -127,16 +127,16 @@ tiebreakWinners = ->
 tiebreakWinner = -> if tiebreakWinners().length is 1 then tiebreakWinners()[0] else false
 
 
-formatNumbers = (originalStr) ->
-  str = ''
-  for char, i in "#{originalStr}"
-    # console.log char
-    if i%5 is 0
-      str+= ' '
-    str+= char
-  str = str.match(/.{1,12}/g).join("<br/>")
+formatNumbers = (originalStr) -> return originalStr
+  # str = ''
+  # for char, i in "#{originalStr}"
+  #   # console.log char
+  #   if i%5 is 0
+  #     str+= ' '
+  #   str+= char
+  # str = str.match(/.{1,12}/g).join("<br/>")
   # console.log str
-  return str
+  # return str
 
 if Meteor.isClient
 
@@ -171,7 +171,7 @@ if Meteor.isClient
     # dispaly
     setPhase 1
     Session.set "tiebreakComplete", false
-    clock.startCountdown helpers.currentGame().timers.watch_timebreak, ->
+    clock.startCountdown helpers.currentGame().timers.watch_timebreak, {med : true}, ->
       setPhase 2
       clock.startCountdown helpers.currentGame().timers.input_timebreak, {big : true}, ->
         Session.set "tiebreakComplete", true
@@ -188,7 +188,7 @@ if Meteor.isClient
 
   Template.tiebreak_number_input.numberString = -> 
     str = myNumberString() || " "
-    return str.match(/.{1,10}/g).join("<br/>")
+    # return str.match(/.{1,10}/g).join("<br/>")
       
   eventsObj = {}
   eventsObj[helpers.quickTouch] = (e,t) ->
