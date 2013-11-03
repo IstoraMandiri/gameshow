@@ -239,6 +239,8 @@ if Meteor.isClient
       fieldTitle = $.trim($('label',this).text())
       if $("[type='checkbox']",$this).size() > 0
         fieldValue = $("[type='checkbox']",$this).attr('checked')?
+      else if $("[type='radio']",$this).size() > 0
+        fieldValue = $("[type='radio']:checked",$this).val()
       else
         fieldValue = $('.input', $this).val()
       fields.push
@@ -277,10 +279,12 @@ if Meteor.isClient
       $('.has-value', $(event.target)).each ->
         $this = $(this)
         if $this.attr('required')? 
-          if $.trim($this.val()) is '' or ($this.attr('type') is 'checkbox' and !$this.is(':checked'))
+          invalidEmail = if ($this.attr('type') is 'email') and ($.trim($this.val()).indexOf('@') is -1) then true else false
+          if invalidEmail or $.trim($this.val()) is '' or ($this.attr('type') is 'checkbox' and !$this.is(':checked'))
             valid = false
-            $this.parent().popover
-              content: 'This field is required'
+            $this.parent()
+            .popover
+              content: if invalidEmail then 'Please enter a valid email address' else 'This field is required'
               placement: 'top'
               delay:
                 hide: 2000

@@ -6,6 +6,8 @@ if Meteor.isClient
       Session.set 'subPage', sub
       Meteor.autorun ->
         Meteor.subscribe "players"
+        Meteor.subscribe "games"
+        Meteor.subscribe "forms"
       return 'admin'
 
   Template.body.layoutName = ->

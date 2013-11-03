@@ -2,10 +2,6 @@ tiebreakStageList = ['tiebreakSlide','tiebreakIntro','tiebreak','tiebreakResults
 
 buttons = [{t:'0',d:0},{t:'1',d:1},{t:'2',d:2},{t:'3',d:3},{t:'4',d:4},{t:'5',d:5},{t:'6',d:6},{t:'7',d:7},{t:'8',d:8},{t:'9',d:9},{t:'×',d:'backspace',c:'backspace btn-primary'}]
 
-duration =
-  phase1 : 10 # fix this
-  phase2 : 20
-
 numberLength = 20
 
 tieBreakIntroStage = undefined
@@ -148,7 +144,6 @@ if Meteor.isClient
     else
       currentPlayer = helpers.currentPlayer()
       match = false
-      console.log 'playing',currentTiebreak().players
       for player in currentTiebreak().players
         if currentPlayer._id is player._id
           match = true
@@ -171,15 +166,16 @@ if Meteor.isClient
     # dispaly
     setPhase 1
     Session.set "tiebreakComplete", false
-    clock.startCountdown helpers.currentGame().timers.watch_timebreak, {med : true}, ->
+    console.log 'starting tiebreak for ',helpers.currentGame().timers, helpers.currentGame().timers.watch_tiebreak, helpers.currentGame().timers.input_tiebreak
+    clock.startCountdown helpers.currentGame().timers.watch_tiebreak, {med : true}, ->
       setPhase 2
-      clock.startCountdown helpers.currentGame().timers.input_timebreak, {big : true}, ->
+      clock.startCountdown helpers.currentGame().timers.input_tiebreak, {big : true}, ->
         Session.set "tiebreakComplete", true
 
   Template.tiebreak_number_input.created = (template) ->
     # client
     Session.set 'tiebreakNumbers', ''
-    clock.startCountdown helpers.currentGame().timers.input_timebreak, ->
+    clock.startCountdown helpers.currentGame().timers.input_tiebreak, ->
       Session.set "tiebreakComplete", true
       sendTiebreakScore()
 

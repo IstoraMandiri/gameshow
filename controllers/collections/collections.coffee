@@ -37,5 +37,7 @@ if Meteor.isClient
     Meteor.subscribe "last20Players"
     Meteor.subscribe "stages"
     Meteor.subscribe "questions"
-    Meteor.subscribe "forms"
     Meteor.subscribe "top10Players", -> top10Players()
+
+  # if admin
+    
