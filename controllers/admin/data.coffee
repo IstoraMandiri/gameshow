@@ -19,19 +19,19 @@ if Meteor.isClient
     "click ul li.tab": -> 
       Session.set 'admin_data_subPage', @id
 
-  Template.admin_data_players.players = -> admin.findPlayers().fetch()
+  Template.admin_data_players.players = -> admin.findPlayers()
   Template.admin_data_players.count = -> admin.findPlayers().count()
 
 
-  Template.admin_data_forms.forms = -> admin.findForms().fetch()
+  Template.admin_data_forms.forms = -> admin.findForms()
   Template.admin_data_forms.count = -> admin.findForms().count()  
 
-  Template.admin_data_games.games = -> admin.findGames().fetch()
+  Template.admin_data_games.games = -> admin.findGames()
   Template.admin_data_games.count = -> admin.findGames().count()  
   
   Template.game_player.player =  -> admin.getPlayer(@)
 
-  Template.admin_questions.questions = -> admin.findQuestions().fetch()
+  Template.admin_questions.questions = -> admin.findQuestions()
   Template.admin_questions.count = -> admin.findQuestions().count()  
   
 
@@ -45,16 +45,19 @@ if Meteor.isClient
 
     'click .btn.answers': ->
       helpers.showModal
+        html: true
         title: "Answers: #{@firstname} #{@lastname}"
         body: admin.renderTemplate('admin_data_players_answers', @).string
 
     'click .btn.fields': ->
       helpers.showModal
+        html: true
         title: "#{@title}: #{@player.firstname} #{@player.lastname}"
         body: admin.renderTemplate('admin_data_forms_fields', @).string        
 
     'click .btn.players': ->
       helpers.showModal
+        html: true
         title: "Game Results"
         body: admin.renderTemplate('admin_data_games_players', @).string
 

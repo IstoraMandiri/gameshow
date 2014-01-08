@@ -8,7 +8,11 @@
       </div>
     {{/if}}
     <div class="modal-body">
+      {{#if message.html}}
+        {{{message.body}}}
+      {{else}}
         {{breakLines message.body}}
+      {{/if}}
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
