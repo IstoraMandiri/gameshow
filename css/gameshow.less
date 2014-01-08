@@ -1,7 +1,3 @@
-/* CSS declarations go here */
-
-@color1:#FDBB30;
-@color2:#666;
 
 
 @font-face {
@@ -128,7 +124,7 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
   h1,h2,h3,h4,h5{
     font-family:'HeaderFont';
     font-weight:normal;
-    color:@color2;
+    color:#666;
     margin:0;
     margin-bottom:1em;
   }
@@ -139,7 +135,11 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
 
 
   #body.player h1{
-    color:@color1;
+    background:url('/img/button_color.png');
+    background-position:center center;
+    background-repeat:repeat-x;
+    background-size:auto 100%;
+
   }
 
 
@@ -149,7 +149,11 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
   }
 
   .btn-success{
-    background:@color1;
+    background:url('/img/button_color.png');
+    background-position:center center;
+    background-repeat:repeat-x;
+    background-size:auto 100%;
+
   }
 
   form{
@@ -251,8 +255,11 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
 
   #controls{
     th{
-      background:@color1;
-      color:@color2;
+      background:url('/img/button_color.png');
+      background-position:center center;
+      background-repeat:repeat-x;
+      background-size:auto 100%;
+      color:#666;
       font-family:'HeaderFont';
     }
     font-size:20px;
@@ -312,7 +319,10 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
   .btn{
     color:black;
     font-family:'HeaderFont';
-    background: -webkit-radial-gradient(50% -20px, ellipse cover, lighten(@color1, 20%) 0%,@color1 100%);
+    background:url('/img/button_color.png');
+    background-position:center center;
+    background-repeat:repeat-x;
+    background-size:auto 100%;
     border:none;
     text-shadow:0px -1px 1px white;
     box-shadow:0px 3px 5px rgba(0,0,0,.1), inset 0px 0px 30px rgba(0,0,0,.1);
@@ -320,7 +330,10 @@ html,body,#body,#wrapper,#wrapper_inner,#holding_slide{
     border-top:1px solid rgba(255,255,255,.4);
     &:hover, &:active{
       background-position:0;
-      background: -webkit-radial-gradient(50% -20px, ellipse cover, lighten(@color1, 20%) 0%,@color1 100%);
+      background:url('/img/button_color.png');
+      background-position:center center;
+      background-repeat:repeat-x;
+      background-size:auto 100%;
       color:black;
     }
     &.btn-primary{
@@ -571,11 +584,11 @@ h2.question-text{
     padding:20px;
     padding-right:110px;
     content:'Question';
-    background:@color1;
     color:white;
-    background-image:url('/img/question_icon.png');
-    background-position:top right;
-    background-repeat: no-repeat;
+    background-image:url('/img/question_icon.png'), url('/img/button_color.png');
+    background-position:top right, center center;
+    background-repeat: no-repeat, repeat-x;
+    background-size: auto, auto 100%;
     box-shadow:1px solid white;
   }
 }
