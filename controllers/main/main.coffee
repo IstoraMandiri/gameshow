@@ -80,7 +80,12 @@ winningVideo = -> helpers.currentWinningVideo()
 
 if Meteor.isServer
   
-  Meteor.methods  
+  Meteor.methods
+    'uploadNewQuestions' : (questions) ->
+      collections.Questions.remove({})
+      helpers.batchInsertQuestions questions
+      createNewGame()
+
     'endVideoVote' : ->
       console.log 'updating current game'
       helpers.updateCurrentGame

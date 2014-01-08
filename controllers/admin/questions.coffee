@@ -36,7 +36,19 @@ if Meteor.isClient
 
   Template.admin_questions.events
     "click .create-question": -> createQuestion()
+    "change input.upload-questions": (event,template) ->
+      if confirm 'WARNING: THIS WILL REPLACE ALL QUESTIONS.\nAre you sure you wish to continue?'
+        file = event.target.files[0]
+        reader = new FileReader();
+        unless reader
+          alert 'please use chrome'
 
+        reader.readAsText file
+        reader.onload = (event) ->
+          newQuestions = helpers.CSVToArray(event.target.result)
+          newQuestions.splice(0,1)
+          Meteor.call 'uploadNewQuestions', newQuestions
+          window.location.reload()
 
   Template.admin_question.events
     "click .delete-question": -> deleteQuestion @._id

@@ -13,7 +13,43 @@ prevGame = null
 
 
 @helpers = 
-  
+  batchInsertQuestions: (questions) ->
+    for question in questions
+      insertQuestion = {}
+      for field, i in question
+        switch i 
+          when 0
+            insertQuestion.category = parseInt field
+          when 1
+            insertQuestion.text = field
+          when 2
+            insertQuestion.options = [
+              text: field
+              correct: true
+            ]
+          else
+            if field isnt ''
+              insertQuestion.options.push 
+                text: field
+
+      collections.Questions.insert insertQuestion
+
+  CSVToArray : (strData, strDelimiter) ->
+    strDelimiter = (strDelimiter or ",")
+    objPattern = new RegExp(("(\\" + strDelimiter + "|\\r?\\n|\\r|^)" + "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" + "([^\"\\" + strDelimiter + "\\r\\n]*))"), "gi")
+    arrData = [[]]
+    arrMatches = null
+    while arrMatches = objPattern.exec(strData)
+      strMatchedDelimiter = arrMatches[1]
+      arrData.push []  if strMatchedDelimiter.length and (strMatchedDelimiter isnt strDelimiter)
+      if arrMatches[2]
+        strMatchedValue = arrMatches[2].replace(new RegExp("\"\"", "g"), "\"")
+      else
+        strMatchedValue = arrMatches[3]
+      arrData[arrData.length - 1].push strMatchedValue
+    arrData  
+
+
   currentWinningVideo : ->
     if helpers.currentPlayers()?
       videoVotes = _.countBy helpers.currentPlayers(), (player) ->

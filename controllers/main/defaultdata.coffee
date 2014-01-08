@@ -1,3 +1,5 @@
+
+
 @insertFakeData = ->
   
   collections.Config.insert
@@ -1220,26 +1222,7 @@ Curabitur egestas lacus non magna lacinia, id malesuada massa facilisis. Sed ult
       ""
     ]
   ]
-
-  for question in symantecQuesitons
-    insertQuestion = {}
-    for field, i in question
-      switch i 
-        when 0
-          insertQuestion.category = parseInt field
-        when 1
-          insertQuestion.text = field
-        when 2
-          insertQuestion.options = [
-            text: field
-            correct: true
-          ]
-        else
-          if field isnt ''
-            insertQuestion.options.push 
-              text: field
-
-    collections.Questions.insert insertQuestion
+  helpers.batchInsertQuestions symantecQuesitons
 
 
 

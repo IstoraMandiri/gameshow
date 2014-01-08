@@ -2,7 +2,11 @@
 <template name="admin_questions">
   <h2>Questions <small>Create a pool of questions</small></h2>
   <hr>
-  <button class="btn btn-primary create-question pull-right">New Question</button>
+  <div class="pull-right">
+    <a href="/csv_sample.csv">Sample CSV</a>&nbsp;&nbsp;
+    <input type="file" class='upload-questions' accept=".csv">
+    <button class="btn btn-primary create-question">New Question</button>  
+  </div>
   <h3>{{count}} Questions Created</h3>
   {{#each questions}}
     {{> admin_question}}
