@@ -37,6 +37,9 @@ if Meteor.isClient
 
 
   Template.admin_data.events
+    'click .toggle-hidden' : -> # toggle hidden player
+      collections.Players.update @_id, {$set:{hidden:!@hidden}}
+
     'click .delete-all-data': ->
       if confirm 'Are you sure you wish to delete all data?'
         if confirm 'Please confirm again. You cannot recover the deleted data.'

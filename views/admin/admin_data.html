@@ -21,6 +21,7 @@
       <th>Score</th>
       <th>Answers</th>
       <th>Signed Up</th>
+      <th>Show in Top 10?</th>
     </tr>
     {{#each players}}
       <tr>
@@ -32,6 +33,9 @@
         {{/if}}
         </td>      
         <td>{{created}}</td>
+        <td>
+          <button class="btn btn-small toggle-hidden">{{#if hidden}}No{{else}}Yes{{/if}}</button>
+        </td>
       </tr>
     {{/each}}          
   </table>

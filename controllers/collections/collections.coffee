@@ -16,7 +16,7 @@ collections.Forms.before.insert (id,doc) -> doc.created = new Date()
 collections.Questions.before.insert (id,doc) -> doc.created = new Date()
 
 
-@top10Players = -> collections.Players.find({},{sort:{score:-1},limit:10})
+@top10Players = -> collections.Players.find({hidden:{$ne:true}},{sort:{score:-1},limit:10})
 
 if Meteor.isServer
   Meteor.publish "currentGame", -> collections.Games.find({},{sort:{created:-1},limit:1})
