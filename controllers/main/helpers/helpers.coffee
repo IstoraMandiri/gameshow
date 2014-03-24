@@ -94,7 +94,7 @@ prevGame = null
     if player?
       collections.Players.findOne player
 
-  defaultConfig: -> collections.Config.findOne({_id:'defaultGame'})
+  defaultConfig: -> collections.Config.findOne({_id:'defaultGame'}) or {}
 
   showModal : (data) -> 
     Session.set 'modalData', data
